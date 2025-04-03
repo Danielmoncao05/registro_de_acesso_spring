@@ -8,6 +8,7 @@ public class RegistroDeAcessoSpringApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RegistroDeAcessoSpringApplication.class, args);
+		System.out.println("hello world");
 	}
 
 }
