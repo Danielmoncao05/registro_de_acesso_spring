@@ -1,9 +1,11 @@
 package com.senai.registro_de_acesso_spring.entity;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+@Entity
 public class Usuario {
 
     @Id
@@ -16,6 +18,10 @@ public class Usuario {
     private String email;
     private String senha;
     private String telefone;
+
+    public Usuario(){
+
+    }
 
     public Usuario(int id, Integer idAcesso, String CPF, String nome, String email, String senha, String telefone) {
         this.id = id;
