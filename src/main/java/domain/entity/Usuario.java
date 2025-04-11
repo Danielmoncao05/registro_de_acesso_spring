@@ -1,5 +1,8 @@
-package entity;
+package domain.entity;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Usuario {
     private int id_Usuario;
     private int id_Acesso;
