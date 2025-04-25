@@ -1,7 +1,7 @@
 package com.senai.registro_de_acesso_spring.presentation.controllers;
 
-import com.senai.registro_de_acesso_spring.domain.entities.User;
-import com.senai.registro_de_acesso_spring.domain.repositories.UserRepository;
+import com.senai.registro_de_acesso_spring.domain.entities_BAGUNCADO.Usuario;
+import com.senai.registro_de_acesso_spring.domain.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,36 +12,36 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
-public class UserController {
-
+public class UsuarioController {
+        // mover por service
     @Autowired
-    private UserRepository userRepository;
+    private UsuarioRepository userRepository;
 
     @GetMapping
-    public List<User> getUsers() {
+    public List<Usuario> getUsers() {
         return userRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> user = userRepository.findById(id);
+    public ResponseEntity<Usuario> getUserById(@PathVariable Long id) {
+        Optional<Usuario> user = userRepository.findById(id);
         return user.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
+    public Usuario createUser(@RequestBody Usuario user) {
         return userRepository.save(user);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userUpdated) {
-        Optional<User> userExistents = userRepository.findById(id);
+    public ResponseEntity<Usuario> updateUser(@PathVariable Long id, @RequestBody Usuario userUpdated) {
+        Optional<Usuario> userExistents = userRepository.findById(id);
 
         if(userExistents.isPresent()) {
-            User user = userExistents.get();
+            Usuario user = userExistents.get();
 
-            user.setIdAcess(userUpdated.getIdAcess());
+            user.setIDdeAcesso(userUpdated.getIDdeAcesso());
             user.setName(userUpdated.getName());
             user.setPhonenumber(userUpdated.getPhonenumber());
             user.setEmail(userUpdated.getEmail());
