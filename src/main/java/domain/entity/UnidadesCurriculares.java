@@ -5,16 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalTime;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-public class Usuario {
-    private int id_Usuario;
-    private int id_Acesso;
-    private int id_Matricula;
+public class UnidadesCurriculares {
     private String nome;
-    private boolean status;
-    private String email;
-    private String senha;
+    /*list<Professor>*/
+    private LocalTime cargaHoraria;
 }
