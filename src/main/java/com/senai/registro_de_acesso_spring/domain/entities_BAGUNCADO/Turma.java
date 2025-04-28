@@ -16,7 +16,7 @@ import java.util.List;
 public class Turma { // obs: Strings temporários, execeto nome
     private String nome;
     private List<SubTurma> subTurma;
-    private String periodo;
+    private Periodo periodo;
     private Curso curso;
     private String data_inicial;
     private String horario_entrada;

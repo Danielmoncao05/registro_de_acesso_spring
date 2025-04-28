@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Ocorrencia { // obs: Strings temporários
-    private String tipo;
+    private Ocorrencias tipo; // somente entrada e saida ? | falta conta?
     private String descricao;
-    private String status; // utilizar ENUM ? | somente três tipos de status: APROVADO, PENDENTE, REPROVADO
+    private Status status; // utilizar ENUM ? | somente três tipos de status: APROVADO, PENDENTE, REPROVADO
     private LocalDateTime data_hora;
 }

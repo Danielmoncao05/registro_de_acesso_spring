@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Curso { // obs: Strings temporários, execeto nome
     private List<String> nome;
-    private Enum<TipoCurso> tipo;
+    private TipoCurso tipo;
     private String carga_horaria;
     private List<UnidadeCurricular> unidades_curriculares;
     @Getter

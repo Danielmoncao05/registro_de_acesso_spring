@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DiasDaSemana {
-    private Enum<DiaSemana> dia_Semana;
+    private DiaSemana dia_Semana;
     private List<UnidadeCurricular> unidades_curriculares;
     private List<Professor> professor;
     private List<Ambiente> ambiente;

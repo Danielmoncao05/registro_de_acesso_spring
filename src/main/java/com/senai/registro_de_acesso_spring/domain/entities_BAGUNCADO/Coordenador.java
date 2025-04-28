@@ -9,7 +9,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Professor { // o que o professor tem? | unidades curriculares e turma
+@AllArgsConstructor
+public class Coordenador extends Usuario{
 }

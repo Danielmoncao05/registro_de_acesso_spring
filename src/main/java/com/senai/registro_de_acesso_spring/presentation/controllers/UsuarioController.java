@@ -41,11 +41,11 @@ public class UsuarioController {
         if(userExistents.isPresent()) {
             Usuario user = userExistents.get();
 
-            user.setIDdeAcesso(userUpdated.getIDdeAcesso());
-            user.setName(userUpdated.getName());
-            user.setPhonenumber(userUpdated.getPhonenumber());
+            user.setIdDeAcesso(userUpdated.getIdDeAcesso());
+            user.setNome(userUpdated.getNome());
+            user.setTelefone(userUpdated.getTelefone());
             user.setEmail(userUpdated.getEmail());
-            user.setPhoto(userUpdated.getPhoto());
+            user.setFoto(userUpdated.getFoto());
 
             userRepository.save(user);
 
