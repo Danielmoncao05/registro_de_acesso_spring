@@ -1,4 +1,4 @@
-package domain.entity;
+package domain.entities;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -12,7 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class DiasDaSemana {
-    /*diaSemana(enum)*/
+    private diaSemana diaSemana;
     private List<UnidadesCurriculares>unidadeCurricular;
-    /*list<Professor> e list<AM?>*/
+    private List<Professor> professores;
+     /*list<Ambiente>*/
 }

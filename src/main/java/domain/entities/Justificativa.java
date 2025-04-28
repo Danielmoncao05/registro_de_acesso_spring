@@ -1,4 +1,4 @@
-package domain.entity;
+package domain.entities;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -6,17 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-public class Ocorrencia {
+public class Justificativa {
     private String tipo;
     private String descricao;
-    private boolean status;
-    private LocalDate data;
+    /*anexo*/
     private LocalTime hora;
+    private LocalDate data;
+    private int quantidadeDias;
+    private boolean status;
 }

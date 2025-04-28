@@ -1,4 +1,4 @@
-package domain.entity;
+package domain.entities;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -16,9 +15,9 @@ import java.util.List;
 @Entity
 public class Turma {
     private String nome;
-    private List<SubTurma> turmas;
+    private List<SubTurma> turma;
     private LocalTime periodo;
-    private String curso;
+    private Curso curso;
     /*list<aluno>*/
     private LocalTime horarioEntrada;
     private LocalDate dataInicio;

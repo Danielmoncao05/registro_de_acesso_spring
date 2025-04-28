@@ -1,11 +1,10 @@
-package domain.entity;
+package domain.entities;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.awt.*;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
 @Entity
 public class Curso {
     private String nome;
-    private String tipo;
+    private TipoCurso tipoCurso;
     private List<UnidadesCurriculares> unidadeCurricular;
     private LocalTime cargaHoraria;
     private LocalTime tolerancia;
