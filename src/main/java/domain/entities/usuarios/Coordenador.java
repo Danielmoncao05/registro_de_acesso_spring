@@ -1,4 +1,4 @@
-package domain.entities;
+package domain.entities.usuarios;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Coordenador extends Usuario{
+public class Coordenador extends Usuario {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(

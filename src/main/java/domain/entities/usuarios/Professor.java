@@ -1,5 +1,7 @@
-package domain.entities;
+package domain.entities.usuarios;
 
+import domain.entities.turma.horarios.Turma;
+import domain.entities.curso.UnidadesCurriculares;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

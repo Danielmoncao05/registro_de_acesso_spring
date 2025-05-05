@@ -1,4 +1,5 @@
-package domain.entities;
+package domain.entities.turma.horarios;
+
 
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -6,14 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalTime;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-public class UnidadesCurriculares {
-    private String nome;
-    private List<Professor> professores;
-    private LocalTime cargaHoraria;
+public class SubTurma extends Turma {
+private String nome;
+/*list<aluno>*/
+    private LocalTime horario;
 }

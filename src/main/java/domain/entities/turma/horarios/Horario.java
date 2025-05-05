@@ -1,4 +1,4 @@
-package domain.entities;
+package domain.entities.turma.horarios;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;

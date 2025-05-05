@@ -1,7 +1,7 @@
 package presentation.dto;
 
-import domain.entities.Turma;
-import domain.entities.UnidadesCurriculares;
+import domain.entities.turma.horarios.Turma;
+import domain.entities.curso.UnidadesCurriculares;
 
 import java.util.List;
 

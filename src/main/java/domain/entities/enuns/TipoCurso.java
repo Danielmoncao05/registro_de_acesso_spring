@@ -1,4 +1,4 @@
-package domain.entities;
+package domain.entities.enuns;
 
 public enum TipoCurso {
     CAI,

@@ -1,4 +1,4 @@
-package domain.entities;
+package domain.entities.usuarios.Aluno;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -12,10 +12,12 @@ import java.time.LocalTime;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Ocorrencia {
+public class Justificativa {
     private String tipo;
     private String descricao;
-    private Status status;
-    private LocalDate data;
+    /*anexo*/
     private LocalTime hora;
+    private LocalDate data;
+    private int quantidadeDias;
+    private boolean status;
 }

@@ -1,4 +1,4 @@
-package domain.entities;
+package domain.entities.usuarios;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;

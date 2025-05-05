@@ -1,5 +1,6 @@
-package domain.entities;
+package domain.entities.turma.horarios;
 
+import domain.entities.curso.Curso;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
