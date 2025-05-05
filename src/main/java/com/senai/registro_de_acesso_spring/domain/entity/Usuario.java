@@ -1,4 +1,4 @@
-package com.senai.registro_de_acesso_spring.entity;
+package com.senai.registro_de_acesso_spring.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,8 +1,8 @@
-package com.senai.registro_de_acesso_spring.Controller;
+package com.senai.registro_de_acesso_spring.apresentation.Controller;
 
 
-import com.senai.registro_de_acesso_spring.entity.Usuario;
-import com.senai.registro_de_acesso_spring.repository.UsuarioRepository;
+import com.senai.registro_de_acesso_spring.domain.entity.Usuario;
+import com.senai.registro_de_acesso_spring.domain.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
