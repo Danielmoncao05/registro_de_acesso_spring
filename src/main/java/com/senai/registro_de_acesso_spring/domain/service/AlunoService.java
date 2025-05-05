@@ -1,15 +1,10 @@
 package com.senai.registro_de_acesso_spring.domain.service;
 
-import com.senai.registro_de_acesso_spring.domain.entities_BAGUNCADO.Aluno;
-import com.senai.registro_de_acesso_spring.domain.repositories.AlunoRepository;
-import com.senai.registro_de_acesso_spring.presentation.dtos.AlunoDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AlunoService {
+    /*
     @Autowired
     private AlunoRepository alunoRepo;
 
@@ -20,7 +15,7 @@ public class AlunoService {
         aluno.setTelefone(alunoDTO.telefone());
         aluno.setEmail(alunoDTO.email());
         /*
-         nao é necessario a foto do aluno para cadastrar e as ocorerncias serao criada quando necessario apenas */
+         nao é necessario a foto do aluno para cadastrar e as ocorerncias serao criada quando necessario apenas
 
         alunoRepo.save(aluno);
     }
@@ -37,5 +32,5 @@ public class AlunoService {
                 aluno.getJustificativa()
         )).toList(); // pegar tudo?? | como pegar separado
     }
-
+*/
 }
