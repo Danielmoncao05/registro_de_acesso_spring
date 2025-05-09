@@ -10,5 +10,6 @@ public record UsuarioDTO(
         String cpf,
         LocalDate dataNascimento,
         String email,
+        String telefone,
         TipoDeUsuario tipoDeUsuario) {
 }

@@ -1,7 +1,9 @@
 package com.senai.registro_de_acesso_spring.domain.entity.usuarios;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,12 +16,15 @@ abstract public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
-    /*
-    fazer depois -> not null | unique | qtd carateres */
+
+    protected String idAcesso;  // TODO: annotation que gera o ID de Acesso automaticamente
+
+    @NotNull
+    @Size (max = 40)
     protected String nome;
+
     protected String cpf; // usado como login
     protected LocalDate dataNascimento;
-    protected String idAcesso;
     protected String email;
     protected String senha;
     protected String telefone;

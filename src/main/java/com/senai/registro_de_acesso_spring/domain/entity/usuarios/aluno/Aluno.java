@@ -6,6 +6,8 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import lombok.Data;
+import lombok.Getter;
 
 import java.util.List;
 

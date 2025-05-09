@@ -1,15 +1,20 @@
 package com.senai.registro_de_acesso_spring.presentation.controllers;
 
+import com.senai.registro_de_acesso_spring.application.dto.AlunoDTO;
+import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/alunos")
 public class AlunoController {
     @Autowired
     private AlunoService alunoService;
-/*
+
     @PostMapping
     public ResponseEntity<String> cadastrar(@RequestBody AlunoDTO alunoDTO) {
         alunoService.cadastrar(alunoDTO);
@@ -22,11 +27,11 @@ public class AlunoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<AlunoDTO>> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<Aluno> buscarPorId(@PathVariable Long id) {
         return alunoService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
+    }   //TODO - Revisar e corrigir
 
     @PutMapping
     public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody AlunoDTO alunoDTO) {
@@ -47,5 +52,4 @@ public class AlunoController {
     }
 
     // criar salvar e ler ocorrencia | um só de entrada e um só de saida(entrada é automatica) | controller e service pequenos porem uteis | como vou utiliza-lo no aluno ??
-*/
 }
