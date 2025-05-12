@@ -12,12 +12,13 @@ import lombok.Getter;
 import java.util.List;
 
 @Entity
+@Data
 @DiscriminatorValue("ALUNO") // associação da tabela tipo de usuario | determina o nome que será escrito na coluna criada no Usuario
 public class Aluno extends Usuario {
     @OneToMany(mappedBy = "aluno") // determina a relacao | associaca a coluna aluno da tabela ocorrencia |
     private List<Ocorrencia> ocorrencias;
 
-    @OneToMany(mappedBy = "aluno") // ujm para muitos
+    @OneToMany(mappedBy = "aluno") // um para muitos
     private List<Justificativa> justificativas;
 
     @ManyToMany // muitos para muitos | noa precisa de associacao pois ja esta
