@@ -8,4 +8,5 @@ import lombok.*;
 @Data
 @DiscriminatorValue("AQV")
 public class AQV extends Usuario {
+
 }
