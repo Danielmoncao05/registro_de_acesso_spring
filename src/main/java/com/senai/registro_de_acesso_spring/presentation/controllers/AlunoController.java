@@ -20,6 +20,18 @@ public class AlunoController {
         alunoService.cadastrar(alunoDTO);
         return ResponseEntity.ok("Aluno cadastrado com sucesso!");
     }
+    /*
+    {
+    "nome":"Pedro Quidute",
+    "cpf": "476.082.128-91",
+    "dataNascimento":"2005-09-03",
+    "email":"pquidute@proton.me",
+    "telefone":"(11)93902-7089",
+    "ocorrencias":[],
+    "justificativas":[],
+    "subTurmas":[]
+    }
+     */
 
     @GetMapping
     public ResponseEntity<List<AlunoDTO>> listarAlunos() {
@@ -27,11 +39,11 @@ public class AlunoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Aluno> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<AlunoDTO> buscarPorId(@PathVariable Long id) {
         return alunoService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }   //TODO - Revisar e corrigir
+    }
 
     @PutMapping
     public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody AlunoDTO alunoDTO) {
@@ -43,13 +55,11 @@ public class AlunoController {
     }
 
     @DeleteMapping
-    public ResponseEntity<String> deletar(@PathVariable Long id) {
-        if(alunoService.deletar(id)) {
-            return ResponseEntity.ok("Aluno deletado com sucesso!");
+    public ResponseEntity<String> desativar(@PathVariable Long id) {
+        if(alunoService.desativar(id)) {
+            return ResponseEntity.ok("Aluno desativado com sucesso!");
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-
-    // criar salvar e ler ocorrencia | um só de entrada e um só de saida(entrada é automatica) | controller e service pequenos porem uteis | como vou utiliza-lo no aluno ??
 }

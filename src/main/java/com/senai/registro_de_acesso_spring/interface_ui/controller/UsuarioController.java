@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
+    /*
 
     @Autowired
     UsuarioService usuarioService;
@@ -47,4 +48,6 @@ public class UsuarioController {
         }
         return ResponseEntity.notFound().build();
         }
+
+     */
     }

@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
+    /*
     @Autowired
     private UsuarioRepository usuarioRepository;
 
@@ -50,4 +51,5 @@ public class UsuarioService {
             return true;
         }).orElse(false);
     }
+     */
 }

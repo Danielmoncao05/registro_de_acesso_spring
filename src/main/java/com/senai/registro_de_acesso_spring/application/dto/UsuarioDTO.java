@@ -17,6 +17,7 @@ public record UsuarioDTO(
         String email,
         String telefone,
         TipoDeUsuario tipoDeUsuario) {
+    /*
         public static UsuarioDTO toDTO(Usuario u) {
             TipoDeUsuario tipo = switch (u) {
                 case Aluno a -> TipoDeUsuario.ALUNO;
@@ -45,4 +46,5 @@ public record UsuarioDTO(
             usuario.setSenha("");
             return usuario;
         }
+     */
 }
