@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 @Service
 public class ProfessorService {
     @Autowired
-    private ProfessorRepository professorRepository;
+    ProfessorRepository professorRepository;
 
     public void cadastrarProfessor(ProfessorDTO dto) {
         professorRepository.save(dto.fromDTO());
     }
 
-    public List<ProfessorDTO> listarProfessoresAtivos() {
+    public List<ProfessorDTO> listarProfessores() {
         return professorRepository.findByAtivoTrue()
                 .stream().map(ProfessorDTO::toDTO)
                 .collect(Collectors.toList());

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Entity
-
+@Data
 public class UnidadeCurricular { // obs: Strings temporários, execeto nome
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

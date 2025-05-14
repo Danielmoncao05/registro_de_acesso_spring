@@ -8,8 +8,10 @@ import java.util.List;
 
 @Entity // indica que possuirá tabela
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) // define a estratégia - join table(pega e junta), single table uma única tabela, possui tudo que as classes concretas possuem
+//@Column(name = "ativo") como fazer isso
 @DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING) // nome da coluna e o que será escrito na mesma | vê qual o tipo da entidade e grava em uma coluna , type determina o valor "nome/id", utilizando string
 @Data
+
 abstract public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

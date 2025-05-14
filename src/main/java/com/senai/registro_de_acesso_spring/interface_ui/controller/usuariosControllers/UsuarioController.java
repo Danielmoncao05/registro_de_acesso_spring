@@ -1,7 +1,7 @@
 package com.senai.registro_de_acesso_spring.interface_ui.controller.usuariosControllers;
 
-import com.senai.registro_de_acesso_spring.application.services.usuariosServices.UsuarioService;
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.UsuarioDTO;
+import com.senai.registro_de_acesso_spring.application.services.usuariosServices.UsuarioService;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +21,11 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping
+    public ResponseEntity<List<UsuarioDTO>>listarUsuariosAtivos() {
+        return ResponseEntity.ok(usuarioService.listarUsuariosAtivos());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDTO> buscarUsuarioPorId(@PathVariable Long id) {
         return usuarioService.buscarUsuarioPorId(id)
@@ -28,17 +33,13 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping
-    public ResponseEntity<List<UsuarioDTO>>listarUsuariosAtivos() {
-        return ResponseEntity.ok(usuarioService.listarUsuariosAtivos());
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO dto) {
         if(usuarioService.atualizarUsuario(id, dto)) {
             return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
@@ -49,7 +50,7 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
     }
-    /* caso fro retornar string para exibir no postman
+    /* caso for retornar string para exibir no postman
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO dto) {
         if(usuarioService.atualizarUsuario(id, dto)) {

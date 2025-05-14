@@ -2,6 +2,7 @@ package com.senai.registro_de_acesso_spring.domain.entity.turma;
 
 import com.senai.registro_de_acesso_spring.domain.entity.curso.Curso;
 import jakarta.persistence.*;
+import lombok.Data;
 
 
 import java.time.LocalDate;
@@ -9,7 +10,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Entity
-public class Turma { // obs: Strings temporários, execeto nome
+@Data
+public class Turma {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -20,6 +22,7 @@ public class Turma { // obs: Strings temporários, execeto nome
     private LocalTime horarioEntrada;
     private Integer quantidadeSemestres;
     private Integer quantidadeAulasPorDia;
+    private boolean ativo;
 
     @ManyToOne
     private Curso curso;

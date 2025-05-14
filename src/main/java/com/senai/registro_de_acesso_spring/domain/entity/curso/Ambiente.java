@@ -14,4 +14,5 @@ public class Ambiente {
     protected Long id;
 
     private String nome;
+    private boolean ativo;
 }

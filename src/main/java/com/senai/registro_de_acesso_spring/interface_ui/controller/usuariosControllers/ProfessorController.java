@@ -29,7 +29,7 @@ public class ProfessorController {
 
     @GetMapping
     public ResponseEntity<List<ProfessorDTO>> listarProfessoresAtivos() {
-        return ResponseEntity.ok(professorService.listarProfessoresAtivos());
+        return ResponseEntity.ok(professorService.listarProfessores());
     }
 
     @PutMapping("/{id}")

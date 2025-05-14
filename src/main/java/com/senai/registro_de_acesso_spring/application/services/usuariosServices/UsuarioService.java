@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 public class UsuarioService {
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    UsuarioRepository usuarioRepository;
 
     public void cadastrarUsuario(UsuarioDTO dto) {
         usuarioRepository.save(dto.fromDTO());

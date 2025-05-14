@@ -4,11 +4,13 @@ import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.HorarioP
 import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.HorarioSemanal;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import jakarta.persistence.*;
+import lombok.Data;
 
 
 import java.util.List;
 
 @Entity
+@Data
 public class SubTurma {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

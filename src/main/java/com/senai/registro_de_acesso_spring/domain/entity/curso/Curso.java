@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Curso { // obs: Strings temporários, execeto nome
+public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -21,6 +21,7 @@ public class Curso { // obs: Strings temporários, execeto nome
     private Integer carga_horaria;
     private Integer toleranciaMinutos;
     private Integer quantidadeSemestres;
+    private boolean ativo;
 
     @OneToMany(mappedBy = "curso")
     private List<UnidadeCurricular> unidades_curriculares;
