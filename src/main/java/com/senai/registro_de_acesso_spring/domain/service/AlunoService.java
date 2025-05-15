@@ -22,7 +22,8 @@ public class AlunoService {
     }
 
     public List<AlunoDTO> listar() {
-        return alunoRepo.findByStatusTrue()
+        System.out.println("alunos sendo listados");
+        return alunoRepo.findByAtivoTrue()
                 .stream().map(AlunoDTO::toDTO)
                 .collect(Collectors.toList());
     }
@@ -45,13 +46,13 @@ public class AlunoService {
 
     public Optional<AlunoDTO> buscarPorId(Long id) {
         return alunoRepo.findById(id)
-                .filter(Aluno::isStatus)
+                .filter(Aluno::isAtivo)
                 .map(AlunoDTO::toDTO);
     }
 
     public boolean desativar(Long id) {
         return alunoRepo.findById(id).map(aluno -> {
-            aluno.setStatus(false);
+            aluno.setAtivo(false);
             alunoRepo.save(aluno);
             return true;
         }).orElse(false);

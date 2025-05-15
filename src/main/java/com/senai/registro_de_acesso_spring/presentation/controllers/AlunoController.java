@@ -20,18 +20,6 @@ public class AlunoController {
         alunoService.cadastrar(alunoDTO);
         return ResponseEntity.ok("Aluno cadastrado com sucesso!");
     }
-    /*
-    {
-    "nome":"Pedro Quidute",
-    "cpf": "476.082.128-91",
-    "dataNascimento":"2005-09-03",
-    "email":"pquidute@proton.me",
-    "telefone":"(11)93902-7089",
-    "ocorrencias":[],
-    "justificativas":[],
-    "subTurmas":[]
-    }
-     */
 
     @GetMapping
     public ResponseEntity<List<AlunoDTO>> listarAlunos() {
@@ -45,7 +33,7 @@ public class AlunoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody AlunoDTO alunoDTO) {
         if(alunoService.atualizar(id, alunoDTO)) {
             return ResponseEntity.ok("Aluno atualizado com sucesso!");
@@ -54,7 +42,7 @@ public class AlunoController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> desativar(@PathVariable Long id) {
         if(alunoService.desativar(id)) {
             return ResponseEntity.ok("Aluno desativado com sucesso!");

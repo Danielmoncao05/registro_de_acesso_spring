@@ -23,7 +23,7 @@ abstract public class Usuario {
     @Size (max = 50)
     protected String nome;
 
-    protected String cpf; // usado como login
+    protected String cpf;
     protected LocalDate dataNascimento;
     protected String email;
     protected String senha;
@@ -33,5 +33,6 @@ abstract public class Usuario {
     @ElementCollection(fetch = FetchType.EAGER) // faz uma coleçao dos elementos no banco de dados | tipo de busca -> ansiosa ?
     protected List<String> permissoes;
 
-    protected boolean status;
+    @Column(name = "ativo")
+    protected boolean ativo = true;
 }

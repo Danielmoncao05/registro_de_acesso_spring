@@ -4,8 +4,10 @@ import com.senai.registro_de_acesso_spring.domain.entity.turma.SubTurma;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Justificativa;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
+import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeUsuario;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public record AlunoDTO(
@@ -14,6 +16,7 @@ public record AlunoDTO(
         String cpf,
         LocalDate dataNascimento,
         String email,
+        TipoDeUsuario tipo,
         String telefone,
         List<Ocorrencia> ocorrencias,
         List<Justificativa> justificativas,
@@ -21,20 +24,26 @@ public record AlunoDTO(
         ) {
 
         public static AlunoDTO toDTO(Aluno a) {
-                return new AlunoDTO(a.getId(), a.getNome(), a.getCpf(), a.getDataNascimento(), a.getEmail(), a.getTelefone(), a.getOcorrencias(), a.getJustificativas(), a.getSubTurmas());
+                TipoDeUsuario tipo = TipoDeUsuario.ALUNO;
+
+                List<Ocorrencia> ocorrencias = new ArrayList<>();
+                List<Justificativa> justificativas = new ArrayList<>();
+                List<SubTurma> subTurmas = new ArrayList<>();
+
+                return new AlunoDTO(a.getId(), a.getNome(), a.getCpf(), a.getDataNascimento(), a.getEmail(), tipo, a.getTelefone(), ocorrencias, justificativas, subTurmas);
         }
 
         public Aluno fromDTO() {
                 Aluno a = new Aluno();
+
                 a.setId(id);
                 a.setNome(nome);
-                a.setCpf(cpf);
-                a.setDataNascimento(dataNascimento);
                 a.setEmail(email);
-                a.setTelefone(telefone);
-                a.setOcorrencias(ocorrencias);
-                a.setJustificativas(justificativas);
+                a.setDataNascimento(dataNascimento);
+                a.setAtivo(true);
                 a.setSubTurmas(subTurmas);
+                a.setJustificativas(justificativas);
+                a.setOcorrencias(ocorrencias);
                 return a;
         }
 }
