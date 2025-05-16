@@ -15,15 +15,7 @@ public class AmbienteService {
     @Autowired
     private AmbienteRepository ambienteRepository;
 
-    public boolean deletarAmbiente(long id) {
-        if (ambienteRepository.existsById(id)) {
-            ambienteRepository.deleteById(id);
-            return true;
-        }
-        return true;
-    }
-
-    public void criarAmbiente(AmbienteDTO ambienteDTO) {
+    public void adicionarAmbiente(AmbienteDTO ambienteDTO) {
         Ambiente ambiente = new Ambiente();
         ambiente.setNome(ambienteDTO.nome());
         ambienteRepository.save(ambiente);
