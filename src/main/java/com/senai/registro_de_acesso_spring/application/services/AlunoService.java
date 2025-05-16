@@ -20,7 +20,6 @@ public class AlunoService {
     }
 
     public List<AlunoDTO> listar() {
-        System.out.println("alunos sendo listados");
         return alunoRepo.findByAtivoTrue()
                 .stream().map(AlunoDTO::toDTO)
                 .collect(Collectors.toList());
