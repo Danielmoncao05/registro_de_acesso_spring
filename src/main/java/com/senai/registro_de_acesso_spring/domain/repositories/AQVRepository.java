@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface AQVRepository extends JpaRepository<AQV, Long> {
-    List<AQVDto> findByAtivoTrue();
+ //   List<AQVDto> findByAtivoTrue();
 }
