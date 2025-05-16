@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AQVService {
@@ -15,17 +16,18 @@ public class AQVService {
     @Autowired
     public AQVRepository aqvRepo;
 
+
     public void cadastrarAQV (AQVDto aqvDto) {
         aqvRepo.save(aqvDto.fromDTO());
     }
 
     public Optional<AQVDto> buscarPorId (Long id) {
-        return aqvRepo.findById(id).map(AQVDto::toDTO);
+        return aqvRepo.findById(id).filter(AQV::isAtivo).map(AQVDto::toDTO);
     }
 
     public List<AQVDto> listar() {
 
-        return aqvRepo.findAll().stream().map(AQVDto::toDTO).toList();
+       return aqvRepo.findByAtivoTrue().stream().map(AQVDto::toDTO).collect(Collectors.toList());
 
     }
 
@@ -42,11 +44,16 @@ public class AQVService {
     }
 
     public boolean deletarAqv( Long id) {
-        if (aqvRepo.existsById(id)) {
-            aqvRepo.deleteById(id);
+//        if (aqvRepo.existsById(id)) {
+//            aqvRepo.deleteById(id);
+//            return true;
+//        } else  {
+//            return false;
+//        }
+
+        return aqvRepo.findById(id).map(aqv -> {
+            aqv.setAtivo(true);
             return true;
-        } else  {
-            return false;
-        }
+        }).orElse(false);
     }
 }

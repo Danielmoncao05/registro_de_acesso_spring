@@ -1,5 +1,8 @@
 package com.senai.registro_de_acesso_spring.domain.entity.usuarios;
 
+import com.senai.registro_de_acesso_spring.application.dto.UsuarioDTO;
+import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
+import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeUsuario;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +27,9 @@ abstract public class Usuario {
     protected String senha;
     protected String telefone;
     protected String foto;
-    //protected boolean ativo;
+    protected TipoDeUsuario tipoDeUsuario;
+    protected boolean ativo;
+
 
     @ElementCollection(fetch = FetchType.EAGER) // faz uma coleçao dos elementos no banco de dados | tipo de busca -> ansiosa ?
     protected List<String> permissoes;
