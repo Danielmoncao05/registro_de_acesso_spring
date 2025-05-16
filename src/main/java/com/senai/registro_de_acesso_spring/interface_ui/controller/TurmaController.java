@@ -1,4 +1,4 @@
-package com.senai.registro_de_acesso_spring.presentation.controllers;
+package com.senai.registro_de_acesso_spring.interface_ui.controller;
 
 
 import com.senai.registro_de_acesso_spring.application.dto.TurmaDTO;
@@ -18,7 +18,7 @@ public class TurmaController {
     @PostMapping
     public ResponseEntity<String> adicionarTurma(@RequestBody TurmaDTO turmaDTO) {
         turmaService.adicionarTurma(turmaDTO);
-        return ResponseEntity.ok("Turma adicionada com sucesso!");
+        return ResponseEntity.ok("Turma " + turmaDTO.nome() + " adicionada com sucesso!");
     }
 
     @GetMapping

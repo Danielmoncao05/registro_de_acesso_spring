@@ -1,4 +1,4 @@
-package com.senai.registro_de_acesso_spring.domain.service;
+package com.senai.registro_de_acesso_spring.application.services;
 
 import org.springframework.stereotype.Service;
 
