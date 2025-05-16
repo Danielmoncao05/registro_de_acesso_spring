@@ -36,9 +36,10 @@ public class CoordenadorService {
             Coordenador coordenadorAtualizado = dto.fromDTO();
 
             coordenador.setNome(coordenadorAtualizado.getNome());
-            coordenador.setEmail(coordenadorAtualizado.getEmail());
-            coordenador.setDataNascimento(coordenadorAtualizado.getDataNascimento());
             coordenador.setCpf(coordenadorAtualizado.getCpf());
+            coordenador.setDataNascimento(coordenadorAtualizado.getDataNascimento());
+            coordenador.setEmail(coordenadorAtualizado.getEmail());
+            coordenador.setTelefone(coordenadorAtualizado.getTelefone());
 
             coordenadorRepository.save(coordenador);
             return true;

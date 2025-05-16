@@ -15,9 +15,9 @@ public class OcorrenciaController {
     private OcorrenciaService ocorrenciaService;
 
     @PostMapping
-    public ResponseEntity<Void> cadastrarOcorrencia(@RequestBody OcorrenciaDTO dto) {
+    public ResponseEntity<String> cadastrarOcorrencia(@RequestBody OcorrenciaDTO dto) {
         ocorrenciaService.cadastrarOcorrencia(dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Ocorrência cadastrada com sucesso!"); // return ResponseEntity.ok("Ocorrência do(a) Aluno(a) '" + dto.aluno().getNome() +  "' cadastrada com sucesso!");
     }
 
     @GetMapping
@@ -33,17 +33,17 @@ public class OcorrenciaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarOcorrencia(@PathVariable Long id, @RequestBody OcorrenciaDTO dto) {
+    public ResponseEntity<String> atualizarOcorrencia(@PathVariable Long id, @RequestBody OcorrenciaDTO dto) {
         if(ocorrenciaService.atualizarOcorrencia(id, dto)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Ocorrência atualizada com sucesso!"); //return ResponseEntity.ok("Ocorrência do(a) Aluno(a) '" + dto.aluno().getNome() +  "' atualizada com sucesso!");
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> inativarOcorrencia(@PathVariable Long id) {
+    public ResponseEntity<String> inativarOcorrencia(@PathVariable Long id) {
         if(ocorrenciaService.inativarOcorrencia(id)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Ocorrência desativada do sistema!");
         }
         return ResponseEntity.notFound().build();
     }

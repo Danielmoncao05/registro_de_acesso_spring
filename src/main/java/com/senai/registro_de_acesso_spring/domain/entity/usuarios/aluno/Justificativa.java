@@ -21,6 +21,7 @@ public class Justificativa {
     private String anexo;
     private LocalDate dataInicial;
     private Integer quantidadeDias;
+    private boolean ativo;
 
     @Enumerated(EnumType.STRING)
     private StatusDaJustificativa status;

@@ -36,9 +36,10 @@ public class AQVService {
             AQV aqvAtualizado = dto.fromDTO();
 
             aqv.setNome(aqvAtualizado.getNome());
-            aqv.setEmail(aqvAtualizado.getEmail());
-            aqv.setDataNascimento(aqvAtualizado.getDataNascimento());
             aqv.setCpf(aqvAtualizado.getCpf());
+            aqv.setDataNascimento(aqvAtualizado.getDataNascimento());
+            aqv.setEmail(aqvAtualizado.getEmail());
+            aqv.setTelefone(aqvAtualizado.getTelefone());
 
             aqvRepository.save(aqv);
             return true;

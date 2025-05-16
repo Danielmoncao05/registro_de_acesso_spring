@@ -36,9 +36,10 @@ public class ProfessorService {
             Professor professorAtualizado = dto.fromDTO();
 
             professor.setNome(professorAtualizado.getNome());
-            professor.setEmail(professorAtualizado.getEmail());
-            professor.setDataNascimento(professorAtualizado.getDataNascimento());
             professor.setCpf(professorAtualizado.getCpf());
+            professor.setDataNascimento(professorAtualizado.getDataNascimento());
+            professor.setEmail(professorAtualizado.getEmail());
+            professor.setTelefone(professorAtualizado.getTelefone());
 
             professorRepository.save(professor);
             return true;

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-public class Ocorrencia { // obs: Strings temporários
+public class Ocorrencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -27,6 +27,7 @@ public class Ocorrencia { // obs: Strings temporários
 
     private LocalDateTime dataHoraCriacao;
     private LocalDateTime dataHoraConclusao;
+    private boolean ativo;
 
     @ManyToOne
     private Aluno aluno;

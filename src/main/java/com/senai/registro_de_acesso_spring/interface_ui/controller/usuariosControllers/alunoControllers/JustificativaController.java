@@ -15,9 +15,9 @@ public class JustificativaController {
     private JustificativaService justificativaService;
 
     @PostMapping
-    public ResponseEntity<Void> cadastrarJustificativa(@RequestBody JustificativaDTO dto) {
+    public ResponseEntity<String> cadastrarJustificativa(@RequestBody JustificativaDTO dto) {
         justificativaService.cadastrarJustificativa(dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Justificativa do(a) Aluno(a) '" + dto.aluno().getNome() +  "' cadastrada com sucesso!");
     }
 
     @GetMapping
@@ -33,17 +33,17 @@ public class JustificativaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarJustificativa(@PathVariable Long id, @RequestBody JustificativaDTO dto) {
+    public ResponseEntity<String> atualizarJustificativa(@PathVariable Long id, @RequestBody JustificativaDTO dto) {
         if(justificativaService.atualizarJustificativa(id, dto)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Justificativa do(a) Aluno(a) '" + dto.aluno().getNome() +  "' atualizada com sucesso!");
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> inativarJustificativa(@PathVariable Long id) {
+    public ResponseEntity<String> inativarJustificativa(@PathVariable Long id) {
         if(justificativaService.inativarJustificativa(id)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Justificativa desativada do sistema!");
         }
         return ResponseEntity.notFound().build();
     }

@@ -15,9 +15,9 @@ public class CoordenadorController {
     private CoordenadorService coordenadorService;
 
     @PostMapping
-    public ResponseEntity<Void> cadastrarCoordenador(@RequestBody CoordenadorDTO dto) {
+    public ResponseEntity<String> cadastrarCoordenador(@RequestBody CoordenadorDTO dto) {
         coordenadorService.cadastrarCoordenador(dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Coordenador(a) '" + dto.nome() + "' cadastrado(a) com sucesso!");
     }
 
     @GetMapping
@@ -33,17 +33,17 @@ public class CoordenadorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarCoordenador(@PathVariable Long id, @RequestBody CoordenadorDTO dto) {
+    public ResponseEntity<String> atualizarCoordenador(@PathVariable Long id, @RequestBody CoordenadorDTO dto) {
         if(coordenadorService.atualizarCoordenador(id, dto)) {
-            return  ResponseEntity.ok().build();
+            return  ResponseEntity.ok("Coordenador(a) '" +  dto.nome() + "' atualizado(a) com sucesso!");
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> inativarCoordenador(@PathVariable Long id) {
+    public ResponseEntity<String> inativarCoordenador(@PathVariable Long id) {
         if(coordenadorService.inativarCoordenador(id)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Coordenador(a) desativado(a) do sistema!");
         }
         return ResponseEntity.notFound().build();
     }

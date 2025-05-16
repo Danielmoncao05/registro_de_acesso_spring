@@ -15,6 +15,7 @@ public record UsuarioDTO(
         String cpf,
         LocalDate dataNascimento,
         String email,
+        String telefone,
         TipoDeUsuario tipoDeUsuario)
 {
     public static  UsuarioDTO toDTO(Usuario u) {
@@ -25,7 +26,7 @@ public record UsuarioDTO(
             case AQV aqv -> TipoDeUsuario.AQV;
             default -> throw new IllegalArgumentException("Tipo de usuário desconhecido");
         };
-        return new UsuarioDTO(u.getId(), u.getNome(), u.getCpf(), u.getDataNascimento(),u.getEmail(), tipo);
+        return new UsuarioDTO(u.getId(), u.getNome(), u.getCpf(), u.getDataNascimento(),u.getEmail(), u.getTelefone(), tipo);
     }
 
     public Usuario fromDTO() {
@@ -35,14 +36,17 @@ public record UsuarioDTO(
             case COORDENADOR -> new Coordenador();
             case AQV -> new AQV();
         };
+
         usuario.setId(id);
         usuario.setNome(nome);
         usuario.setCpf(cpf);
-        usuario.setEmail(email);
         usuario.setDataNascimento(dataNascimento);
+        usuario.setEmail(email);
+        usuario.setTelefone(telefone);
         usuario.setAtivo(true);
         usuario.setIdAcesso("");
         usuario.setSenha("");
+        usuario.setFoto("");
 
         return usuario;
     }

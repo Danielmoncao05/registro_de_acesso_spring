@@ -36,9 +36,15 @@ public class AlunoService {
             Aluno alunoAtualizado = dto.fromDTO();
 
             aluno.setNome(alunoAtualizado.getNome());
-            aluno.setEmail(alunoAtualizado.getEmail());
-            aluno.setDataNascimento(alunoAtualizado.getDataNascimento());
             aluno.setCpf(alunoAtualizado.getCpf());
+            aluno.setDataNascimento(alunoAtualizado.getDataNascimento());
+            aluno.setEmail(alunoAtualizado.getEmail());
+            aluno.setTelefone(alunoAtualizado.getTelefone());
+            /*
+            aluno.setIdAcesso(alunoAtualizado.getIdAcesso());
+            aluno.setSenha(alunoAtualizado.getSenha());
+            aluno.setFoto(alunoAtualizado.getFoto());
+            */
             aluno.setJustificativas(alunoAtualizado.getJustificativas());
             aluno.setOcorrencias(alunoAtualizado.getOcorrencias());
             aluno.setSubTurmas(alunoAtualizado.getSubTurmas());

@@ -15,9 +15,9 @@ public class ProfessorController {
     ProfessorService professorService;
 
     @PostMapping
-    public ResponseEntity<Void> cadastrarProfessor(@RequestBody ProfessorDTO dto) {
+    public ResponseEntity<String> cadastrarProfessor(@RequestBody ProfessorDTO dto) {
         professorService.cadastrarProfessor(dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Professor(a) '" + dto.nome() + "' cadastrado(a) com sucesso");
     }
 
     @GetMapping("/{id}")
@@ -33,17 +33,17 @@ public class ProfessorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarProfessor(@PathVariable Long id, @RequestBody ProfessorDTO dto) {
+    public ResponseEntity<String> atualizarProfessor(@PathVariable Long id, @RequestBody ProfessorDTO dto) {
         if(professorService.atualizarProfessor(id, dto)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Professor(a) '" + dto.nome() + "' atualizado(a) com sucesso!");
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> inativarProfessor(@PathVariable Long id) {
+    public ResponseEntity<String> inativarProfessor(@PathVariable Long id) {
         if(professorService.inativarProfessor(id)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Professor(a) desativado(a) do sistema.");
         }
         return ResponseEntity.notFound().build();
     }

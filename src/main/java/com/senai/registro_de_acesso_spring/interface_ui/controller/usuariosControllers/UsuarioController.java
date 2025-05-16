@@ -16,9 +16,9 @@ public class UsuarioController {
     UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<Void> cadastrarUsuario(@RequestBody UsuarioDTO dto) {
+    public ResponseEntity<String> cadastrarUsuario(@RequestBody UsuarioDTO dto) {
         usuarioService.cadastrarUsuario(dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Usuário cadastrado com sucesso!");
     }
 
     @GetMapping
@@ -34,39 +34,21 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO dto) {
-        if(usuarioService.atualizarUsuario(id, dto)) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> inativarUsuario(@PathVariable Long id) {
-        if(usuarioService.inativarUsuario(id)) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    /* caso for retornar string para exibir no postman
-    @PutMapping("/{id}")
     public ResponseEntity<String> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO dto) {
         if(usuarioService.atualizarUsuario(id, dto)) {
-            return ResponseEntity.ok("Usuário atualizado!");
+            return ResponseEntity.ok("Usuário atualizado com sucesso!");
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> inativarUsuario(@PathVariable Long id) {
         if(usuarioService.inativarUsuario(id)) {
-            return ResponseEntity.ok("Usuário inativo!");
+            return ResponseEntity.ok("Usuário desativado do sistema!");
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-     */
 
 }

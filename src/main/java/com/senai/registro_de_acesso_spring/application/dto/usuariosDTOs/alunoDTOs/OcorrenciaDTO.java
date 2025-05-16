@@ -36,6 +36,7 @@ public record OcorrenciaDTO(
         ocorrencia.setAluno(aluno);
         ocorrencia.setProfessorResponsavel(professor);
         ocorrencia.setUnidadeCurricular(unidadeCurricular);
+        ocorrencia.setAtivo(true);
 
         return ocorrencia;
     }

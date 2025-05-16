@@ -15,9 +15,9 @@ public class AlunoController {
     AlunoService alunoService;
 
     @PostMapping
-    public ResponseEntity<Void> cadastrarAluno(@RequestBody AlunoDTO dto) {
+    public ResponseEntity<String> cadastrarAluno(@RequestBody AlunoDTO dto) {
         alunoService.cadastrarAluno(dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Aluno(a) '" + dto.nome() + "' cadastrado(a) com sucesso!");
     }
 
     @GetMapping
@@ -33,17 +33,17 @@ public class AlunoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarAluno(@PathVariable Long id, @RequestBody AlunoDTO dto) {
+    public ResponseEntity<String> atualizarAluno(@PathVariable Long id, @RequestBody AlunoDTO dto) {
         if (alunoService.atualizarAluno(id, dto)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Aluno(a) '" + dto.nome() + "' atualizado(a) com sucesso!");
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> inativarAluno(@PathVariable Long id) {
+    public ResponseEntity<String> inativarAluno(@PathVariable Long id) {
         if (alunoService.inativarAluno(id)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Aluno(a) desativado(a) do sistema.");
         }
         return ResponseEntity.notFound().build();
     }

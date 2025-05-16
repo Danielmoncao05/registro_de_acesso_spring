@@ -15,9 +15,9 @@ public class CursoController {
     CursoService cursoService;
 
     @PostMapping
-    public ResponseEntity<Void> cadastrarCurso(@RequestBody CursoDTO dto) {
+    public ResponseEntity<String> cadastrarCurso(@RequestBody CursoDTO dto) {
         cursoService.cadastrarCurso(dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Curso '" + dto.titulo() + "' cadastrado com sucesso!");
     }
 
     @GetMapping
@@ -33,18 +33,18 @@ public class CursoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarCurso(@PathVariable Long id, @RequestBody CursoDTO dto) {
+    public ResponseEntity<String> atualizarCurso(@PathVariable Long id, @RequestBody CursoDTO dto) {
         if(cursoService.atualizarCurso(id, dto)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Curso '" + dto.titulo() + "' atualizado com sucesso!");
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> inativarCurso(@PathVariable Long id) {
+    public ResponseEntity<String> inativarCurso(@PathVariable Long id) {
         if(cursoService.inativarCurso(id)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Curso desativado do sistema.");
         } else {
             return ResponseEntity.notFound().build();
         }

@@ -16,9 +16,9 @@ public class AmbienteController {
     AmbienteService ambienteService;
 
     @PostMapping
-    public ResponseEntity<Void> cadastrarAmbiente(@RequestBody AmbienteDTO dto) {
+    public ResponseEntity<String> cadastrarAmbiente(@RequestBody AmbienteDTO dto) {
         ambienteService.cadastrarAmbiente(dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Ambiente '" + dto.nome() + "' cadastrado com sucesso!");
     }
 
     @GetMapping
@@ -34,18 +34,18 @@ public class AmbienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Ambiente> atualizarAmbiente(@PathVariable Long id, @RequestBody AmbienteDTO dto) {
+    public ResponseEntity<String> atualizarAmbiente(@PathVariable Long id, @RequestBody AmbienteDTO dto) {
         if(ambienteService.atualizarAmbiente(id, dto)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Ambiente '" + dto.nome() + "' atualizado com sucesso!");
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> inativarAmbiente(@PathVariable Long id) {
+    public ResponseEntity<String> inativarAmbiente(@PathVariable Long id) {
         if(ambienteService.inativarAmbiente(id)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Ambiente desativado do sistema.");
         } else {
             return ResponseEntity.notFound().build();
         }
