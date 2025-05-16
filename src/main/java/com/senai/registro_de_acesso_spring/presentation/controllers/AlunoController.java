@@ -18,7 +18,7 @@ public class AlunoController {
     @PostMapping
     public ResponseEntity<String> cadastrar(@RequestBody AlunoDTO alunoDTO) {
         alunoService.cadastrar(alunoDTO);
-        return ResponseEntity.ok("Aluno cadastrado com sucesso!");
+        return ResponseEntity.ok(alunoDTO.nome() + " cadastrado com sucesso!");
     }
 
     @GetMapping
@@ -36,7 +36,7 @@ public class AlunoController {
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody AlunoDTO alunoDTO) {
         if(alunoService.atualizar(id, alunoDTO)) {
-            return ResponseEntity.ok("Aluno atualizado com sucesso!");
+            return ResponseEntity.ok(alunoDTO.nome() + " atualizado com sucesso!");
         } else {
             return ResponseEntity.notFound().build();
         }
