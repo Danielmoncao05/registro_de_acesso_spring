@@ -1,8 +1,6 @@
-package com.senai.registro_de_acesso_spring.domain.service;
+package com.senai.registro_de_acesso_spring.application.services;
 
 import com.senai.registro_de_acesso_spring.application.dto.AlunoDTO;
-import com.senai.registro_de_acesso_spring.application.dto.UsuarioDTO;
-import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Usuario;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.repositories.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

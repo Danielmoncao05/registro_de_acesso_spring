@@ -34,6 +34,8 @@ public record AlunoDTO(
 
                 a.setId(id);
                 a.setNome(nome);
+                a.setCpf(cpf);
+                a.setTelefone(telefone);
                 a.setEmail(email);
                 a.setDataNascimento(dataNascimento);
                 a.setAtivo(true);
