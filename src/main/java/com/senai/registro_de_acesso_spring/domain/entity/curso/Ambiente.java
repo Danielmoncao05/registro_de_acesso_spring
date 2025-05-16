@@ -17,4 +17,5 @@ public class Ambiente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     private String nome;
+
 }
