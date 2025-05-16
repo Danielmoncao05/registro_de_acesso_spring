@@ -1,5 +1,6 @@
 package com.senai.registro_de_acesso_spring.application.dto;
 
+import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Justificativa;
 import com.senai.registro_de_acesso_spring.domain.enuns.StatusDaJustificativa;
 import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeJustifcativa;
@@ -13,7 +14,8 @@ public record JustificativaDTO(
         String anexo,
         LocalDate dataInicial,
         Integer quantidadeDias,
-        StatusDaJustificativa status) {
+        StatusDaJustificativa status,
+        Aluno aluno){
 
     public static JustificativaDTO toDTO(Justificativa j) {
 
@@ -24,7 +26,8 @@ public record JustificativaDTO(
                 j.getAnexo(),
                 j.getDataInicial(),
                 j.getQuantidadeDias(),
-                j.getStatus()
+                j.getStatus(),
+                j.getAluno()
         );
     }
 
@@ -38,6 +41,7 @@ public record JustificativaDTO(
         justificativa.setDataInicial(dataInicial);
         justificativa.setQuantidadeDias(quantidadeDias);
         justificativa.setStatus(status);
+        justificativa.setAluno(aluno);
         return justificativa;
     }
 }
