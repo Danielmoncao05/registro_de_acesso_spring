@@ -17,6 +17,7 @@ public record AlunoDTO(
         LocalDate dataNascimento,
         String email,
         String telefone,
+        String idAcesso,
         List<Ocorrencia> ocorrencias,
         List<Justificativa> justificativas,
         List<SubTurma> subTurmas
@@ -26,7 +27,7 @@ public record AlunoDTO(
                 List<Ocorrencia> ocorrencias = new ArrayList<>();
                 List<Justificativa> justificativas = new ArrayList<>();
                 List<SubTurma> subTurmas = new ArrayList<>();
-                return new AlunoDTO(a.getId(), a.getNome(), a.getCpf(), a.getDataNascimento(), a.getEmail(),a.getTelefone(), ocorrencias, justificativas, subTurmas);
+                return new AlunoDTO(a.getId(), a.getNome(), a.getCpf(), a.getDataNascimento(), a.getEmail(),a.getTelefone(), a.getIdAcesso(), ocorrencias, justificativas, subTurmas);
         }
 
         public Aluno fromDTO() {
@@ -39,6 +40,7 @@ public record AlunoDTO(
                 a.setEmail(email);
                 a.setDataNascimento(dataNascimento);
                 a.setAtivo(true);
+                a.setIdAcesso(idAcesso);
                 a.setSubTurmas(subTurmas);
                 a.setJustificativas(justificativas);
                 a.setOcorrencias(ocorrencias);
