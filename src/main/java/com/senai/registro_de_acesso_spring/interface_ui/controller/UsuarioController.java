@@ -2,9 +2,13 @@ package com.senai.registro_de_acesso_spring.interface_ui.controller;
 
 import com.senai.registro_de_acesso_spring.application.services.UsuarioService;
 import com.senai.registro_de_acesso_spring.application.dto.UsuarioDTO;
+import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuario")
@@ -12,7 +16,8 @@ public class UsuarioController {
         // mover por service
     @Autowired
     UsuarioService usuarioService;
-/*
+
+    /*
     @GetMapping
     public List<Usuario> getUsers() {
         return userRepository.findAll();
@@ -24,7 +29,7 @@ public class UsuarioController {
         return user.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-*/
+
     @PostMapping
     public ResponseEntity<Void> cadastrarUsuario(@RequestBody UsuarioDTO dto) {
         usuarioService.cadastrarUsuario(dto);

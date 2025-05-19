@@ -36,4 +36,8 @@ public class UsuarioService {
 
         usuarioRepository.save(usuario);
     }
+
+    public void listarUsuarios(){
+        usuarioRepository.findAll().stream().map(us -> new UsuarioDTO());
+    }
 }
