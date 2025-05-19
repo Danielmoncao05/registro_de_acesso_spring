@@ -1,4 +1,4 @@
-package com.senai.registro_de_acesso_spring.interface_ui.controller;
+package com.senai.registro_de_acesso_spring.user_interface.controller;
 
 import com.senai.registro_de_acesso_spring.application.dto.AlunoDTO;
 import com.senai.registro_de_acesso_spring.application.services.AlunoService;

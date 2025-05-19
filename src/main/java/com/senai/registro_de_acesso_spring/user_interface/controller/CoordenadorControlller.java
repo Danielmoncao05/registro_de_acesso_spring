@@ -1,4 +1,4 @@
-package com.senai.registro_de_acesso_spring.interface_ui.controller;
+package com.senai.registro_de_acesso_spring.user_interface.controller;
 
 import com.senai.registro_de_acesso_spring.application.dto.CoordenadorDTO;
 import com.senai.registro_de_acesso_spring.application.services.CoordenadorService;
