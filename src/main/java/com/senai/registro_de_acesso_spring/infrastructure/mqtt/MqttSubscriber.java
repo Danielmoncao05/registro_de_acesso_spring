@@ -1,16 +1,20 @@
 package com.senai.registro_de_acesso_spring.infrastructure.mqtt;
 
 import com.senai.registro_de_acesso_spring.user_interface.controller.OcorrenciaController;
+import jakarta.annotation.PostConstruct;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MqttSubscriber {
     private static final String BROKER = "tcp://localhost:1883";
     private static final String CLIENT_ID = "ServidorJava";
     private static final String TOPICO = "catraca/rfid";
     private static final OcorrenciaController ocorrenciaController = new OcorrenciaController();
 
-    public static void iniciarMqtt() {
+    @PostConstruct
+    public void iniciarMqtt() {
         try {
             MqttClient client = new MqttClient(BROKER, CLIENT_ID);
             client.connect();

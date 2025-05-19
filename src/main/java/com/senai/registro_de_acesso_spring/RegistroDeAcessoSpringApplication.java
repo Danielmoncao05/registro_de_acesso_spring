@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class  RegistroDeAcessoSpringApplication {
 
 	public static void main(String[] args) {
-		MqttSubscriber.iniciarMqtt();
 		SpringApplication.run(RegistroDeAcessoSpringApplication.class, args);
 	}
 

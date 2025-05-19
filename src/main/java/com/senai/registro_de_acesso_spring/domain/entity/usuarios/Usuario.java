@@ -17,7 +17,7 @@ abstract public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    protected String idAcesso;  // TODO: annotation que gera o ID de Acesso automaticamente
+    protected String idAcesso;
 
     @NotNull
     @Size (max = 50)
