@@ -12,11 +12,12 @@ public record ProfessorDTO(
         LocalDate dataNascimento,
         String email,
         String telefone,
-        TipoDeUsuario tipoDeUsuario
+        String idAcesso,
+        TipoDeUsuario tipo
 ) {
     public static ProfessorDTO toDTO(Professor p) {
         TipoDeUsuario tipo = TipoDeUsuario.PROFESSOR;
-        return new ProfessorDTO(p.getId(), p.getNome(), p.getCpf(), p.getDataNascimento(), p.getEmail(), p.getTelefone(), tipo);
+        return new ProfessorDTO(p.getId(), p.getNome(), p.getCpf(), p.getDataNascimento(), p.getEmail(), p.getTelefone(), p.getIdAcesso(), tipo);
     }
 
     public Professor fromDTO() {
@@ -28,6 +29,7 @@ public record ProfessorDTO(
         professor.setDataNascimento(dataNascimento);
         professor.setEmail(email);
         professor.setTelefone(telefone);
+        professor.setIdAcesso(idAcesso);
         professor.setAtivo(true);
         professor.setIdAcesso("");
         professor.setSenha("");

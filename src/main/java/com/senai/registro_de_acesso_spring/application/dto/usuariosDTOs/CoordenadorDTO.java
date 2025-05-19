@@ -12,11 +12,12 @@ public record CoordenadorDTO(
         LocalDate dataNascimento,
         String email,
         String telefone,
-        TipoDeUsuario tipoDeUsuario
+        String idAcesso,
+        TipoDeUsuario tipo
 ) {
     public static CoordenadorDTO toDTO(Coordenador c) {
         TipoDeUsuario tipo = TipoDeUsuario.COORDENADOR;
-        return new CoordenadorDTO(c.getId(), c.getNome(), c.getCpf(), c.getDataNascimento(), c.getEmail(), c.getTelefone(), tipo);
+        return new CoordenadorDTO(c.getId(), c.getNome(), c.getCpf(), c.getDataNascimento(), c.getEmail(), c.getTelefone(), c.getIdAcesso(), tipo);
     }
 
     public Coordenador fromDTO() {
@@ -28,8 +29,8 @@ public record CoordenadorDTO(
         coordenador.setDataNascimento(dataNascimento);
         coordenador.setEmail(email);
         coordenador.setTelefone(telefone);
+        coordenador.setIdAcesso(idAcesso);
         coordenador.setAtivo(true);
-        coordenador.setIdAcesso("");
         coordenador.setSenha("");
         coordenador.setFoto("");
 

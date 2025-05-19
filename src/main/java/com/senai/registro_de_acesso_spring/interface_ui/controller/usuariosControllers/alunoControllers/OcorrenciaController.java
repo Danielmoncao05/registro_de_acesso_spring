@@ -48,4 +48,10 @@ public class OcorrenciaController {
         return ResponseEntity.notFound().build();
     }
 
+    // Processar Mqtt
+    public void processarMQTT(String idDeAcesso) {
+        System.out.println(idDeAcesso);
+        ocorrenciaService.criarOcorrenicaDeAtraso(idDeAcesso);
+    }
+
 }

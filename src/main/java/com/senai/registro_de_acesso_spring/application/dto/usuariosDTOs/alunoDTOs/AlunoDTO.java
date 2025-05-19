@@ -15,6 +15,7 @@ public record AlunoDTO(
         String nome,
         String cpf,
         LocalDate dataNascimento,
+        String idAcesso,
         String email,
         String telefone,
         TipoDeUsuario tipo,
@@ -24,7 +25,7 @@ public record AlunoDTO(
 ) {
     public static AlunoDTO toDTO(Aluno a) {
         TipoDeUsuario tipo = TipoDeUsuario.ALUNO;
-        return new AlunoDTO(a.getId(), a.getNome(), a.getCpf(), a.getDataNascimento(), a.getEmail(), a.getTelefone(), tipo, a.getOcorrencias(), a.getJustificativas(), a.getSubTurmas());
+        return new AlunoDTO(a.getId(), a.getNome(), a.getCpf(), a.getDataNascimento(), a.getIdAcesso(), a.getEmail(), a.getTelefone(), tipo, a.getOcorrencias(), a.getJustificativas(), a.getSubTurmas());
     }
 
     public Aluno fromDTO() {
@@ -36,8 +37,8 @@ public record AlunoDTO(
         aluno.setEmail(email);
         aluno.setDataNascimento(dataNascimento);
         aluno.setTelefone(telefone);
+        aluno.setIdAcesso(idAcesso);
         aluno.setAtivo(true);
-        aluno.setIdAcesso("");
         aluno.setSenha("");
         aluno.setSubTurmas(subTurmas);
         aluno.setJustificativas(justificativas);
