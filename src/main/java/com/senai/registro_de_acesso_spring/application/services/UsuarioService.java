@@ -11,6 +11,8 @@ import com.senai.registro_de_acesso_spring.domain.repositories.UsuarioRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UsuarioService {
     @Autowired
@@ -37,7 +39,14 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
 
-    public void listarUsuarios(){
-        usuarioRepository.findAll().stream().map(us -> new UsuarioDTO());
+    public List<UsuarioDTO> listarUsuarios(){
+        return usuarioRepository.findAll().stream().map(
+                us -> new UsuarioDTO(us.getId(),
+                        us.getNome(),
+                        us.getCpf(),
+                        us.getDataNascimento(),
+                        us.getEmail(),us.getTipoDeUsuario())
+
+        ).toList();
     }
 }

@@ -17,6 +17,16 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
+    @PostMapping
+    public ResponseEntity<String> salvarUsuario(@RequestBody UsuarioDTO usuarioDTO){
+        usuarioService.cadastrarUsuario(usuarioDTO);
+        return ResponseEntity.ok("Usuario cadastrado com sucesso! " + " -> " + usuarioDTO.nome());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UsuarioDTO>> listarUsuarios(){
+        return ResponseEntity.ok(usuarioService.listarUsuarios());
+    }
     /*
     @GetMapping
     public List<Usuario> getUsers() {

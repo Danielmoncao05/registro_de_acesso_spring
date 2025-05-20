@@ -1,5 +1,6 @@
 package com.senai.registro_de_acesso_spring.domain.entity.usuarios;
 
+import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeUsuario;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,12 +11,19 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) // define a estratégia - join table(pega e junta), single table uma única tabela, possui tudo que as classes concretas possuem
 @DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING) // nome da coluna e o que será escrito na mesma | vê qual o tipo da entidade e grava em uma coluna , type determina o valor "nome/id", utilizando string
 @Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 abstract public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     /*
     fazer depois -> not null | unique | qtd carateres */
+
+    @Enumerated(EnumType.STRING)
+    private TipoDeUsuario tipoDeUsuario;
     protected String nome;
     protected String cpf; // usado como login
     protected LocalDate dataNascimento;
