@@ -15,7 +15,7 @@ public record OcorrenciaDTO(
         String descricao,
         StatusDaOcorrencia status,
         LocalDateTime dataHoraCriacao,
-        LocalDateTime dataHorasConclusao,
+        LocalDateTime dataHoraConclusao,
         Aluno aluno,
         Professor professor,
         UnidadeCurricular unidadeCurricular
@@ -32,7 +32,7 @@ public record OcorrenciaDTO(
         ocorrencia.setDescricao(descricao);
         ocorrencia.setStatus(status);
         ocorrencia.setDataHoraCriacao(dataHoraCriacao);
-        ocorrencia.setDataHoraConclusao(dataHorasConclusao);
+        ocorrencia.setDataHoraConclusao(dataHoraConclusao);
         ocorrencia.setAluno(aluno);
         ocorrencia.setProfessorResponsavel(professor);
         ocorrencia.setUnidadeCurricular(unidadeCurricular);

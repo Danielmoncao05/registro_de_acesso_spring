@@ -69,7 +69,9 @@ public class OcorrenciaService {
     public void criarOcorrenicaDeAtraso(String idAcesso) {
         usuarioRepository.findByIdAcesso(idAcesso).map(usuario -> {
             if(usuario instanceof Aluno) {
-                System.out.println("aluno");
+                System.out.println("È Aluno");
+            } else {
+                System.out.println("Não é Aluno");
             }
             return null;
         });

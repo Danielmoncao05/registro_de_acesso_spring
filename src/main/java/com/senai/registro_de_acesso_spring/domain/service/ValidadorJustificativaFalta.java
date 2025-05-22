@@ -3,28 +3,19 @@ package com.senai.registro_de_acesso_spring.domain.service;
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.AlunoDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.repositories.usuariosRepositories.UsuarioRepository;
-import com.senai.registro_de_acesso_spring.domain.repositories.usuariosRepositories.alunoRepositories.OcorrenciaRepository;
+import com.senai.registro_de_acesso_spring.domain.repositories.usuariosRepositories.alunoRepositories.JustificativaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class ValidadorOcorrenciaEntrada {
+public class ValidadorJustificativaFalta {
     @Autowired
-    private OcorrenciaRepository ocorrenciaRepository;
+    private JustificativaRepository justificativaRepository;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // Criar Ocorrencia de Atraso com MQTT
-    public void criarOcorrenicaDeAtraso(AlunoDTO dto) {
-        if(verificarAluno(dto.idAcesso())) {
-            try {
 
-
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
+    public void criarJustificativaFalta(AlunoDTO dto) {
+        if(verificarAluno(dto.idAcesso())) {}
     }
 
     private boolean verificarAluno(String idAcesso) {
@@ -39,5 +30,4 @@ public class ValidadorOcorrenciaEntrada {
         });
         return false;
     }
-
 }

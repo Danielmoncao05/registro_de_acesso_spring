@@ -21,8 +21,7 @@ public record TurmaDTO(
         List<SubTurma> subTurma
 ) {
     public static TurmaDTO toDTO(Turma t) {
-        List<SubTurma> subTurma = new ArrayList<>();
-        return new TurmaDTO(t.getId(), t.getNome(), t.getPeriodo(), t.getDataInicial(), t.getHorarioEntrada(), t.getQuantidadeSemestres(), t.getQuantidadeAulasPorDia(), t.getCurso(), subTurma);
+        return new TurmaDTO(t.getId(), t.getNome(), t.getPeriodo(), t.getDataInicial(), t.getHorarioEntrada(), t.getQuantidadeSemestres(), t.getQuantidadeAulasPorDia(), t.getCurso(), t.getSubTurma());
     }
 
     public Turma fromDTO() {
@@ -37,6 +36,7 @@ public record TurmaDTO(
         turma.setQuantidadeAulasPorDia(quantidadeAulasPorDia);
         turma.setCurso(curso);
         turma.setSubTurma(subTurma);
+        turma.setAtivo(true);
 
         return turma;
     }
