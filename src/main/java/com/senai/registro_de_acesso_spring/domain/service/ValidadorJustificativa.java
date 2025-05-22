@@ -21,7 +21,7 @@ public class ValidadorJustificativa {
     }
 
     public void criarJustificativaAtraso(AlunoDTO dto) {
-        dto.
+
     }
 
     public void criarJustificativaFalta(AlunoDTO dto) {}
