@@ -1,5 +1,6 @@
 package com.senai.registro_de_acesso_spring.application.services;
 
+import com.senai.registro_de_acesso_spring.application.dto.OcorrenciaSaidaDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Usuario;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
@@ -25,6 +26,9 @@ public class OcorrenciaService {
         }
     }
 
-    public void autorizaSaida(){}
+
+    public void autorizarSaida(OcorrenciaSaidaDTO ocorrenciaSaidaDTO){
+
+    }
 
 }
