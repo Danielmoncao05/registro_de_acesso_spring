@@ -14,6 +14,7 @@ public class OcorrenciaController {
 
     public void processarMqtt(String mT){
         ocorrenciaService.criarOcorrenciaDeAtraso(mT);
+        ocorrenciaService.criarOcorrenciaDeSaida(mT);
     }
 
 
