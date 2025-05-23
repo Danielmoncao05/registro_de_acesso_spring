@@ -1,7 +1,7 @@
-package com.senai.registro_de_acesso_spring.user_interface.controller;
+package com.senai.registro_de_acesso_spring.ui.controller;
 
 import com.senai.registro_de_acesso_spring.application.dto.CoordenadorDTO;
-import com.senai.registro_de_acesso_spring.application.services.CoordenadorService;
+import com.senai.registro_de_acesso_spring.application.service.CoordenadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

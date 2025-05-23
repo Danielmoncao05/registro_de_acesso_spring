@@ -1,10 +1,11 @@
-package com.senai.registro_de_acesso_spring.application.services;
+package com.senai.registro_de_acesso_spring.application.service;
 
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Usuario;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.repositories.OcorrenciaRepository;
 import com.senai.registro_de_acesso_spring.domain.repositories.UsuarioRepository;
 import com.senai.registro_de_acesso_spring.domain.service.ValidadorOcorrenciaEntrada;
+import com.senai.registro_de_acesso_spring.domain.service.ValidadorOcorrenciaSaida;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,15 @@ public class OcorrenciaService {
     private UsuarioRepository usuarioRepo;
     @Autowired
     private ValidadorOcorrenciaEntrada validadorOcorrencia;
+    @Autowired
+    private ValidadorOcorrenciaSaida validadorOcorrenciaSaida;
 
-    public void criarOcorrenciaAtraso(String idAcesso){
+    public void identificarUsuario(String idAcesso){
         Optional<Usuario> usuarioOpt = usuarioRepo.findByIdAcesso(idAcesso);
         if (usuarioOpt.isPresent()){
             if (usuarioOpt.get() instanceof Aluno aluno){
                 System.out.println("Aluno identificado portador do ID de acesso '" + idAcesso + "'!");
-            }
-        }
+            }else System.out.println(usuarioOpt.getClass().getSimpleName() + " identificado portador do ID de acesso '" + idAcesso + "'!");
+        }else System.out.println("Usuário portador do ID de acesso '" + idAcesso + "' não encontrado!");
     }
 }

@@ -1,14 +1,6 @@
-package com.senai.registro_de_acesso_spring.application.services;
+package com.senai.registro_de_acesso_spring.application.service;
 
-import com.senai.registro_de_acesso_spring.application.dto.UsuarioDTO;
-import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Usuario;
-import com.senai.registro_de_acesso_spring.domain.repositories.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {

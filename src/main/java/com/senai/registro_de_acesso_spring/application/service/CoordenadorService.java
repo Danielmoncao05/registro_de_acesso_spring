@@ -1,9 +1,7 @@
-package com.senai.registro_de_acesso_spring.application.services;
+package com.senai.registro_de_acesso_spring.application.service;
 
-import com.senai.registro_de_acesso_spring.application.dto.AlunoDTO;
 import com.senai.registro_de_acesso_spring.application.dto.CoordenadorDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Coordenador;
-import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.repositories.CoordenadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +30,7 @@ public class CoordenadorService {
             Coordenador coordenadorAtualizado = coordenadorDTO.fromDTO();
             coordenador.setNome(coordenadorAtualizado.getNome());
             coordenador.setEmail(coordenadorAtualizado.getEmail());
+            coordenador.setSenha(coordenadorAtualizado.getSenha());
             coordenador.setDataNascimento(coordenadorAtualizado.getDataNascimento());
             coordenador.setCpf(coordenadorAtualizado.getCpf());
             coordenador.setTelefone(coordenadorAtualizado.getTelefone());

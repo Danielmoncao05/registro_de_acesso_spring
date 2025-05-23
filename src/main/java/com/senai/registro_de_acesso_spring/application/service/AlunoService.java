@@ -1,4 +1,4 @@
-package com.senai.registro_de_acesso_spring.application.services;
+package com.senai.registro_de_acesso_spring.application.service;
 
 import com.senai.registro_de_acesso_spring.application.dto.AlunoDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
@@ -30,6 +30,7 @@ public class AlunoService {
             Aluno alunoAtualizado = alunoDTO.fromDTO();
             aluno.setNome(alunoAtualizado.getNome());
             aluno.setEmail(alunoAtualizado.getEmail());
+            aluno.setSenha(alunoAtualizado.getSenha());
             aluno.setDataNascimento(alunoAtualizado.getDataNascimento());
             aluno.setCpf(alunoAtualizado.getCpf());
             aluno.setSubTurmas(alunoAtualizado.getSubTurmas());
