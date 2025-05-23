@@ -27,6 +27,7 @@ public class Ocorrencia { // obs: Strings temporários
 
     private LocalDateTime dataHoraCriacao;
     private LocalDateTime dataHoraConclusao;
+    private boolean ativo;
 
     @ManyToOne
     private Aluno aluno;

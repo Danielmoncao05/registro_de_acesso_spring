@@ -1,7 +1,6 @@
 package com.senai.registro_de_acesso_spring.interface_ui.controller;
 
-import com.senai.registro_de_acesso_spring.application.services.UsuarioService;
-import com.senai.registro_de_acesso_spring.application.dto.UsuarioDTO;
+import com.senai.registro_de_acesso_spring.application.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

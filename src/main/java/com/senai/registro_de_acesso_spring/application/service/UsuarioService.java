@@ -1,6 +1,5 @@
-package com.senai.registro_de_acesso_spring.application.services;
+package com.senai.registro_de_acesso_spring.application.service;
 
-import com.senai.registro_de_acesso_spring.application.dto.UsuarioDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.AQV;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Coordenador;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Professor;

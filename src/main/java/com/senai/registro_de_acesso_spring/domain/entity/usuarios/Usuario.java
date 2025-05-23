@@ -24,6 +24,7 @@ abstract public class Usuario {
     protected String senha;
     protected String telefone;
     protected String foto;
+    protected boolean ativo;
 
     @ElementCollection(fetch = FetchType.EAGER) // faz uma coleçao dos elementos no banco de dados | tipo de busca -> ansiosa ?
     protected List<String> permissoes;
