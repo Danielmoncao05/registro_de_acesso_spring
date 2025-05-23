@@ -7,16 +7,19 @@ import com.senai.registro_de_acesso_spring.domain.enuns.StatusDaOcorrencia;
 import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeOcorrencia;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 
 public record OcorrenciaSaidaDTO(Long id,
+                                 Aluno aluno,
+                                 Professor professorResponsavel,
+                                 UnidadeCurricular unidadeCurricular,
                                  TipoDeOcorrencia tipoDeOcorrencia,
                                  String descricao,
-                                 //Aluno aluno,
                                  StatusDaOcorrencia statusDaOcorrencia,
-                                 //Professor professorResponsavel,
-                                 //UnidadeCurricular unidadeCurricular,
-                                 LocalDateTime horaDeSaida,
-                                 LocalDateTime horaPedido){//PUXAR O DIA AUTOMATICO
+                                 LocalDateTime dataHoraConclusao,
+                                 LocalDateTime dataHoraCriacao) {
+
+
+
+    //PUXAR O DIA AUTOMATICO
 }

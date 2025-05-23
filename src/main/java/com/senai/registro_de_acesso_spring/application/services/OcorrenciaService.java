@@ -32,11 +32,14 @@ private OcorrenciaRepository ocorrenciaRepository;
 
     public void criarOcorrenciaDeSaida(String idDeAcesso, OcorrenciaSaidaDTO ocorrenciaSaidaDTO){
      Ocorrencia ocorrencia = new Ocorrencia();
+     ocorrencia.setAluno(ocorrenciaSaidaDTO.aluno());
+     ocorrencia.setProfessorResponsavel(ocorrenciaSaidaDTO.professorResponsavel());
+     ocorrencia.setUnidadeCurricular(ocorrenciaSaidaDTO.unidadeCurricular());
      ocorrencia.setTipo(ocorrenciaSaidaDTO.tipoDeOcorrencia());
      ocorrencia.setDescricao(ocorrenciaSaidaDTO.descricao());
      ocorrencia.setStatus(ocorrenciaSaidaDTO.statusDaOcorrencia());
-     ocorrencia.setDataHoraConclusao(ocorrenciaSaidaDTO.horaDeSaida());
-     ocorrencia.setDataHoraCriacao(ocorrenciaSaidaDTO.horaPedido());
+        ocorrencia.setDataHoraCriacao(ocorrenciaSaidaDTO.dataHoraCriacao());
+        ocorrencia.setDataHoraConclusao(ocorrenciaSaidaDTO.dataHoraConclusao());
      ocorrenciaRepository.save(ocorrencia);
     }
 
@@ -44,19 +47,25 @@ private OcorrenciaRepository ocorrenciaRepository;
         return ocorrenciaRepository.findAll().stream().map(
                 os -> new OcorrenciaSaidaDTO(
                         os.getId(),
+                        os.getAluno(),
+                        os.getProfessorResponsavel(),
+                        os.getUnidadeCurricular(),
                         os.getTipo(),
                         os.getDescricao(),
                         os.getStatus(),
                         os.getDataHoraConclusao(),
-                        os.getDataHoraCriacao()
+                        os.getDataHoraCriacao(
                 )
-        ).toList();
+        )).toList();
     }
 
     public Optional<OcorrenciaSaidaDTO> buscarOcorrenciaSaidaPorId(Long id){
         return ocorrenciaRepository.findById(id).map(
                 os -> new OcorrenciaSaidaDTO(
                         os.getId(),
+                        os.getAluno(),
+                        os.getProfessorResponsavel(),
+                        os.getUnidadeCurricular(),
                         os.getTipo(),
                         os.getDescricao(),
                         os.getStatus(),
@@ -66,10 +75,25 @@ private OcorrenciaRepository ocorrenciaRepository;
         );
     }
 
-    public boolean atualizarOcorrenciaSaida(Long id, OcorrenciaSaidaDTO ocorrenciaSaidaDTO){
+    public boolean atualizarOcorrenciaSaidaPorId(Long id, OcorrenciaSaidaDTO ocorrenciaSaidaDTO){
         return ocorrenciaRepository.findById(id).map(
-                os ->
-                os.setTipo(ocorrenciaSaidaDTO.tipoDeOcorrencia()));
+                os -> {
+                    os.setAluno(ocorrenciaSaidaDTO.aluno());
+                    os.setTipo(ocorrenciaSaidaDTO.tipoDeOcorrencia());
+                    os.setDescricao(ocorrenciaSaidaDTO.descricao());
+                    os.setStatus(ocorrenciaSaidaDTO.statusDaOcorrencia());
+                    os.setDataHoraCriacao(ocorrenciaSaidaDTO.horaPedido());
+                    os.setDataHoraConclusao(ocorrenciaSaidaDTO.horaDeSaida());
+                    ocorrenciaRepository.save(os);
+                    return true;
+                }).orElse(false);
     }
 
+    public boolean deletarOcorrenciaSaida(Long id){
+        if (ocorrenciaRepository.existsById(id)){
+
+        }
+    }
 }
+
+
