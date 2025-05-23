@@ -7,6 +7,7 @@ import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrenc
 import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeUsuario;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public record AlunoDTO(
@@ -14,9 +15,10 @@ public record AlunoDTO(
         String nome,
         String cpf,
         LocalDate dataNascimento,
-        String idAcesso,
         String email,
+        String senha,
         String telefone,
+        String idAcesso,
         TipoDeUsuario tipo,
         List<Ocorrencia> ocorrencias,
         List<Justificativa> justificativas,
@@ -24,25 +26,41 @@ public record AlunoDTO(
 ) {
     public static AlunoDTO toDTO(Aluno a) {
         TipoDeUsuario tipo = TipoDeUsuario.ALUNO;
-        return new AlunoDTO(a.getId(), a.getNome(), a.getCpf(), a.getDataNascimento(), a.getIdAcesso(), a.getEmail(), a.getTelefone(), tipo, a.getOcorrencias(), a.getJustificativas(), a.getSubTurmas());
+        List<Ocorrencia> ocorrencias = new ArrayList<>();
+        List<Justificativa> justificativas = new ArrayList<>();
+        List<SubTurma> subTurmas = new ArrayList<>();
+        return new AlunoDTO(
+                a.getId(),
+                a.getNome(),
+                a.getCpf(),
+                a.getDataNascimento(),
+                a.getIdAcesso(),
+                a.getEmail(),
+                a.getSenha(),
+                a.getTelefone(),
+                tipo,
+                ocorrencias,
+                justificativas,
+                subTurmas
+        );
     }
 
     public Aluno fromDTO() {
-        Aluno aluno = new Aluno();
+        Aluno a = new Aluno();
 
-        aluno.setId(id);
-        aluno.setNome(nome);
-        aluno.setCpf(cpf);
-        aluno.setEmail(email);
-        aluno.setDataNascimento(dataNascimento);
-        aluno.setTelefone(telefone);
-        aluno.setIdAcesso(idAcesso);
-        aluno.setAtivo(true);
-        aluno.setSenha("");
-        aluno.setSubTurmas(subTurmas);
-        aluno.setJustificativas(justificativas);
-        aluno.setOcorrencias(ocorrencias);
+        a.setId(id);
+        a.setNome(nome);
+        a.setCpf(cpf);
+        a.setEmail(email);
+        a.setDataNascimento(dataNascimento);
+        a.setTelefone(telefone);
+        a.setIdAcesso(idAcesso);
+        a.setAtivo(true);
+        a.setSenha(senha);
+        a.setSubTurmas(subTurmas);
+        a.setJustificativas(justificativas);
+        a.setOcorrencias(ocorrencias);
 
-        return aluno;
+        return a;
     }
 }

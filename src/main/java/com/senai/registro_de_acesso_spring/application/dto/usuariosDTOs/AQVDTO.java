@@ -11,13 +11,24 @@ public record AQVDTO (
         String cpf,
         LocalDate dataNascimento,
         String email,
+        String senha,
         String telefone,
         String idAcesso,
         TipoDeUsuario tipo
 ){
     public static AQVDTO toDTO(AQV a) {
         TipoDeUsuario tipo = TipoDeUsuario.AQV;
-        return new AQVDTO(a.getId(), a.getNome(), a.getCpf(), a.getDataNascimento(), a.getEmail(), a.getTelefone(),a.getIdAcesso(), tipo);
+        return new AQVDTO(
+                a.getId(),
+                a.getNome(),
+                a.getCpf(),
+                a.getDataNascimento(),
+                a.getEmail(),
+                a.getSenha(),
+                a.getTelefone(),
+                a.getIdAcesso(),
+                tipo
+        );
     }
 
     public AQV fromDTO() {
@@ -28,10 +39,10 @@ public record AQVDTO (
         aqv.setCpf(cpf);
         aqv.setDataNascimento(dataNascimento);
         aqv.setEmail(email);
+        aqv.setSenha(senha);
         aqv.setTelefone(telefone);
         aqv.setIdAcesso(idAcesso);
         aqv.setAtivo(true);
-        aqv.setSenha("");
         aqv.setFoto("");
 
         return aqv;

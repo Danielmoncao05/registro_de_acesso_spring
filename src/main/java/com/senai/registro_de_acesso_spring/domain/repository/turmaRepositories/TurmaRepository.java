@@ -1,4 +1,4 @@
-package com.senai.registro_de_acesso_spring.domain.repositories.turmaRepositories;
+package com.senai.registro_de_acesso_spring.domain.repository.turmaRepositories;
 
 import com.senai.registro_de_acesso_spring.domain.entity.turma.Turma;
 import org.springframework.data.jpa.repository.JpaRepository;

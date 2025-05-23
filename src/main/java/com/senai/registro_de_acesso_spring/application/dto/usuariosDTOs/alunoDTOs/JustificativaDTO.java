@@ -18,7 +18,16 @@ public record JustificativaDTO(
         Aluno aluno
 ) {
     public static JustificativaDTO toDTO(Justificativa j) {
-        return new JustificativaDTO(j.getId(), j.getTipo(), j.getDescricao(), j.getAnexo(), j.getDataInicial(), j.getQuantidadeDias(), j.getStatus(), j.getAluno());
+        return new JustificativaDTO(
+                j.getId(),
+                j.getTipo(),
+                j.getDescricao(),
+                j.getAnexo(),
+                j.getDataInicial(),
+                j.getQuantidadeDias(),
+                j.getStatus(),
+                j.getAluno()
+        );
     }
 
     public Justificativa fromDTO() {

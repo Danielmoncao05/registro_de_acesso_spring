@@ -17,7 +17,16 @@ public record ProfessorDTO(
 ) {
     public static ProfessorDTO toDTO(Professor p) {
         TipoDeUsuario tipo = TipoDeUsuario.PROFESSOR;
-        return new ProfessorDTO(p.getId(), p.getNome(), p.getCpf(), p.getDataNascimento(), p.getEmail(), p.getTelefone(), p.getIdAcesso(), tipo);
+        return new ProfessorDTO(
+                p.getId(),
+                p.getNome(),
+                p.getCpf(),
+                p.getDataNascimento(),
+                p.getEmail(),
+                p.getTelefone(),
+                p.getIdAcesso(),
+                tipo
+        );
     }
 
     public Professor fromDTO() {

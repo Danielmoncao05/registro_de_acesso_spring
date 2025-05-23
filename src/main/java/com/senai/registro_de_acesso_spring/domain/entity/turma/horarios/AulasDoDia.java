@@ -11,15 +11,16 @@ import java.util.List;
 public class AulasDoDia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
 
     @Enumerated(EnumType.STRING) // muta o enum para string
     private DiasDaSemana diaDaSemana;
 
     @ManyToOne
+    @JoinColumn(name = "horario_id")
     private HorarioBase horario;
 
     @OneToMany(mappedBy = "aulasDia", cascade = CascadeType.ALL, orphanRemoval = true)
-    /* @OrderColumn(name = "ordem") // ordenação por ordem alfabetica */
+    @OrderColumn(name = "ordem") // ordenação por ordem alfabetica
     private List<Aula> aulas;
 }

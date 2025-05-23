@@ -20,6 +20,6 @@ public class Aluno extends Usuario {
     @OneToMany(mappedBy = "aluno") // ujm para muitos
     private List<Justificativa> justificativas;
 
-    @ManyToMany // muitos para muitos | noa precisa de associacao pois ja esta
+    @ManyToMany // muitos para muitos | nao precisa de associacao pois ja esta
     private List<SubTurma> subTurmas;
 }

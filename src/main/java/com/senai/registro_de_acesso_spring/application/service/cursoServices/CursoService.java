@@ -3,8 +3,8 @@ package com.senai.registro_de_acesso_spring.application.service.cursoServices;
 import com.senai.registro_de_acesso_spring.application.dto.cursoDTOs.CursoDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.curso.Curso;
 import com.senai.registro_de_acesso_spring.domain.entity.curso.UnidadeCurricular;
-import com.senai.registro_de_acesso_spring.domain.repositories.cursoRepositories.CursoRepository;
-import com.senai.registro_de_acesso_spring.domain.repositories.cursoRepositories.UnidadeCurricularRepository;
+import com.senai.registro_de_acesso_spring.domain.repository.cursoRepositories.CursoRepository;
+import com.senai.registro_de_acesso_spring.domain.repository.cursoRepositories.UnidadeCurricularRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

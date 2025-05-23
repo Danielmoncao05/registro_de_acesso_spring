@@ -1,5 +1,6 @@
 package com.senai.registro_de_acesso_spring.application.dto.turmaDTOs;
 
+import com.senai.registro_de_acesso_spring.domain.entity.turma.Semestre;
 import com.senai.registro_de_acesso_spring.domain.entity.turma.SubTurma;
 import com.senai.registro_de_acesso_spring.domain.entity.turma.Turma;
 import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.HorarioPadrao;
@@ -14,12 +15,16 @@ public record SubTurmaDTO(
         String nome,
         Turma turma,
         List<Aluno> aluno,
-        HorarioPadrao horarioPadrao,
-        List<HorarioSemanal> horariosSemanais
+        List<Semestre> semestres
 ) {
     public static SubTurmaDTO toDTO(SubTurma sbt) {
-        List<HorarioSemanal> horariosSemanais = new ArrayList<>();
-        return new SubTurmaDTO(sbt.getId(), sbt.getNome(), sbt.getTurma(), sbt.getAluno(), sbt.getHorarioPadrao(), horariosSemanais);
+        return new SubTurmaDTO(
+                sbt.getId(),
+                sbt.getNome(),
+                sbt.getTurma(),
+                sbt.getAlunos(),
+                sbt.getSemestres()
+        );
     }
 
     public SubTurma fromDTO() {
@@ -27,9 +32,8 @@ public record SubTurmaDTO(
 
         subTurma.setId(id);
         subTurma.setNome(nome);
-        subTurma.setAluno(aluno);
-        subTurma.setHorarioPadrao(horarioPadrao);
-        subTurma.setHorariosSemanais(horariosSemanais);
+        subTurma.setAlunos(aluno);
+        subTurma.setSemestres(semestres);
 
         return subTurma;
     }
