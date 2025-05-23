@@ -4,7 +4,7 @@ import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Usuario;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.repositories.OcorrenciaRepository;
 import com.senai.registro_de_acesso_spring.domain.repositories.UsuarioRepository;
-import com.senai.registro_de_acesso_spring.domain.service.ValidadorOcorrencia;
+import com.senai.registro_de_acesso_spring.domain.service.ValidadorOcorrenciaEntrada;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class OcorrenciaService {
     @Autowired
     private UsuarioRepository usuarioRepo;
     @Autowired
-    private ValidadorOcorrencia validadorOcorrencia;
+    private ValidadorOcorrenciaEntrada validadorOcorrencia;
 
     public void criarOcorrenciaAtraso(String idAcesso){
         Optional<Usuario> usuarioOpt = usuarioRepo.findByIdAcesso(idAcesso);

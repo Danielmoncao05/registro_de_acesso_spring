@@ -10,10 +10,12 @@ public record CoordenadorDTO (
         String cpf,
         LocalDate dataNascimento,
         String email,
-        String telefone)
+        String idAcesso,
+        String telefone
+)
 {
     public static CoordenadorDTO toDTO(Coordenador c) {
-        return new CoordenadorDTO(c.getId(), c.getNome(), c.getCpf(), c.getDataNascimento(), c.getEmail(),c.getTelefone());
+        return new CoordenadorDTO(c.getId(), c.getNome(), c.getCpf(), c.getDataNascimento(), c.getEmail(), c.getIdAcesso(), c.getTelefone());
     }
 
     public Coordenador fromDTO() {
@@ -23,6 +25,7 @@ public record CoordenadorDTO (
         c.setCpf(cpf);
         c.setTelefone(telefone);
         c.setEmail(email);
+        c.setIdAcesso(idAcesso);
         c.setDataNascimento(dataNascimento);
         c.setAtivo(true);
         return c;

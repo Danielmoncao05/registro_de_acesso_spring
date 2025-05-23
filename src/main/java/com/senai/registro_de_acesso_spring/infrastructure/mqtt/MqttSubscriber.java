@@ -4,6 +4,7 @@ import com.senai.registro_de_acesso_spring.user_interface.controller.OcorrenciaC
 import jakarta.annotation.PostConstruct;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,7 +12,9 @@ public class MqttSubscriber {
     private static final String BROKER = "tcp://localhost:1883";
     private static final String CLIENT_ID = "ServidorJava";
     private static final String TOPICO = "catraca/rfid";
-    private static final OcorrenciaController ocorrenciaController = new OcorrenciaController();
+
+    @Autowired
+    public OcorrenciaController ocorrenciaController;
 
     @PostConstruct
     public void iniciarMqtt() {

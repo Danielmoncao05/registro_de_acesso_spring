@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OcorrenciaController {
 
     public void processarMqtt(String payload){
-        System.out.println("Payload received: '" + payload + "'");
+        System.out.println("Payload RFID: '" + payload + "'");
     }
 
 }
