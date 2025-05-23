@@ -33,6 +33,7 @@ public class AlunoService {
             aluno.setSenha(alunoAtualizado.getSenha());
             aluno.setDataNascimento(alunoAtualizado.getDataNascimento());
             aluno.setCpf(alunoAtualizado.getCpf());
+            aluno.setIdAcesso(alunoAtualizado.getIdAcesso());
             aluno.setSubTurmas(alunoAtualizado.getSubTurmas());
             aluno.setOcorrencias(alunoAtualizado.getOcorrencias());
             aluno.setJustificativas(alunoAtualizado.getJustificativas());
