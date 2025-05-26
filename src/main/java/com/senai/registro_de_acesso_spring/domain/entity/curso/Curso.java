@@ -1,9 +1,8 @@
 package com.senai.registro_de_acesso_spring.domain.entity.curso;
 
-import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeCurso;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeCurso;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.id.IntegralDataTypeHolder;
 
 import java.util.List;
 

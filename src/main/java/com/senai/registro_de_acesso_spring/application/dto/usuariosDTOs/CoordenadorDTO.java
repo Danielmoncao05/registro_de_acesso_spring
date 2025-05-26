@@ -1,7 +1,7 @@
 package com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs;
 
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Coordenador;
-import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeUsuario;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeUsuario;
 
 import java.time.LocalDate;
 

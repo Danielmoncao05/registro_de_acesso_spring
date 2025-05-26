@@ -1,6 +1,4 @@
-package com.senai.registro_de_acesso_spring.domain.enuns;
-
-import lombok.Data;
+package com.senai.registro_de_acesso_spring.domain.enums;
 
 //@Data
 public enum TipoDeCurso {

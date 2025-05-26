@@ -2,7 +2,7 @@ package com.senai.registro_de_acesso_spring.application.dto.cursoDTOs;
 
 import com.senai.registro_de_acesso_spring.domain.entity.curso.Curso;
 import com.senai.registro_de_acesso_spring.domain.entity.curso.UnidadeCurricular;
-import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeCurso;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeCurso;
 
 import java.util.List;
 

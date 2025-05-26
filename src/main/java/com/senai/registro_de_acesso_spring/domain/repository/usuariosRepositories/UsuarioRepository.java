@@ -10,7 +10,8 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
     List<Usuario> findByAtivoTrue();
-
     // Buscar todos os usuarios por id
     Optional<Usuario> findByIdAcesso(String idAcesso);
+    // Buscar pelo username
+    Optional<Usuario> findByUsername(String username);
 }

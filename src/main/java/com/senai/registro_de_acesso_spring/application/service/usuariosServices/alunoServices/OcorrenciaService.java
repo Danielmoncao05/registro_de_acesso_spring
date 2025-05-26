@@ -3,10 +3,11 @@ package com.senai.registro_de_acesso_spring.application.service.usuariosServices
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.OcorrenciaDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
-import com.senai.registro_de_acesso_spring.domain.enuns.StatusDaOcorrencia;
+import com.senai.registro_de_acesso_spring.domain.enums.StatusDaOcorrencia;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.UsuarioRepository;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.OcorrenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,24 +57,12 @@ public class OcorrenciaService {
     }
 
     public boolean deletarOcorrencia(Long id) {
-        return ocorrenciaRepository.findById(id).map(ocorrencia -> {
-            ocorrencia.setStatus(StatusDaOcorrencia.REPROVADO);
-
-            ocorrenciaRepository.save(ocorrencia);
+        if(ocorrenciaRepository.existsById(id)) {
+            ocorrenciaRepository.deleteById(id);
             return true;
-        }).orElse(false);
-    }
-
-    // Criar Ocorrencia de Atraso com MQTT
-    public void criarOcorrenicaDeAtraso(String idAcesso) {
-        usuarioRepository.findByIdAcesso(idAcesso).map(usuario -> {
-            if(usuario instanceof Aluno) {
-                System.out.println("È Aluno");
-            } else {
-                System.out.println("Não é Aluno");
-            }
-            return null;
-        });
+        }else {
+            return false;
+        }
     }
 
 }

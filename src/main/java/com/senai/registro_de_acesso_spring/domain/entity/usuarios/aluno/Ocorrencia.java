@@ -2,9 +2,8 @@ package com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno;
 
 import com.senai.registro_de_acesso_spring.domain.entity.curso.UnidadeCurricular;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Professor;
-import com.senai.registro_de_acesso_spring.domain.enuns.StatusDaOcorrencia;
-import com.senai.registro_de_acesso_spring.domain.enuns.StatusDaJustificativa;
-import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeOcorrencia;
+import com.senai.registro_de_acesso_spring.domain.enums.StatusDaOcorrencia;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeOcorrencia;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-public class Ocorrencia { // obs: Strings temporários
+public class Ocorrencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -27,7 +26,6 @@ public class Ocorrencia { // obs: Strings temporários
 
     private LocalDateTime dataHoraCriacao;
     private LocalDateTime dataHoraConclusao;
-    private boolean ativo;
 
     @ManyToOne
     private Aluno aluno;

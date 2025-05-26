@@ -2,14 +2,12 @@ package com.senai.registro_de_acesso_spring.application.service.usuariosServices
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.JustificativaDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Justificativa;
-import com.senai.registro_de_acesso_spring.domain.enuns.StatusDaJustificativa;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.JustificativaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class JustificativaService {

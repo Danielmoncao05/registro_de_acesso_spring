@@ -4,7 +4,7 @@ import com.senai.registro_de_acesso_spring.domain.entity.turma.SubTurma;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Justificativa;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
-import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeUsuario;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeUsuario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,13 +22,10 @@ public record AlunoDTO(
         TipoDeUsuario tipo,
         List<Ocorrencia> ocorrencias,
         List<Justificativa> justificativas,
-        List<SubTurma> subTurmas
+        SubTurma subTurma
 ) {
     public static AlunoDTO toDTO(Aluno a) {
         TipoDeUsuario tipo = TipoDeUsuario.ALUNO;
-        List<Ocorrencia> ocorrencias = new ArrayList<>();
-        List<Justificativa> justificativas = new ArrayList<>();
-        List<SubTurma> subTurmas = new ArrayList<>();
         return new AlunoDTO(
                 a.getId(),
                 a.getNome(),
@@ -39,9 +36,9 @@ public record AlunoDTO(
                 a.getSenha(),
                 a.getTelefone(),
                 tipo,
-                ocorrencias,
-                justificativas,
-                subTurmas
+                a.getOcorrencias(),
+                a.getJustificativas(),
+                a.getSubTurma()
         );
     }
 
@@ -57,9 +54,9 @@ public record AlunoDTO(
         a.setIdAcesso(idAcesso);
         a.setAtivo(true);
         a.setSenha(senha);
-        a.setSubTurmas(subTurmas);
-        a.setJustificativas(justificativas);
-        a.setOcorrencias(ocorrencias);
+        a.setSubTurma(subTurma);
+        a.setJustificativas(new ArrayList<>());
+        a.setOcorrencias(new ArrayList<>());
 
         return a;
     }

@@ -23,7 +23,7 @@ public class SubTurma {
     @OneToMany(mappedBy = "subTurma", cascade = CascadeType.ALL)
     private List<Aluno> alunos;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "subTurma", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Semestre> semestres;
 
 }

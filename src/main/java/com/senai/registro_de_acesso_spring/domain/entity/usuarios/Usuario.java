@@ -1,5 +1,6 @@
 package com.senai.registro_de_acesso_spring.domain.entity.usuarios;
 
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeUsuario;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,11 +17,16 @@ abstract public class Usuario {
     protected Long id;
     /*
     fazer depois -> not null | unique | qtd carateres */
+    @Column(nullable = false)
     protected String nome;
+
     protected String cpf; // usado como login
     protected LocalDate dataNascimento;
     protected String idAcesso;
     protected String email;
+
+    @Column(nullable = false, unique = true)
+    protected String username;
     protected String senha;
     protected String telefone;
     protected String foto;
@@ -28,4 +34,7 @@ abstract public class Usuario {
 
     @ElementCollection(fetch = FetchType.EAGER) // faz uma coleçao dos elementos no banco de dados | tipo de busca -> ansiosa ?
     protected List<String> permissoes;
+
+    @Enumerated(EnumType.STRING)
+    private TipoDeUsuario tipoDeUsuario;
 }

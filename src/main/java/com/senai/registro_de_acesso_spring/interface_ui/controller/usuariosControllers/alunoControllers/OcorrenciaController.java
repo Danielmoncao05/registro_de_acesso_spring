@@ -2,8 +2,11 @@ package com.senai.registro_de_acesso_spring.interface_ui.controller.usuariosCont
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.OcorrenciaDTO;
 import com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices.OcorrenciaService;
+import com.senai.registro_de_acesso_spring.domain.service.OcorrenciaServiceRN.OcorrenciaServiceRN;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +17,10 @@ public class OcorrenciaController {
     @Autowired
     private OcorrenciaService ocorrenciaService;
 
-    @PostMapping
+    @Autowired
+    private OcorrenciaServiceRN ocorrenciaServiceRN;
+
+    @PostMapping("/{id}")
     public ResponseEntity<Void> registrarOcorrencia(@RequestBody OcorrenciaDTO dto) {
         ocorrenciaService.registrarOcorrencia(dto);
         return ResponseEntity.ok().build();
@@ -48,10 +54,26 @@ public class OcorrenciaController {
         return ResponseEntity.notFound().build();
     }
 
+    // Ocorrencia Service RN
     // Criar Ocorrencia De Atraso e Processar Mqtt
     public void criarOcorrenciaAtraso(String idDeAcesso) {
         System.out.println(idDeAcesso);
-        ocorrenciaService.criarOcorrenicaDeAtraso(idDeAcesso);
+        ocorrenciaServiceRN.criarOcorrenicaDeAtraso(idDeAcesso);
+    }
+
+    @MessageMapping("/ocorrencia/saida")
+    public void solicitarSaida(@Payload OcorrenciaDTO dto) {
+        ocorrenciaServiceRN.solicitarSaidaAntecipada(dto);
+    }
+
+    @MessageMapping("/ocorrencia/decisao")
+    public void decidirSaida(@Payload OcorrenciaDTO dto) {
+        ocorrenciaServiceRN.decidirSaida(dto);
+    }
+
+    @MessageMapping("/ocorrencia/ciencia")
+    public void darCiencia(@Payload OcorrenciaDTO dto) {
+        ocorrenciaServiceRN.confirmarCiencia(dto);
     }
 
 }

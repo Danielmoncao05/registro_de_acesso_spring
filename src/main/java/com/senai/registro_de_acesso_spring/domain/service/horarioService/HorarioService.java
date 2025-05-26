@@ -1,10 +1,10 @@
-package com.senai.registro_de_acesso_spring.domain.service;
+package com.senai.registro_de_acesso_spring.domain.service.horarioService;
 
 import com.senai.registro_de_acesso_spring.application.dto.turmaDTOs.horariosDTOs.AulaDTO;
 import com.senai.registro_de_acesso_spring.application.dto.turmaDTOs.horariosDTOs.AulasDoDiaDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.turma.Semestre;
 import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.*;
-import com.senai.registro_de_acesso_spring.domain.enuns.DiasDaSemana;
+import com.senai.registro_de_acesso_spring.domain.enums.DiasDaSemana;
 import com.senai.registro_de_acesso_spring.domain.repository.cursoRepositories.AmbienteRepository;
 import com.senai.registro_de_acesso_spring.domain.repository.cursoRepositories.UnidadeCurricularRepository;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.ProfessorRepository;

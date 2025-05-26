@@ -1,7 +1,7 @@
 package com.senai.registro_de_acesso_spring.application.dto.turmaDTOs.horariosDTOs;
 
 import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.AulasDoDia;
-import com.senai.registro_de_acesso_spring.domain.enuns.DiasDaSemana;
+import com.senai.registro_de_acesso_spring.domain.enums.DiasDaSemana;
 
 import java.util.List;
 

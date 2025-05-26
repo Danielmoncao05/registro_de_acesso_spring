@@ -1,7 +1,7 @@
 package com.senai.registro_de_acesso_spring.application.dto.turmaDTOs;
 
 import com.senai.registro_de_acesso_spring.domain.entity.turma.Turma;
-import com.senai.registro_de_acesso_spring.domain.enuns.Periodo;
+import com.senai.registro_de_acesso_spring.domain.enums.Periodo;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

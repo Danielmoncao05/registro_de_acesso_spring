@@ -1,6 +1,6 @@
 package com.senai.registro_de_acesso_spring.domain.entity.turma.horarios;
 
-import com.senai.registro_de_acesso_spring.domain.enuns.DiasDaSemana;
+import com.senai.registro_de_acesso_spring.domain.enums.DiasDaSemana;
 import jakarta.persistence.*;
 import lombok.Data;
 

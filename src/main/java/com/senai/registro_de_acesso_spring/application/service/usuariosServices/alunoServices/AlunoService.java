@@ -45,7 +45,7 @@ public class AlunoService {
             aluno.setFoto(alunoAtualizado.getFoto());
             aluno.setJustificativas(alunoAtualizado.getJustificativas());
             aluno.setOcorrencias(alunoAtualizado.getOcorrencias());
-            aluno.setSubTurmas(alunoAtualizado.getSubTurmas());
+            aluno.setSubTurma(alunoAtualizado.getSubTurma());
 
             alunoRepository.save(aluno);
             return true;

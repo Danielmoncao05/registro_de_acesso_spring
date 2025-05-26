@@ -1,7 +1,7 @@
 package com.senai.registro_de_acesso_spring.domain.entity.turma;
 
 import com.senai.registro_de_acesso_spring.domain.entity.curso.Curso;
-import com.senai.registro_de_acesso_spring.domain.enuns.Periodo;
+import com.senai.registro_de_acesso_spring.domain.enums.Periodo;
 import jakarta.persistence.*;
 import lombok.Data;
 
