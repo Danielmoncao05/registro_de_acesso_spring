@@ -37,4 +37,7 @@ public class Ocorrencia { // obs: Strings temporários
 
     @ManyToOne
     private UnidadeCurricular unidadeCurricular;
+
+    @OneToOne
+    private Justificativa justificativa;
 }

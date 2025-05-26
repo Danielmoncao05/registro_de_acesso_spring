@@ -7,6 +7,7 @@ import com.senai.registro_de_acesso_spring.domain.enuns.StatusDaOcorrencia;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.UsuarioRepository;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.OcorrenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,9 @@ import java.util.stream.Collectors;
 public class OcorrenciaService {
     @Autowired
     private OcorrenciaRepository ocorrenciaRepository;
+
+    //@Autowired
+   // private SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -74,6 +78,10 @@ public class OcorrenciaService {
             }
             return null;
         });
+    }
+
+    public void solicitarSaidaAntecipada() {
+
     }
 
 }

@@ -27,4 +27,7 @@ public class Justificativa {
 
     @ManyToOne
     private Aluno aluno;
+
+    @OneToOne
+    private Ocorrencia ocorrencia;
 }

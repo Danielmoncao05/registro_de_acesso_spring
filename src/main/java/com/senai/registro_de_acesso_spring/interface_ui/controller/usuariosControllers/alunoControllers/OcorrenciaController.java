@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ocorrencia")
+
 public class OcorrenciaController {
     @Autowired
     private OcorrenciaService ocorrenciaService;
@@ -53,5 +54,7 @@ public class OcorrenciaController {
         System.out.println(idDeAcesso);
         ocorrenciaService.criarOcorrenicaDeAtraso(idDeAcesso);
     }
+
+
 
 }
