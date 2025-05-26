@@ -25,7 +25,7 @@ public class Ocorrencia { // obs: Strings temporários
     @Enumerated(EnumType.STRING)
     private StatusDaOcorrencia status;
 
-    private LocalDateTime dataHoraCriacao;
+    private LocalDateTime PedidoDeSaida;
     private LocalDateTime dataHoraConclusao;
 
     @ManyToOne

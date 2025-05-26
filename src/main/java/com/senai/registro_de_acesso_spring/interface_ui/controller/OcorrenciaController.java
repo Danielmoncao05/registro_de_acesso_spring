@@ -1,5 +1,6 @@
 package com.senai.registro_de_acesso_spring.interface_ui.controller;
 
+import com.senai.registro_de_acesso_spring.application.dto.OcorrenciaSaidaDTO;
 import com.senai.registro_de_acesso_spring.application.services.OcorrenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +19,12 @@ public class OcorrenciaController {
 
     }
     @PostMapping("/saida/{idAluno}")
-    public void criarOcorrenciaDeSaida(String idDeAcesso, String tipoDeOcorrencia, String descricao, String statusDaOcorrencia, String horaDeSaida, String horaPedido){
-        ocorrenciaService.criarOcorrenciaDeSaida(idDeAcesso, tipoDeOcorrencia, descricao, statusDaOcorrencia, horaDeSaida, horaPedido);
+   public void solicitarSaida(String idDeAcesso, OcorrenciaSaidaDTO dto){
+        ocorrenciaService.criarOcorrenciaDeSaida(idDeAcesso,dto);
     }
 
 
-}
+    }
+
+
+

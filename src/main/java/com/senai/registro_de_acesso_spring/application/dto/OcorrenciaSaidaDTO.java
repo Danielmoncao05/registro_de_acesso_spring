@@ -17,7 +17,7 @@ public record OcorrenciaSaidaDTO(Long id,
                                  String descricao,
                                  StatusDaOcorrencia statusDaOcorrencia,
                                  LocalDateTime dataHoraConclusao,
-                                 LocalDateTime dataHoraCriacao) {
+                                 LocalDateTime PedidoDeSaida) {
 
 
 
