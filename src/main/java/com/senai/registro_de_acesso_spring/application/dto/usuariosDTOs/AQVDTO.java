@@ -14,6 +14,7 @@ public record AQVDTO (
         String senha,
         String telefone,
         String idAcesso,
+        String username,
         TipoDeUsuario tipo
 ){
     public static AQVDTO toDTO(AQV a) {
@@ -27,6 +28,7 @@ public record AQVDTO (
                 a.getSenha(),
                 a.getTelefone(),
                 a.getIdAcesso(),
+                a.getUsername(),
                 tipo
         );
     }
@@ -42,6 +44,7 @@ public record AQVDTO (
         aqv.setSenha(senha);
         aqv.setTelefone(telefone);
         aqv.setIdAcesso(idAcesso);
+        aqv.setUsername(username);
         aqv.setAtivo(true);
         aqv.setFoto("");
 

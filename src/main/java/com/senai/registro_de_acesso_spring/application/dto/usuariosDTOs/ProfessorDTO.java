@@ -11,8 +11,10 @@ public record ProfessorDTO(
         String cpf,
         LocalDate dataNascimento,
         String email,
+        String senha,
         String telefone,
         String idAcesso,
+        String username,
         TipoDeUsuario tipo
 ) {
     public static ProfessorDTO toDTO(Professor p) {
@@ -23,8 +25,10 @@ public record ProfessorDTO(
                 p.getCpf(),
                 p.getDataNascimento(),
                 p.getEmail(),
+                p.getSenha(),
                 p.getTelefone(),
                 p.getIdAcesso(),
+                p.getUsername(),
                 tipo
         );
     }
@@ -39,10 +43,9 @@ public record ProfessorDTO(
         professor.setEmail(email);
         professor.setTelefone(telefone);
         professor.setIdAcesso(idAcesso);
+        professor.setSenha(senha);
+        professor.setUsername(username);
         professor.setAtivo(true);
-        professor.setIdAcesso("");
-        professor.setSenha("");
-        professor.setFoto("");
 
         return professor;
     }

@@ -19,6 +19,7 @@ public record AlunoDTO(
         String senha,
         String telefone,
         String idAcesso,
+        String username,
         TipoDeUsuario tipo,
         List<Ocorrencia> ocorrencias,
         List<Justificativa> justificativas,
@@ -35,6 +36,7 @@ public record AlunoDTO(
                 a.getEmail(),
                 a.getSenha(),
                 a.getTelefone(),
+                a.getUsername(),
                 tipo,
                 a.getOcorrencias(),
                 a.getJustificativas(),
@@ -52,6 +54,7 @@ public record AlunoDTO(
         a.setDataNascimento(dataNascimento);
         a.setTelefone(telefone);
         a.setIdAcesso(idAcesso);
+        a.setUsername(username);
         a.setAtivo(true);
         a.setSenha(senha);
         a.setSubTurma(subTurma);

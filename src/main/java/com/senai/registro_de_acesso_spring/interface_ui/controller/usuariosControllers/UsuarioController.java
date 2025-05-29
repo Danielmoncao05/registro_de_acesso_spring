@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/usuarios")
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
@@ -17,7 +17,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<String> cadastrarUsuario(@RequestBody UsuarioDTO dto) {
         usuarioService.cadastrarUsuario(dto);
-        return ResponseEntity.ok("Usuário cadastrado com sucesso!");
+        return ResponseEntity.ok(dto.nome() + " cadastrado com sucesso!");
     }
 
     @GetMapping
@@ -35,7 +35,7 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO dto) {
         if(usuarioService.atualizarUsuario(id, dto)) {
-            return ResponseEntity.ok("Usuário atualizado com sucesso!");
+            return ResponseEntity.ok(dto.nome() + " atualizado com sucesso!");
         } else {
             return ResponseEntity.notFound().build();
         }
