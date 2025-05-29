@@ -14,6 +14,7 @@ public record CoordenadorDTO(
         String senha,
         String telefone,
         String idAcesso,
+        String username,
         TipoDeUsuario tipo
 ) {
     public static CoordenadorDTO toDTO(Coordenador c) {
@@ -27,6 +28,7 @@ public record CoordenadorDTO(
                 c.getSenha(),
                 c.getTelefone(),
                 c.getIdAcesso(),
+                c.getUsername(),
                 tipo);
     }
 
@@ -41,8 +43,8 @@ public record CoordenadorDTO(
         c.setSenha(senha);
         c.setTelefone(telefone);
         c.setIdAcesso(idAcesso);
+        c.setUsername(username);
         c.setAtivo(true);
-        c.setFoto("");
 
         return c;
     }

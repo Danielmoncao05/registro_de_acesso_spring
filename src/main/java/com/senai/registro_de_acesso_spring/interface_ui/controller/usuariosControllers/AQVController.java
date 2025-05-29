@@ -18,7 +18,7 @@ public class AQVController {
     @PostMapping
     public ResponseEntity<String> cadastrarAQV(@RequestBody AQVDTO dto) {
         aqvService.cadastrarAQV(dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(dto.nome() + " cadastrado com sucesso!");
     }
 
     @GetMapping("/{id}")
@@ -36,16 +36,16 @@ public class AQVController {
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarAQV(@PathVariable Long id, @RequestBody AQVDTO dto) {
         if (aqvService.atualizarAQV(id, dto)) {
-            return ResponseEntity.ok("AQV atualizado!!!!");
+            return ResponseEntity.ok(dto.nome() + " atualizado com sucesso!");
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> inativarAQV(@PathVariable Long id) {
+    public ResponseEntity<String> inativarAQV(@PathVariable Long id) {
         if (aqvService.inativarAQV(id)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("AQV desativado com sucesso!");
         } else  {
             return ResponseEntity.notFound().build();
         }

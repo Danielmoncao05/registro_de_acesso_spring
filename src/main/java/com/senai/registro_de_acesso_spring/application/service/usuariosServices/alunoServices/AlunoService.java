@@ -16,7 +16,7 @@ public class AlunoService {
     private AlunoRepository alunoRepository;
 
     public void cadastrarAluno(AlunoDTO dto) {
-        alunoRepository.save(dto.fromDTO()); // nao é necessario a foto do aluno para cadastrar e as ocorerncias serao criada quando necessario apenas
+        alunoRepository.save(dto.fromDTO());
     }
 
     public List<AlunoDTO> listarAlunos() {
