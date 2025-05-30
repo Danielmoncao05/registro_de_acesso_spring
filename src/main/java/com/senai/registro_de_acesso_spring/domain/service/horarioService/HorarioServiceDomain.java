@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class HorarioService {
+public class HorarioServiceDomain {
     @Autowired
     private UnidadeCurricularRepository unidadeCurricularRepository;
 

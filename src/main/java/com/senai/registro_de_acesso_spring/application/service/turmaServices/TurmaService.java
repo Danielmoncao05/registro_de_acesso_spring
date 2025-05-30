@@ -7,7 +7,7 @@ import com.senai.registro_de_acesso_spring.domain.entity.turma.SubTurma;
 import com.senai.registro_de_acesso_spring.domain.entity.turma.Turma;
 import com.senai.registro_de_acesso_spring.domain.repository.cursoRepositories.CursoRepository;
 import com.senai.registro_de_acesso_spring.domain.repository.turmaRepositories.TurmaRepository;
-import com.senai.registro_de_acesso_spring.domain.service.horarioService.HorarioService;
+import com.senai.registro_de_acesso_spring.domain.service.horarioService.HorarioServiceDomain;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class TurmaService {
     private CursoRepository cursoRepository;
 
     @Autowired
-    private HorarioService horarioService;
+    private HorarioServiceDomain horarioService;
 
     @Transactional
     public void cadastrarTurma(TurmaDTO dto) {
@@ -38,12 +38,14 @@ public class TurmaService {
         turma.setCurso(curso);
 
         SubTurma subTurma = new SubTurma();
+        //turma.setSubTurmas(new ArrayList<>());
         turma.getSubTurma().add(subTurma);
 
         subTurma.setNome("Turma " + turma.getSubTurma().size());
         subTurma.setTurma(turma);
 
         Semestre semestre = new Semestre();
+        subTurma.setSemestres(new ArrayList<>());
         subTurma.getSemestres().add(semestre);
 
         semestre.setNomeDaTurma(

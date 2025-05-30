@@ -1,53 +1,22 @@
-package com.senai.registro_de_acesso_spring.domain.service.OcorrenciaServiceRN;
+package com.senai.registro_de_acesso_spring.domain.service.OcorrenciaService;
 
-import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.OcorrenciaDTO;
-import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Professor;
-import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
-import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
-import com.senai.registro_de_acesso_spring.domain.enums.StatusDaOcorrencia;
-import com.senai.registro_de_acesso_spring.domain.enums.TipoDeOcorrencia;
-import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.ProfessorRepository;
-import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.UsuarioRepository;
-import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.AlunoRepository;
-import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.OcorrenciaRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Service
-public class OcorrenciaServiceRN {
+public class OcorrenciaServiceDomain {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-    @Autowired
-    private OcorrenciaRepository ocorrenciaRepository;
-
-    @Autowired
-    private AlunoRepository alunoRepository;
-
-    @Autowired
-    private ProfessorRepository professorRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    // Criar Ocorrencia de Atraso com MQTT
-    public void criarOcorrenicaDeAtraso(String idAcesso) {
-        usuarioRepository.findByIdAcesso(idAcesso).map(usuario -> {
-            if (usuario instanceof Aluno) {
-                System.out.println("È Aluno");
-            } else {
-                System.out.println("Não é Aluno");
-            }
-            return null;
-        });
+    public boolean verificarAtraso(LocalTime horaEntrada, Integer tolerancia){
+        LocalTime horarioLimite = horaEntrada.plusMinutes(tolerancia);
+        return LocalTime.now().isAfter(horarioLimite);
     }
 
-    @Transactional
+    /*@Transactional
     public void solicitarSaidaAntecipada(OcorrenciaDTO dto) {
         Aluno aluno = alunoRepository.findById(dto.alunoId())
                 .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
@@ -109,5 +78,5 @@ public class OcorrenciaServiceRN {
                         ocorrencia.getAluno().getId(),
                 OcorrenciaDTO.toDTO(saved)
         );
-    }
+    }*/
 }

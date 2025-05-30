@@ -5,7 +5,7 @@ import com.senai.registro_de_acesso_spring.domain.entity.turma.Semestre;
 import com.senai.registro_de_acesso_spring.domain.entity.turma.SubTurma;
 import com.senai.registro_de_acesso_spring.domain.repository.turmaRepositories.SemestreRepository;
 import com.senai.registro_de_acesso_spring.domain.repository.turmaRepositories.SubTurmaRepository;
-import com.senai.registro_de_acesso_spring.domain.service.horarioService.HorarioService;
+import com.senai.registro_de_acesso_spring.domain.service.horarioService.HorarioServiceDomain;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class SemestreService {
     private SubTurmaRepository subTurmaRepository;
 
     @Autowired
-    private HorarioService horarioService;
+    private HorarioServiceDomain horarioService;
 
     @Transactional
     public void criarSemestre(Long subTurmaId) {

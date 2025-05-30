@@ -2,14 +2,11 @@ package com.senai.registro_de_acesso_spring.interface_ui.controller.usuariosCont
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.OcorrenciaDTO;
 import com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices.OcorrenciaService;
-import com.senai.registro_de_acesso_spring.domain.service.OcorrenciaServiceRN.OcorrenciaServiceRN;
+import com.senai.registro_de_acesso_spring.domain.service.OcorrenciaService.OcorrenciaServiceDomain;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/ocorrencia")
@@ -18,8 +15,9 @@ public class OcorrenciaController {
     private OcorrenciaService ocorrenciaService;
 
     @Autowired
-    private OcorrenciaServiceRN ocorrenciaServiceRN;
+    private OcorrenciaServiceDomain ocorrenciaServiceRN;
 
+    /*
     @PostMapping("/{id}")
     public ResponseEntity<Void> registrarOcorrencia(@RequestBody OcorrenciaDTO dto) {
         ocorrenciaService.registrarOcorrencia(dto);
@@ -52,15 +50,13 @@ public class OcorrenciaController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
+    }*/
+
+    public void verificarAcesso(String idAcesso) {
+        ocorrenciaService.gerarOcorrenciaDeAtraso(idAcesso);
     }
 
-    // Ocorrencia Service RN
-    // Criar Ocorrencia De Atraso e Processar Mqtt
-    public void criarOcorrenciaAtraso(String idDeAcesso) {
-        System.out.println(idDeAcesso);
-        ocorrenciaServiceRN.criarOcorrenicaDeAtraso(idDeAcesso);
-    }
-
+    /*
     @MessageMapping("/ocorrencia/saida")
     public void solicitarSaida(@Payload OcorrenciaDTO dto) {
         ocorrenciaServiceRN.solicitarSaidaAntecipada(dto);
@@ -75,5 +71,6 @@ public class OcorrenciaController {
     public void darCiencia(@Payload OcorrenciaDTO dto) {
         ocorrenciaServiceRN.confirmarCiencia(dto);
     }
+     */
 
 }
