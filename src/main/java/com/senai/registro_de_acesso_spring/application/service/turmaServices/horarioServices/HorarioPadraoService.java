@@ -5,7 +5,7 @@ import com.senai.registro_de_acesso_spring.domain.entity.turma.Semestre;
 import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.HorarioPadrao;
 import com.senai.registro_de_acesso_spring.domain.repository.turmaRepositories.SemestreRepository;
 import com.senai.registro_de_acesso_spring.domain.repository.turmaRepositories.horariosRepositories.HorarioPadraoRepository;
-import com.senai.registro_de_acesso_spring.domain.service.horarioService.HorarioService;
+import com.senai.registro_de_acesso_spring.domain.service.horarioService.HorarioServiceDomain;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class HorarioPadraoService {
     private HorarioPadraoRepository horarioPadraoRepository;
 
     @Autowired
-    private HorarioService horarioService;
+    private HorarioServiceDomain horarioService;
 
     @Autowired
     private SemestreRepository semestreRepository;

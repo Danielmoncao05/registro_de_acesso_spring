@@ -13,35 +13,35 @@ import java.util.List;
 public class HorarioPadraoController {
 
     @Autowired
-    private HorarioPadraoService serhorarioPadraoService;
+    private HorarioPadraoService horarioPadraoService;
 
     @PostMapping("/{semestreId}")
     public ResponseEntity<Void> cadastrarHorario(@PathVariable Long semestreId, @RequestBody HorarioPadraoDTO dto) {
-        serhorarioPadraoService.salvarHorarioPadrao(semestreId, dto);
+        horarioPadraoService.salvarHorarioPadrao(semestreId, dto);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping
     public ResponseEntity<List<HorarioPadraoDTO>> listarHorarios() {
-        return ResponseEntity.ok(serhorarioPadraoService.listar());
+        return ResponseEntity.ok(horarioPadraoService.listar());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<HorarioPadraoDTO> buscarHorarioPorId(@PathVariable Long id) {
-        return serhorarioPadraoService.buscarPorId(id)
+        return horarioPadraoService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> atualizarHorario(@PathVariable Long id, @RequestBody HorarioPadraoDTO dto) {
-        if (serhorarioPadraoService.atualizar(id, dto)) return ResponseEntity.ok().build();
+        if (horarioPadraoService.atualizar(id, dto)) return ResponseEntity.ok().build();
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarHorario(@PathVariable Long id) {
-        if (serhorarioPadraoService.deletar(id)) return ResponseEntity.ok().build();
+        if (horarioPadraoService.deletar(id)) return ResponseEntity.ok().build();
         return ResponseEntity.notFound().build();
     }
 }

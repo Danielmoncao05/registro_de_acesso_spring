@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ProfessorRepository extends JpaRepository<Professor, Long> {
     List<Professor> findByAtivoTrue();
+    // buscar professor pela ordem do id ascendente
     Optional<Professor> findFirstByOrderByIdAsc();
 }

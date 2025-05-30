@@ -65,4 +65,18 @@ public class OcorrenciaService {
         }
     }
 
+    // Metódo importado temporariamente para verificação de Aluno
+    private boolean verificarAluno(String idAcesso) {
+        usuarioRepository.findByIdAcesso(idAcesso).map(usuario -> {
+            if(usuario instanceof Aluno) {
+                System.out.println("Aluno");
+                return true;
+            } else {
+                System.out.println("Não é Aluno");
+                return false;
+            }
+        });
+        return false;
+    }
+
 }

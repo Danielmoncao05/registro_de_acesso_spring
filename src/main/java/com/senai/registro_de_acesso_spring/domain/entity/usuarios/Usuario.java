@@ -11,13 +11,11 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) // define a estratégia - join table(pega e junta), single table uma única tabela, possui tudo que as classes concretas possuem
 @DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING) // nome da coluna e o que será escrito na mesma | vê qual o tipo da entidade e grava em uma coluna , type determina o valor "nome/id", utilizando string
 @Data
-
 abstract public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
-    /*
-    fazer depois -> not null | unique | qtd carateres */
+    /* fazer depois -> not null | unique | qtd carateres */
     @Column(nullable = false)
     protected String nome;
 
@@ -28,10 +26,10 @@ abstract public class Usuario {
 
     @Column(nullable = false, unique = true)
     protected String username;
+
     protected String senha;
     protected String telefone;
     protected String foto;
-    protected boolean ativo;
 
     @Column(name = "ativo")
     protected boolean ativo;

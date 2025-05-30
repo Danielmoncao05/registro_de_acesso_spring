@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/professores")
+@RequestMapping("/professor")
 public class ProfessorController {
     @Autowired
     private ProfessorService professorService;
@@ -17,7 +17,7 @@ public class ProfessorController {
     @PostMapping
     public ResponseEntity<String> cadastrarProfessor(@RequestBody ProfessorDTO dto) {
         professorService.cadastrarProfessor(dto);
-        return ResponseEntity.ok(dto.nome() + " cadastrado com sucesso!");
+        return ResponseEntity.ok("Professor(a) '" + dto.nome() + "' cadastrado(a) com sucesso!");
     }
 
     @GetMapping("/{id}")
@@ -35,7 +35,7 @@ public class ProfessorController {
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarProfessor(@PathVariable Long id, @RequestBody ProfessorDTO dto) {
         if(professorService.atualizarProfessor(id, dto)) {
-            return ResponseEntity.ok(dto.nome() + " atualizado com sucesso!");
+            return ResponseEntity.ok("Professor(a) '" + dto.nome() + " atualizado(a) com sucesso!");
         }
         return ResponseEntity.notFound().build();
     }
@@ -43,7 +43,7 @@ public class ProfessorController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> inativarProfessor(@PathVariable Long id) {
         if(professorService.inativarProfessor(id)) {
-            return ResponseEntity.ok("Professor desativado do sistema!");
+            return ResponseEntity.ok("Professor(a) desativado(a) do sistema!");
         }
         return ResponseEntity.notFound().build();
     }

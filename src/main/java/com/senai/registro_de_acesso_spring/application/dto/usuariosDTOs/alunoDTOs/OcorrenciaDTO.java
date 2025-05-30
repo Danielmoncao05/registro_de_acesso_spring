@@ -39,7 +39,6 @@ public record OcorrenciaDTO(
         ocorrencia.setDataHoraCriacao(dataHoraCriacao);
         ocorrencia.setDataHoraConclusao(dataHoraConclusao);
 
-
         return ocorrencia;
     }
 }

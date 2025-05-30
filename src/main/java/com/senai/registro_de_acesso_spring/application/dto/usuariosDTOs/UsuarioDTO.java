@@ -29,7 +29,16 @@ public record UsuarioDTO(
             case AQV aqv -> TipoDeUsuario.AQV;
             default -> throw new IllegalArgumentException("Tipo de usuário desconhecido");
         };
-        return new UsuarioDTO(u.getId(), u.getNome(), u.getCpf(), u.getDataNascimento(), u.getIdAcesso(), u.getEmail(), u.getTelefone(), u.getUsername(),tipo);
+        return new UsuarioDTO(
+                u.getId(),
+                u.getNome(),
+                u.getCpf(),
+                u.getDataNascimento(),
+                u.getIdAcesso(),
+                u.getEmail(),
+                u.getTelefone(),
+                u.getUsername(),
+                tipo);
     }
 
     public Usuario fromDTO() {

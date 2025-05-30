@@ -1,4 +1,4 @@
-package com.senai.registro_de_acesso_spring.domain.service.OcorrenciaService;
+package com.senai.registro_de_acesso_spring.domain.service.ocorrenciaService;
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.OcorrenciaDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Professor;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-public class OcorrenciaServiceRN {
+public class OcorrenciaServiceDomain {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
@@ -35,15 +35,17 @@ public class OcorrenciaServiceRN {
     private UsuarioRepository usuarioRepository;
 
     // Criar Ocorrencia de Atraso com MQTT
-    public void criarOcorrenicaDeAtraso(String idAcesso) {
+    public boolean criarOcorrenicaDeAtraso(String idAcesso) {
         usuarioRepository.findByIdAcesso(idAcesso).map(usuario -> {
             if (usuario instanceof Aluno) {
                 System.out.println("È Aluno");
+                return true;
             } else {
                 System.out.println("Não é Aluno");
+                return  false;
             }
-            return null;
         });
+        return false;
     }
 
     @Transactional

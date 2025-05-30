@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/turma")
 public class TurmaController {
     @Autowired
-    TurmaService turmaService;
+    private TurmaService turmaService;
 
     @PostMapping
     public ResponseEntity<Void> cadastrarTurmas(@RequestBody TurmaDTO dto) {
@@ -40,7 +40,7 @@ public class TurmaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> inativarTurma(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarTurma(@PathVariable Long id) {
         if(turmaService.deletarTurma(id)) return ResponseEntity.ok().build();
 
         return ResponseEntity.notFound().build();

@@ -2,6 +2,7 @@ package com.senai.registro_de_acesso_spring.interface_ui.controller.usuariosCont
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.JustificativaDTO;
 import com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices.JustificativaService;
+import com.senai.registro_de_acesso_spring.domain.service.justificativaService.JustificativaServiceDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,11 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/justificativas")
+@RequestMapping("/justificativa")
 public class JustificativaController {
+    @Autowired
+    private JustificativaService justificativaService;
 
     @Autowired
-    JustificativaService justificativaService;
+    private JustificativaServiceDomain justificativaServiceDomain;
 
     @PostMapping
     public ResponseEntity<String> registrarJustificativa(@RequestBody JustificativaDTO dto) {
@@ -50,5 +53,10 @@ public class JustificativaController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // Justificativa Service Domain
+    // ToDo: Processo de Justificativa de Atraso
+
+    // ToDo: Processo de JUstificativa de Falta
 
 }

@@ -2,7 +2,7 @@ package com.senai.registro_de_acesso_spring.interface_ui.controller.usuariosCont
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.OcorrenciaDTO;
 import com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices.OcorrenciaService;
-import com.senai.registro_de_acesso_spring.domain.service.OcorrenciaService.OcorrenciaServiceRN;
+import com.senai.registro_de_acesso_spring.domain.service.ocorrenciaService.OcorrenciaServiceDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -18,9 +18,9 @@ public class OcorrenciaController {
     private OcorrenciaService ocorrenciaService;
 
     @Autowired
-    private OcorrenciaServiceRN ocorrenciaServiceRN;
+    private OcorrenciaServiceDomain ocorrenciaServiceDomain;
 
-    @PostMapping("/{id}")
+    @PostMapping//("/{id}") // por que passar o id? (não me recordo)
     public ResponseEntity<String> registrarOcorrencia(@RequestBody OcorrenciaDTO dto) {
         ocorrenciaService.registrarOcorrencia(dto);
         return ResponseEntity.ok("Ocorrência registrada com sucesso!");
@@ -54,26 +54,29 @@ public class OcorrenciaController {
         return ResponseEntity.notFound().build();
     }
 
-    // Ocorrencia Service RN
+    // Ocorrencia Service Domain
     // Criar Ocorrencia De Atraso e Processar Mqtt
     public void criarOcorrenciaAtraso(String idDeAcesso) {
         System.out.println(idDeAcesso);
-        ocorrenciaServiceRN.criarOcorrenicaDeAtraso(idDeAcesso);
+        ocorrenciaServiceDomain.criarOcorrenicaDeAtraso(idDeAcesso);
     }
 
+    // ToDo: Processo de Ocorrência de Atraso
+
+    // Processo de Ocorrência de Saida Antecipada
     @MessageMapping("/ocorrencia/saida")
     public void solicitarSaida(@Payload OcorrenciaDTO dto) {
-        ocorrenciaServiceRN.solicitarSaidaAntecipada(dto);
+        ocorrenciaServiceDomain.solicitarSaidaAntecipada(dto);
     }
 
     @MessageMapping("/ocorrencia/decisao")
     public void decidirSaida(@Payload OcorrenciaDTO dto) {
-        ocorrenciaServiceRN.decidirSaida(dto);
+        ocorrenciaServiceDomain.decidirSaida(dto);
     }
 
     @MessageMapping("/ocorrencia/ciencia")
     public void darCiencia(@Payload OcorrenciaDTO dto) {
-        ocorrenciaServiceRN.confirmarCiencia(dto);
+        ocorrenciaServiceDomain.confirmarCiencia(dto);
     }
 
 }

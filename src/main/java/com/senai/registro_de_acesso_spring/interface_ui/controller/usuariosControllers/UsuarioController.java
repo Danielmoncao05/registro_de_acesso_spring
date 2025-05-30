@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/usuario")
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
@@ -17,7 +17,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<String> cadastrarUsuario(@RequestBody UsuarioDTO dto) {
         usuarioService.cadastrarUsuario(dto);
-        return ResponseEntity.ok(dto.nome() + " cadastrado com sucesso!");
+        return ResponseEntity.ok("Usuário(a) '" + dto.nome() + "' cadastrado(a) com sucesso!");
     }
 
     @GetMapping
@@ -35,7 +35,7 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO dto) {
         if(usuarioService.atualizarUsuario(id, dto)) {
-            return ResponseEntity.ok(dto.nome() + " atualizado com sucesso!");
+            return ResponseEntity.ok("Usuário(a) '" + dto.nome() + "' atualizado(a) com sucesso!");
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -44,7 +44,7 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> inativarUsuario(@PathVariable Long id) {
         if(usuarioService.inativarUsuario(id)) {
-            return ResponseEntity.ok("Usuário desativado do sistema!");
+            return ResponseEntity.ok("Usuário(a) desativado do sistema!");
         } else {
             return ResponseEntity.notFound().build();
         }

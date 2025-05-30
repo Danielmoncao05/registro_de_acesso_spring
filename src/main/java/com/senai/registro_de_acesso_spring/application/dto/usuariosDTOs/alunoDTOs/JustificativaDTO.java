@@ -15,7 +15,7 @@ public record JustificativaDTO(
         LocalDate dataInicial,
         Integer quantidadeDias,
         StatusDaJustificativa status,
-        Aluno aluno
+        Long alunoId
 ) {
     public static JustificativaDTO toDTO(Justificativa j) {
         return new JustificativaDTO(
@@ -26,7 +26,7 @@ public record JustificativaDTO(
                 j.getDataInicial(),
                 j.getQuantidadeDias(),
                 j.getStatus(),
-                j.getAluno()
+                j.getAluno() != null ? j.getAluno().getId() : null
         );
     }
 
@@ -39,7 +39,7 @@ public record JustificativaDTO(
         justificativa.setAnexo(anexo);
         justificativa.setDataInicial(dataInicial);
         justificativa.setQuantidadeDias(quantidadeDias);
-        justificativa.setAluno(aluno);
+        justificativa.setStatus(status);
 
         return justificativa;
     }

@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import lombok.*;
 
 @Entity
-@EqualsAndHashCode(callSuper = true)
 @Data
 @DiscriminatorValue("PROFESSOR")
 public class Professor extends Usuario{

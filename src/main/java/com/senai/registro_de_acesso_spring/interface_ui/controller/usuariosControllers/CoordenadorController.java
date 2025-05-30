@@ -1,7 +1,7 @@
 package com.senai.registro_de_acesso_spring.interface_ui.controller.usuariosControllers;
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.CoordenadorDTO;
-import com.senai.registro_de_acesso_spring.application.services.usuariosServices.CoordenadorService;
+import com.senai.registro_de_acesso_spring.application.service.usuariosServices.CoordenadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -51,7 +51,8 @@ public class JustificativaService {
             return true;
         }else  {
             return false;
-        } /*return justificativaRepository.findById(id).map(justificativa -> {
+        }
+        /*return justificativaRepository.findById(id).map(justificativa -> {
             justificativa.setStatus(StatusDaJustificativa.REPROVADO);
 
             justificativaRepository.save(justificativa);

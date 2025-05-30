@@ -1,7 +1,7 @@
 package com.senai.registro_de_acesso_spring.interface_ui.controller.usuariosControllers.alunoControllers;
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.AlunoDTO;
-import com.senai.registro_de_acesso_spring.application.services.usuariosServices.alunoServices.AlunoService;
+import com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
