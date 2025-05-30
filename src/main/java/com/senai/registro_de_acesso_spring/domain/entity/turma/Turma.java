@@ -1,6 +1,7 @@
 package com.senai.registro_de_acesso_spring.domain.entity.turma;
 
 import com.senai.registro_de_acesso_spring.domain.entity.curso.Curso;
+import com.senai.registro_de_acesso_spring.domain.enums.Periodo;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,8 +17,8 @@ public class Turma {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    private String nome;
-    private String periodo;
+    private String siglaDaTurma;
+    private Periodo periodo;
     private LocalDate dataInicial;
     private LocalTime horarioEntrada;
     private Integer quantidadeSemestres;
@@ -27,6 +28,6 @@ public class Turma {
     @ManyToOne
     private Curso curso;
 
-    @OneToMany
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SubTurma> subTurma;
 }

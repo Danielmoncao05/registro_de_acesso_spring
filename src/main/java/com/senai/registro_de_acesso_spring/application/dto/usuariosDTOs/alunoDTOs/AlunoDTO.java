@@ -4,7 +4,7 @@ import com.senai.registro_de_acesso_spring.domain.entity.turma.SubTurma;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Justificativa;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
-import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeUsuario;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeUsuario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,35 +15,52 @@ public record AlunoDTO(
         String nome,
         String cpf,
         LocalDate dataNascimento,
-        String idAcesso,
         String email,
+        String senha,
         String telefone,
+        String idAcesso,
+        String username,
         TipoDeUsuario tipo,
         List<Ocorrencia> ocorrencias,
         List<Justificativa> justificativas,
-        List<SubTurma> subTurmas
+        SubTurma subTurma
 ) {
     public static AlunoDTO toDTO(Aluno a) {
         TipoDeUsuario tipo = TipoDeUsuario.ALUNO;
-        return new AlunoDTO(a.getId(), a.getNome(), a.getCpf(), a.getDataNascimento(), a.getIdAcesso(), a.getEmail(), a.getTelefone(), tipo, a.getOcorrencias(), a.getJustificativas(), a.getSubTurmas());
+        return new AlunoDTO(
+                a.getId(),
+                a.getNome(),
+                a.getCpf(),
+                a.getDataNascimento(),
+                a.getIdAcesso(),
+                a.getEmail(),
+                a.getSenha(),
+                a.getTelefone(),
+                a.getUsername(),
+                tipo,
+                a.getOcorrencias(),
+                a.getJustificativas(),
+                a.getSubTurma()
+        );
     }
 
     public Aluno fromDTO() {
-        Aluno aluno = new Aluno();
+        Aluno a = new Aluno();
 
-        aluno.setId(id);
-        aluno.setNome(nome);
-        aluno.setCpf(cpf);
-        aluno.setEmail(email);
-        aluno.setDataNascimento(dataNascimento);
-        aluno.setTelefone(telefone);
-        aluno.setIdAcesso(idAcesso);
-        aluno.setAtivo(true);
-        aluno.setSenha("");
-        aluno.setSubTurmas(subTurmas);
-        aluno.setJustificativas(justificativas);
-        aluno.setOcorrencias(ocorrencias);
+        a.setId(id);
+        a.setNome(nome);
+        a.setCpf(cpf);
+        a.setEmail(email);
+        a.setDataNascimento(dataNascimento);
+        a.setTelefone(telefone);
+        a.setIdAcesso(idAcesso);
+        a.setUsername(username);
+        a.setAtivo(true);
+        a.setSenha(senha);
+        a.setSubTurma(subTurma);
+        a.setJustificativas(new ArrayList<>());
+        a.setOcorrencias(new ArrayList<>());
 
-        return aluno;
+        return a;
     }
 }

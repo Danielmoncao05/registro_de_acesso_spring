@@ -4,18 +4,21 @@ import com.senai.registro_de_acesso_spring.domain.entity.curso.Ambiente;
 
 public record AmbienteDTO(
         Long id,
-        String nome
+        String nome,
+        boolean ativo
 ) {
     public static AmbienteDTO toDTO(Ambiente a) {
-        return new AmbienteDTO(a.getId(), a.getNome());
+        return new AmbienteDTO(
+                a.getId(),
+                a.getNome(),
+                a.isAtivo());
     }
 
     public Ambiente fromDTO() {
-        Ambiente ambiente = new Ambiente();
-
-        ambiente.setId(id);
-        ambiente.setNome(nome);
-
-        return ambiente;
+        return new Ambiente(
+                id,
+                nome,
+                true
+        );
     }
 }

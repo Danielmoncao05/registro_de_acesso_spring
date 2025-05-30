@@ -1,9 +1,12 @@
 package com.senai.registro_de_acesso_spring.interface_ui.controller.usuariosControllers.alunoControllers;
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.OcorrenciaDTO;
-import com.senai.registro_de_acesso_spring.application.services.usuariosServices.alunoServices.OcorrenciaService;
+import com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices.OcorrenciaService;
+import com.senai.registro_de_acesso_spring.domain.service.OcorrenciaService.OcorrenciaServiceRN;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,10 +17,13 @@ public class OcorrenciaController {
     @Autowired
     private OcorrenciaService ocorrenciaService;
 
-    @PostMapping
-    public ResponseEntity<String> cadastrarOcorrencia(@RequestBody OcorrenciaDTO dto) {
-        ocorrenciaService.cadastrarOcorrencia(dto);
-        return ResponseEntity.ok("Ocorrência cadastrada com sucesso!"); // return ResponseEntity.ok("Ocorrência do(a) Aluno(a) '" + dto.aluno().getNome() +  "' cadastrada com sucesso!");
+    @Autowired
+    private OcorrenciaServiceRN ocorrenciaServiceRN;
+
+    @PostMapping("/{id}")
+    public ResponseEntity<String> registrarOcorrencia(@RequestBody OcorrenciaDTO dto) {
+        ocorrenciaService.registrarOcorrencia(dto);
+        return ResponseEntity.ok("Ocorrência registrada com sucesso!");
     }
 
     @GetMapping
@@ -35,23 +41,39 @@ public class OcorrenciaController {
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarOcorrencia(@PathVariable Long id, @RequestBody OcorrenciaDTO dto) {
         if(ocorrenciaService.atualizarOcorrencia(id, dto)) {
-            return ResponseEntity.ok("Ocorrência atualizada com sucesso!"); //return ResponseEntity.ok("Ocorrência do(a) Aluno(a) '" + dto.aluno().getNome() +  "' atualizada com sucesso!");
+            return ResponseEntity.ok("Ocorrência atualizada com sucesso!");
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> inativarOcorrencia(@PathVariable Long id) {
-        if(ocorrenciaService.inativarOcorrencia(id)) {
-            return ResponseEntity.ok("Ocorrência desativada do sistema!");
+    public ResponseEntity<String> deletarOcorrencia(@PathVariable Long id) {
+        if(ocorrenciaService.deletarOcorrencia(id)) {
+            return ResponseEntity.ok("Ocorrência deletada do sistema!");
         }
         return ResponseEntity.notFound().build();
     }
 
-    // Processar Mqtt
-    public void processarMQTT(String idDeAcesso) {
+    // Ocorrencia Service RN
+    // Criar Ocorrencia De Atraso e Processar Mqtt
+    public void criarOcorrenciaAtraso(String idDeAcesso) {
         System.out.println(idDeAcesso);
-        ocorrenciaService.criarOcorrenicaDeAtraso(idDeAcesso);
+        ocorrenciaServiceRN.criarOcorrenicaDeAtraso(idDeAcesso);
+    }
+
+    @MessageMapping("/ocorrencia/saida")
+    public void solicitarSaida(@Payload OcorrenciaDTO dto) {
+        ocorrenciaServiceRN.solicitarSaidaAntecipada(dto);
+    }
+
+    @MessageMapping("/ocorrencia/decisao")
+    public void decidirSaida(@Payload OcorrenciaDTO dto) {
+        ocorrenciaServiceRN.decidirSaida(dto);
+    }
+
+    @MessageMapping("/ocorrencia/ciencia")
+    public void darCiencia(@Payload OcorrenciaDTO dto) {
+        ocorrenciaServiceRN.confirmarCiencia(dto);
     }
 
 }

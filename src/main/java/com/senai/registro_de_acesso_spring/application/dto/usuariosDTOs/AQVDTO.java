@@ -1,7 +1,7 @@
 package com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs;
 
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.AQV;
-import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeUsuario;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeUsuario;
 
 import java.time.LocalDate;
 
@@ -11,13 +11,26 @@ public record AQVDTO (
         String cpf,
         LocalDate dataNascimento,
         String email,
+        String senha,
         String telefone,
         String idAcesso,
+        String username,
         TipoDeUsuario tipo
 ){
     public static AQVDTO toDTO(AQV a) {
         TipoDeUsuario tipo = TipoDeUsuario.AQV;
-        return new AQVDTO(a.getId(), a.getNome(), a.getCpf(), a.getDataNascimento(), a.getEmail(), a.getTelefone(),a.getIdAcesso(), tipo);
+        return new AQVDTO(
+                a.getId(),
+                a.getNome(),
+                a.getCpf(),
+                a.getDataNascimento(),
+                a.getEmail(),
+                a.getSenha(),
+                a.getTelefone(),
+                a.getIdAcesso(),
+                a.getUsername(),
+                tipo
+        );
     }
 
     public AQV fromDTO() {
@@ -28,10 +41,11 @@ public record AQVDTO (
         aqv.setCpf(cpf);
         aqv.setDataNascimento(dataNascimento);
         aqv.setEmail(email);
+        aqv.setSenha(senha);
         aqv.setTelefone(telefone);
         aqv.setIdAcesso(idAcesso);
+        aqv.setUsername(username);
         aqv.setAtivo(true);
-        aqv.setSenha("");
         aqv.setFoto("");
 
         return aqv;

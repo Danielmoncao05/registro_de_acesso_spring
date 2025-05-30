@@ -1,8 +1,7 @@
 package com.senai.registro_de_acesso_spring.interface_ui.controller.turmaControllers;
 
 import com.senai.registro_de_acesso_spring.application.dto.turmaDTOs.TurmaDTO;
-import com.senai.registro_de_acesso_spring.application.services.turmaServices.TurmaService;
-import com.senai.registro_de_acesso_spring.domain.entity.turma.Turma;
+import com.senai.registro_de_acesso_spring.application.service.turmaServices.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +15,9 @@ public class TurmaController {
     TurmaService turmaService;
 
     @PostMapping
-    public ResponseEntity<String> cadastrarTurmas(@RequestBody TurmaDTO dto) {
+    public ResponseEntity<Void> cadastrarTurmas(@RequestBody TurmaDTO dto) {
         turmaService.cadastrarTurma(dto);
-        return ResponseEntity.ok("Turma '"+ dto.nome() + "' cadastrada com sucesso!");
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
@@ -34,20 +33,16 @@ public class TurmaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarTurma(@PathVariable Long id, @RequestBody TurmaDTO dto) {
-        if(turmaService.atualizarTurma(id, dto)) {
-            return ResponseEntity.ok("Turma '" + dto.nome() + "'atualizada com sucesso!");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> atualizarTurma(@PathVariable Long id, @RequestBody TurmaDTO dto) {
+        if(turmaService.atualizarTurma(id, dto)) return ResponseEntity.ok().build();
+
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> inativarTurma(@PathVariable Long id) {
-        if(turmaService.inativarTurma(id)) {
-            return ResponseEntity.ok("Turma desativada do sistema.");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> inativarTurma(@PathVariable Long id) {
+        if(turmaService.deletarTurma(id)) return ResponseEntity.ok().build();
+
+        return ResponseEntity.notFound().build();
     }
 }

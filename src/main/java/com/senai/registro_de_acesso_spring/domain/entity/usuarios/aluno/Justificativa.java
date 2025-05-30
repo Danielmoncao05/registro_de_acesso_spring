@@ -1,7 +1,7 @@
 package com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno;
 
-import com.senai.registro_de_acesso_spring.domain.enuns.StatusDaJustificativa;
-import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeJustifcativa;
+import com.senai.registro_de_acesso_spring.domain.enums.StatusDaJustificativa;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeJustifcativa;
 import jakarta.persistence.*;
 import lombok.*;
 

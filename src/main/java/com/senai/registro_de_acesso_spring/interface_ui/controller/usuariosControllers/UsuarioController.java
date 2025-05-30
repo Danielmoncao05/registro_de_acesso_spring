@@ -1,8 +1,7 @@
 package com.senai.registro_de_acesso_spring.interface_ui.controller.usuariosControllers;
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.UsuarioDTO;
-import com.senai.registro_de_acesso_spring.application.services.usuariosServices.UsuarioService;
-import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Usuario;
+import com.senai.registro_de_acesso_spring.application.service.usuariosServices.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,15 +9,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/usuarios")
 public class UsuarioController {
     @Autowired
-    UsuarioService usuarioService;
+    private UsuarioService usuarioService;
 
     @PostMapping
     public ResponseEntity<String> cadastrarUsuario(@RequestBody UsuarioDTO dto) {
         usuarioService.cadastrarUsuario(dto);
-        return ResponseEntity.ok("Usuário cadastrado com sucesso!");
+        return ResponseEntity.ok(dto.nome() + " cadastrado com sucesso!");
     }
 
     @GetMapping
@@ -36,7 +35,7 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO dto) {
         if(usuarioService.atualizarUsuario(id, dto)) {
-            return ResponseEntity.ok("Usuário atualizado com sucesso!");
+            return ResponseEntity.ok(dto.nome() + " atualizado com sucesso!");
         } else {
             return ResponseEntity.notFound().build();
         }

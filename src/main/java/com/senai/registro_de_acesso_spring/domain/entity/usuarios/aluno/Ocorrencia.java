@@ -2,9 +2,8 @@ package com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno;
 
 import com.senai.registro_de_acesso_spring.domain.entity.curso.UnidadeCurricular;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Professor;
-import com.senai.registro_de_acesso_spring.domain.enuns.StatusDaOcorrencia;
-import com.senai.registro_de_acesso_spring.domain.enuns.StatusDaJustificativa;
-import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeOcorrencia;
+import com.senai.registro_de_acesso_spring.domain.enums.StatusDaOcorrencia;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeOcorrencia;
 import jakarta.persistence.*;
 import lombok.*;
 

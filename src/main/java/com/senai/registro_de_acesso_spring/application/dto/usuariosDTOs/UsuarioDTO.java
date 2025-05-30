@@ -5,7 +5,7 @@ import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Coordenador;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Professor;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Usuario;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
-import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeUsuario;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeUsuario;
 
 import java.time.LocalDate;
 
@@ -17,6 +17,7 @@ public record UsuarioDTO(
         String idAcesso,
         String email,
         String telefone,
+        String username,
         TipoDeUsuario tipoDeUsuario
 )
 {
@@ -28,7 +29,7 @@ public record UsuarioDTO(
             case AQV aqv -> TipoDeUsuario.AQV;
             default -> throw new IllegalArgumentException("Tipo de usuário desconhecido");
         };
-        return new UsuarioDTO(u.getId(), u.getNome(), u.getCpf(), u.getDataNascimento(), u.getIdAcesso(), u.getEmail(), u.getTelefone(), tipo);
+        return new UsuarioDTO(u.getId(), u.getNome(), u.getCpf(), u.getDataNascimento(), u.getIdAcesso(), u.getEmail(), u.getTelefone(), u.getUsername(),tipo);
     }
 
     public Usuario fromDTO() {
@@ -46,9 +47,8 @@ public record UsuarioDTO(
         usuario.setEmail(email);
         usuario.setTelefone(telefone);
         usuario.setIdAcesso(idAcesso);
+        usuario.setUsername(username);
         usuario.setAtivo(true);
-        usuario.setSenha("");
-        usuario.setFoto("");
 
         return usuario;
     }
