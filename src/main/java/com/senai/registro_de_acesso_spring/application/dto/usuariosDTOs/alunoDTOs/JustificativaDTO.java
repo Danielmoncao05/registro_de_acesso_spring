@@ -1,15 +1,14 @@
 package com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs;
 
-import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Justificativa;
 import com.senai.registro_de_acesso_spring.domain.enums.StatusDaJustificativa;
-import com.senai.registro_de_acesso_spring.domain.enums.TipoDeJustifcativa;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeJustificativa;
 
 import java.time.LocalDate;
 
 public record JustificativaDTO(
         Long id,
-        TipoDeJustifcativa tipo,
+        TipoDeJustificativa tipo,
         String descricao,
         String anexo,
         LocalDate dataInicial,

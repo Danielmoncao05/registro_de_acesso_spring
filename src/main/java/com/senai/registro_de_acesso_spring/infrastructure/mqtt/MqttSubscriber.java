@@ -1,5 +1,6 @@
 package com.senai.registro_de_acesso_spring.infrastructure.mqtt;
 
+import com.senai.registro_de_acesso_spring.interface_ui.controller.usuariosControllers.alunoControllers.JustificativaController;
 import com.senai.registro_de_acesso_spring.interface_ui.controller.usuariosControllers.alunoControllers.OcorrenciaController;
 import jakarta.annotation.PostConstruct;
 import org.eclipse.paho.client.mqttv3.*;
@@ -13,8 +14,10 @@ public class MqttSubscriber {
     private static final String TOPICO = "catraca/rfid";
 
     @Autowired
-    private  OcorrenciaController ocorrenciaController;
+    private OcorrenciaController ocorrenciaController;
 
+    @Autowired
+    private JustificativaController justificativaController;
 
     @PostConstruct
     public void iniciarMqtt() {
@@ -24,6 +27,8 @@ public class MqttSubscriber {
             client.subscribe(TOPICO, (topic, msg) -> {
                 String idAcesso = new String(msg.getPayload());
                 ocorrenciaController.criarOcorrenciaAtraso(idAcesso);
+                // Conexao com justificativa controller - TESTE
+                justificativaController.testeJustificativaFaltaIdAcesso(idAcesso);
             });
             System.out.println("Inscrito no tópico MQTT: " + TOPICO);
         } catch (MqttException e) {

@@ -27,7 +27,7 @@ public class OcorrenciaService {
     }
 
     public List<OcorrenciaDTO> listarOcorrencia() {
-        return ocorrenciaRepository.findAll()// ocorrenciaRepository.findByStatusDaOcorrencia(StatusDaOcorrencia.APROVADO)
+        return ocorrenciaRepository.findAll() // ocorrenciaRepository.findByStatusDaOcorrencia(StatusDaOcorrencia.APROVADO)
                 .stream().map(OcorrenciaDTO::toDTO)
                 .collect(Collectors.toList());
     }

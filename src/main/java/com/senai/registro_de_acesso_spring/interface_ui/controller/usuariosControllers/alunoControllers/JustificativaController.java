@@ -2,21 +2,18 @@ package com.senai.registro_de_acesso_spring.interface_ui.controller.usuariosCont
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.JustificativaDTO;
 import com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices.JustificativaService;
-import com.senai.registro_de_acesso_spring.domain.service.justificativaService.JustificativaServiceDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/justificativa")
 public class JustificativaController {
     @Autowired
     private JustificativaService justificativaService;
-
-    @Autowired
-    private JustificativaServiceDomain justificativaServiceDomain;
 
     @PostMapping
     public ResponseEntity<String> registrarJustificativa(@RequestBody JustificativaDTO dto) {
@@ -55,8 +52,45 @@ public class JustificativaController {
     }
 
     // Justificativa Service Domain
-    // ToDo: Processo de Justificativa de Atraso
+    // NOT ME - ToDo: Processo de Justificativa de Atraso
 
-    // ToDo: Processo de JUstificativa de Falta
+    public void testeJustificativaFaltaIdAcesso(String idAcesso) {
+        System.out.println("Justificativa - idAcesso: " + idAcesso);
+    }
+
+    // Processo de Justificativa de Falta - CRUD ESPECIFICO
+    @PostMapping("/falta")
+    public ResponseEntity<String> criarJustificativaFalta(@RequestBody JustificativaDTO dto) {
+        justificativaService.criarJustificativaFalta(dto);
+        return ResponseEntity.ok("Justificativa de Falta criada com sucesso!");
+    }
+
+    @GetMapping("/falta/{idJustificativa}")
+    public ResponseEntity<Optional<JustificativaDTO>> listarJustificativaFaltaPorId(@PathVariable Long idJustificativa) {
+        return ResponseEntity.ok(justificativaService.listarJustificativaFaltaPorId(idJustificativa));
+    }
+
+    @GetMapping("/falta")
+    public ResponseEntity<List<JustificativaDTO>> listarJustificativasFalta() {
+        return ResponseEntity.ok(justificativaService.listarJustificativasFalta()); // tratar para somente tipo de justificativa = FALTA
+    }
+
+    @PutMapping("/falta/{idJustificativa}")
+    public ResponseEntity<String> alterarJustificativaFalta(@PathVariable Long idJustificativa, @RequestBody JustificativaDTO dto) {
+        if(justificativaService.alterarJustificativaFalta(idJustificativa, dto)) {
+            return ResponseEntity.ok("Justificativa de Falta alterada com sucesso!");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/falta/{idJustificativa}")
+    public ResponseEntity<String> deletarJustificativaFalta(@PathVariable Long idJustificativa) {
+        if (justificativaService.deletarJustificativaFalta(idJustificativa)) {
+            return ResponseEntity.ok("Justificativa de Falta deletada do sistema!");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

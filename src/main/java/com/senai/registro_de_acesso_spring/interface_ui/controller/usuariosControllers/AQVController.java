@@ -11,7 +11,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/aqv")
 public class AQVController {
-
     @Autowired
     private AQVService aqvService;
 
@@ -50,4 +49,15 @@ public class AQVController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // AQV alterar status de Justificativa de Falta
+    @PutMapping("/falta/{id}")
+    public ResponseEntity<String> alterarStatusJustificativaFalta(@PathVariable Long id) {
+        if(aqvService.alterarStatusJustificativaFalta(id)) {
+            return ResponseEntity.ok("Status da Justificativa de Falta alterado com sucesso!");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

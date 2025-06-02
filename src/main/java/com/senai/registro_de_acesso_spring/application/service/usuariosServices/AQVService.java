@@ -54,4 +54,10 @@ public class AQVService {
             return true;
         }).orElse(false);
     }
+
+    // AQV alterar Status de JUstificativa de Falta
+    public boolean alterarStatusJustificativaFalta(Long id) {
+        // todo
+        return true;
+    }
 }
