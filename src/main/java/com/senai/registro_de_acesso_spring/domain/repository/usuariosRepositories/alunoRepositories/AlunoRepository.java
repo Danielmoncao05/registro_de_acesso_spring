@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     List<Aluno> findByAtivoTrue();
+
 }

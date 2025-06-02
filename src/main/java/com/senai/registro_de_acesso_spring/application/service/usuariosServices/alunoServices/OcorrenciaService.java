@@ -5,11 +5,13 @@ import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
 import com.senai.registro_de_acesso_spring.domain.enums.StatusDaOcorrencia;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.UsuarioRepository;
+import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.AlunoRepository;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.OcorrenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,6 +23,8 @@ public class OcorrenciaService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    private AlunoRepository alunoRepository;
 
     public void registrarOcorrencia(OcorrenciaDTO dto) {
         ocorrenciaRepository.save(dto.fromDTO());
@@ -67,4 +71,18 @@ public class OcorrenciaService {
 
 
 
+
+    public void criarOcorrenciaDeSaide (OcorrenciaDTO ocorrenciaDTO) {
+
+        Aluno aluno = alunoRepository.findById(ocorrenciaDTO.alunoId()).orElseThrow(() -> new RuntimeException("Aluno inexistente"));
+
+        Ocorrencia ocorrencia = ocorrenciaDTO.fromDTO();
+
+        ocorrencia.setStatus(StatusDaOcorrencia.AGUARDANDO_AUTORIZACAO);
+        ocorrencia.setDataHoraCriacao(LocalDateTime.now());
+        ocorrencia.setAluno(aluno);
+        ocorrencia.setProfessorResponsavel(ocorrencia.getProfessorResponsavel());
+
+        Ocorrencia save = ocorrenciaRepository.save(ocorrencia);
+    }
 }

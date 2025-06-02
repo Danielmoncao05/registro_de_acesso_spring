@@ -20,4 +20,6 @@ public class Aluno extends Usuario {
     @ManyToOne // muitos para muitos | nao precisa de associacao pois ja esta
     @JoinColumn(name = "sub_turma_id")
     private SubTurma subTurma;
+
+    private boolean classTime;
 }
