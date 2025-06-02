@@ -17,6 +17,7 @@ public class JustificativaService {
     @Autowired
     private JustificativaRepository justificativaRepository;
 
+    // CRUD de Justificativa
     public void registrarJustificativa(JustificativaDTO dto) {
         justificativaRepository.save(dto.fromDTO());
     }
@@ -63,7 +64,7 @@ public class JustificativaService {
         }).orElse(false);*/
     }
 
-    // CRUD Justificativa Falta
+    // CRUD de Justificativa de Falta
     public void criarJustificativaFalta(JustificativaDTO dto) {
         Justificativa justificativa = dto.fromDTO();
 
@@ -88,7 +89,7 @@ public class JustificativaService {
     }
 
     public boolean alterarJustificativaFalta(Long id, JustificativaDTO dto) {
-        return justificativaRepository.findByTipoDeJustificativa(TipoDeJustificativa.FALTA)
+        return justificativaRepository.findById(id).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.FALTA)
                 .map(justificativa -> {
                     Justificativa justificativaAlterada = dto.fromDTO();
 
@@ -102,6 +103,7 @@ public class JustificativaService {
                     justificativa.setQuantidadeDias(justificativaAlterada.getQuantidadeDias());
                     justificativa.setStatus(StatusDaJustificativa.AGUARDANDO_ANALISE); // ao alterar os dados, o status volta a aguardando para nova analise
 
+                    justificativaRepository.save(justificativa);
                     return true;
                 }).orElse(false);
     }

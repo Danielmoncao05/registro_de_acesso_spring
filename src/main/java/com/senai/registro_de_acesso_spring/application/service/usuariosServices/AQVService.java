@@ -1,8 +1,12 @@
 package com.senai.registro_de_acesso_spring.application.service.usuariosServices;
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.AQVDTO;
+import com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices.JustificativaService;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.AQV;
+import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Justificativa;
+import com.senai.registro_de_acesso_spring.domain.enums.StatusDaJustificativa;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.AQVRepository;
+import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.JustificativaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +19,13 @@ public class AQVService {
     @Autowired
     private AQVRepository aqvRepository;
 
+    @Autowired
+    private JustificativaRepository justificativaRepository;
+
+    @Autowired
+    private JustificativaService justificativaService;
+
+    // CRUD de AQV
     public void cadastrarAQV(AQVDTO dto) {
         aqvRepository.save(dto.fromDTO());
     }
@@ -56,8 +67,12 @@ public class AQVService {
     }
 
     // AQV alterar Status de JUstificativa de Falta
-    public boolean alterarStatusJustificativaFalta(Long id) {
-        // todo
+    public boolean alterarStatusJustificativaFalta(Long idJustificativa) {
+        justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getStatus() == StatusDaJustificativa.AGUARDANDO_ANALISE)
+                .map(justificativa -> );
+        if(justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getStatus() == StatusDaJustificativa.AGUARDANDO_ANALISE).isPresent()) {
+
+        }
         return true;
     }
 }

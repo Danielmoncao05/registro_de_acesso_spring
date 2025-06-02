@@ -9,8 +9,10 @@ import java.util.Optional;
 
 @Repository
 public interface JustificativaRepository extends JpaRepository<Justificativa, Long> {
+    // Listar Justificativas pelo Status
     //List<Justificativa> findByStatusDaJustificativa(StatusDaJustificativa status);
-    // Listar Justificativas de Falta ou Atraso
-    //List<JustificativaDTO> findByTipoDeJustificativa(TipoDeJustifcativa tipo);
-    Optional<Justificativa> findByTipoDeJustificativa(TipoDeJustificativa tipo);
+
+    // Listar Justificativas de Falta ou Atraso - AMBOS NÃO ESTÃO SENDO UTILIZADOS MOMENTANEAMENTE
+    // List<JustificativaDTO> findByTipoDeJustificativa(TipoDeJustifcativa tipo);
+    // Optional<Justificativa> findByTipo(TipoDeJustificativa tipo);
 }

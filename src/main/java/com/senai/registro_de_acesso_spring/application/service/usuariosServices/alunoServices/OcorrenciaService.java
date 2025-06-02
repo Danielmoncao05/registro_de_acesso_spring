@@ -1,15 +1,25 @@
 package com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices;
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.OcorrenciaDTO;
+import com.senai.registro_de_acesso_spring.domain.entity.usuarios.AQV;
+import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Professor;
+import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Usuario;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
 import com.senai.registro_de_acesso_spring.domain.enums.StatusDaOcorrencia;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeOcorrencia;
+import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.AQVRepository;
+import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.ProfessorRepository;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.UsuarioRepository;
+import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.AlunoRepository;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.OcorrenciaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,8 +30,21 @@ public class OcorrenciaService {
     private OcorrenciaRepository ocorrenciaRepository;
 
     @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
+    @Autowired
+    private AlunoRepository alunoRepository;
+
+    @Autowired
+    private ProfessorRepository professorRepository;
+
+    @Autowired
+    private AQVRepository aqvRepository;
+
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
+    // CRUD de Ocorrência
     public void registrarOcorrencia(OcorrenciaDTO dto) {
         ocorrenciaRepository.save(dto.fromDTO());
     }
@@ -79,4 +102,73 @@ public class OcorrenciaService {
         return false;
     }
 
+    // TODO: Processo de Ocorrência de Atraso
+
+    // Processo de Ocorrência de Saída Antecipada
+    @Transactional
+    public void solicitarSaidaAntecipada(OcorrenciaDTO dto) {
+        Aluno aluno = alunoRepository.findById(dto.alunoId())
+                .orElseThrow(() -> new RuntimeException("Aluno(a) não encontrado(a)"));
+
+        AQV aqv = aqvRepository.findFirstByOrderByIdAsc()
+                .orElseThrow(() -> new RuntimeException("AQV não encontrado(a)"));
+
+        Professor professor = professorRepository.findById(dto.professorResponsavelId())
+                .orElseThrow(() -> new RuntimeException("Professor(a) não encontrado(a)"));
+
+        Ocorrencia ocorrencia = dto.fromDTO();
+
+        ocorrencia.setProfessorResponsavel(professor);
+        ocorrencia.setDataHoraCriacao(LocalDateTime.now());
+        ocorrencia.setAluno(aluno);
+        ocorrencia.setTipo(TipoDeOcorrencia.SAIDA_ANTECIPADA);
+
+        mudarStatusEEnviaOcorrencia(
+                StatusDaOcorrencia.AGUARDANDO_AUTORIZACAO,
+                aqv,
+                ocorrencia
+        );
+    }
+
+    public void decidirSaida(OcorrenciaDTO dto) {
+        Ocorrencia ocorrencia = ocorrenciaRepository.findById(dto.id())
+                .orElseThrow(() -> new RuntimeException("Ocorrência não encontrada"));
+
+        if (dto.status() == StatusDaOcorrencia.REPROVADO) {
+            mudarStatusEEnviaOcorrencia(
+                    StatusDaOcorrencia.REPROVADO,
+                    ocorrencia.getAluno(),
+                    ocorrencia
+            );
+        } else {
+            mudarStatusEEnviaOcorrencia(
+                    StatusDaOcorrencia.AGUARDANDO_CIENCIA_PROFESSOR,
+                    ocorrencia.getProfessorResponsavel(),
+                    ocorrencia
+            );
+        }
+    }
+
+    public void confirmarCiencia(OcorrenciaDTO dto) {
+        Ocorrencia ocorrencia = ocorrenciaRepository.findById(dto.id())
+                .orElseThrow(() -> new RuntimeException("Ocorrência não encontrada"));
+
+        mudarStatusEEnviaOcorrencia(
+                StatusDaOcorrencia.APROVADO,
+                ocorrencia.getAluno(),
+                ocorrencia
+        );
+    }
+
+    public void mudarStatusEEnviaOcorrencia(StatusDaOcorrencia status, Usuario usuarioDestino, Ocorrencia ocorrencia) {
+        ocorrencia.setStatus(status);
+
+        ocorrenciaRepository.save(ocorrencia);
+
+        messagingTemplate.convertAndSendToUser(
+                usuarioDestino.getUsername(),
+                "/queue/ocorrencia",
+                OcorrenciaDTO.toDTO(ocorrencia)
+        );
+    }
 }

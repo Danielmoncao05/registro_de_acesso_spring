@@ -15,6 +15,7 @@ public class JustificativaController {
     @Autowired
     private JustificativaService justificativaService;
 
+    // CRUD de Justificativa
     @PostMapping
     public ResponseEntity<String> registrarJustificativa(@RequestBody JustificativaDTO dto) {
              justificativaService.registrarJustificativa(dto);
@@ -66,13 +67,19 @@ public class JustificativaController {
     }
 
     @GetMapping("/falta/{idJustificativa}")
+    public ResponseEntity<JustificativaDTO> listarJustificativaFaltaPorId(@PathVariable Long idJustificativa) {
+        return justificativaService.listarJustificativaFaltaPorId(idJustificativa)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+     /* @GetMapping("/falta/{idJustificativa}")
     public ResponseEntity<Optional<JustificativaDTO>> listarJustificativaFaltaPorId(@PathVariable Long idJustificativa) {
         return ResponseEntity.ok(justificativaService.listarJustificativaFaltaPorId(idJustificativa));
-    }
+    } */
 
     @GetMapping("/falta")
     public ResponseEntity<List<JustificativaDTO>> listarJustificativasFalta() {
-        return ResponseEntity.ok(justificativaService.listarJustificativasFalta()); // tratar para somente tipo de justificativa = FALTA
+        return ResponseEntity.ok(justificativaService.listarJustificativasFalta()); // tratar para somente tipo de justificativa = FALTA | FEITO!!
     }
 
     @PutMapping("/falta/{idJustificativa}")

@@ -34,7 +34,7 @@ public class AutenticacaoController {
         return ResponseEntity.ok(Map.of("token", token));
     }
 
-    @PostMapping("/register")
+    @PostMapping("/registrar")
     public ResponseEntity<?> register(@RequestBody Map<String, String> payload) {
         String nome = payload.get("nome");
         String username = payload.get("username");

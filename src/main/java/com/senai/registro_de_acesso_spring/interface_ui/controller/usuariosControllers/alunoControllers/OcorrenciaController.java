@@ -20,7 +20,8 @@ public class OcorrenciaController {
     @Autowired
     private OcorrenciaServiceDomain ocorrenciaServiceDomain;
 
-    @PostMapping//("/{id}") // por que passar o id? (não me recordo)
+    // CRUD de Ocorrência
+    @PostMapping //("/{id}") // por que passar o id? (não me recordo)
     public ResponseEntity<String> registrarOcorrencia(@RequestBody OcorrenciaDTO dto) {
         ocorrenciaService.registrarOcorrencia(dto);
         return ResponseEntity.ok("Ocorrência registrada com sucesso!");
@@ -49,7 +50,7 @@ public class OcorrenciaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletarOcorrencia(@PathVariable Long id) {
         if(ocorrenciaService.deletarOcorrencia(id)) {
-            return ResponseEntity.ok("Ocorrência deletada do sistema!");
+            return ResponseEntity.ok("Ocorrência deletada do sistema.");
         }
         return ResponseEntity.notFound().build();
     }
@@ -64,19 +65,21 @@ public class OcorrenciaController {
     // ToDo: Processo de Ocorrência de Atraso
 
     // Processo de Ocorrência de Saida Antecipada
+    // @MessageMapping envia mensagens passando topico e destino ? | pesquisar mais!
+    // @Payload refere ao 'pacote de dados' a ser entregue na mensagem
     @MessageMapping("/ocorrencia/saida")
     public void solicitarSaida(@Payload OcorrenciaDTO dto) {
-        ocorrenciaServiceDomain.solicitarSaidaAntecipada(dto);
+        ocorrenciaService.solicitarSaidaAntecipada(dto);
     }
 
     @MessageMapping("/ocorrencia/decisao")
     public void decidirSaida(@Payload OcorrenciaDTO dto) {
-        ocorrenciaServiceDomain.decidirSaida(dto);
+        ocorrenciaService.decidirSaida(dto);
     }
 
     @MessageMapping("/ocorrencia/ciencia")
     public void darCiencia(@Payload OcorrenciaDTO dto) {
-        ocorrenciaServiceDomain.confirmarCiencia(dto);
+        ocorrenciaService.confirmarCiencia(dto);
     }
 
 }
