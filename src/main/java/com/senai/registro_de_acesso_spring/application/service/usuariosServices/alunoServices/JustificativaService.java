@@ -1,11 +1,18 @@
 package com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices;
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.JustificativaDTO;
+import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.OcorrenciaDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Justificativa;
+import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
+import com.senai.registro_de_acesso_spring.domain.enums.StatusDaJustificativa;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeJustifcativa;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.JustificativaRepository;
+import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.OcorrenciaRepository;
+import com.senai.registro_de_acesso_spring.domain.service.JustificativasRegras.JustificativaServiceRegras;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +20,10 @@ import java.util.Optional;
 public class JustificativaService {
     @Autowired
     private JustificativaRepository justificativaRepository;
+
+    private JustificativaServiceRegras justificativaServiceRegras;
+
+    private OcorrenciaRepository ocorrenciaRepository;
 
     public void registrarJustificativa(JustificativaDTO dto) {
         justificativaRepository.save(dto.fromDTO());
@@ -57,5 +68,28 @@ public class JustificativaService {
             justificativaRepository.save(justificativa);
             return true;
         }).orElse(false);*/
+    }
+
+
+    // topico para justificativas de saidas antecipadas
+
+    public void justificarSaidaAntecipada (JustificativaDTO justificativaDTO) {
+
+        Long idOcorrencia = justificativaDTO.ocorrencia().getId();
+        Ocorrencia ocorrencia = justificativaServiceRegras.validarOcorrencia(idOcorrencia);
+
+        Justificativa justificativa = justificativaDTO.fromDTO();
+        justificativa.setTipo(TipoDeJustifcativa.FALTA);
+        justificativa.setDescricao(justificativaDTO.descricao());
+        justificativa.setAnexo(justificativaDTO.anexo());
+        justificativa.setDataInicial(LocalDate.now());
+        justificativa.setQuantidadeDias(justificativaDTO.quantidadeDias());
+        justificativa.setOcorrencia(ocorrencia);
+
+        justificativaRepository.save(justificativa);
+
+//        if (ocorrenciaRepository.findBy(ocorrencia))
+//        Justificativa justificativa = justificativaDTO.fromDTO();
+//        justificativa.setStatus(StatusDaJustificativa.AGUARDANDO_ANALISE);
     }
 }

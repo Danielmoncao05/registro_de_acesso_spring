@@ -52,4 +52,14 @@ public class JustificativaController {
         }
     }
 
+    //topico para justificativa de saida antecipada ;
+
+    @PostMapping ("/saidas")
+    public ResponseEntity<JustificativaDTO> justificarSaidaAntecipada (@RequestBody JustificativaDTO dto) {
+
+        justificativaService.justificarSaidaAntecipada(dto);
+
+        return ResponseEntity.ok().build();
+    }
+
 }

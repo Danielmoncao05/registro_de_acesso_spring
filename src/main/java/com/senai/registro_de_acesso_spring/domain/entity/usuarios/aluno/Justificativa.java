@@ -27,4 +27,8 @@ public class Justificativa {
 
     @ManyToOne
     private Aluno aluno;
+
+    @OneToOne
+    @JoinColumn(name = "ocorrencia_id", nullable = false)
+    private Ocorrencia ocorrencia;
 }

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 
 @Service
-public class OcorrenciaServiceRN {
+public class  OcorrenciaServiceRN {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 

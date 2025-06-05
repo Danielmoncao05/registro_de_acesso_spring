@@ -72,7 +72,7 @@ public class OcorrenciaService {
 
 
 
-    public void criarOcorrenciaDeSaide (OcorrenciaDTO ocorrenciaDTO) {
+    public void criarOcorrenciaDeSaida (OcorrenciaDTO ocorrenciaDTO) {
 
         Aluno aluno = alunoRepository.findById(ocorrenciaDTO.alunoId()).orElseThrow(() -> new RuntimeException("Aluno inexistente"));
 

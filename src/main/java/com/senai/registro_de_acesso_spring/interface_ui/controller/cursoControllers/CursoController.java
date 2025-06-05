@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/curso")
-public class CursoController {
+public class    CursoController {
     @Autowired
     CursoService cursoService;
 

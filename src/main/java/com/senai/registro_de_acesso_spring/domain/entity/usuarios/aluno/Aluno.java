@@ -21,5 +21,4 @@ public class Aluno extends Usuario {
     @JoinColumn(name = "sub_turma_id")
     private SubTurma subTurma;
 
-    private boolean classTime;
 }
