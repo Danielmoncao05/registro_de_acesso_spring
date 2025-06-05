@@ -1,6 +1,6 @@
 package com.senai.registro_de_acesso_spring.application.services;
 
-import com.senai.registro_de_acesso_spring.application.dto.OcorrenciaSaidaDTO;
+import com.senai.registro_de_acesso_spring.application.dto.OcorrenciaDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Usuario;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
@@ -23,6 +23,9 @@ public class OcorrenciaService {
 @Autowired
 private OcorrenciaRepository ocorrenciaRepository;
 
+@Autowired
+private Aluno;
+
     public void criarOcorrenciaDeAtraso(String idDeAcesso){
         Optional<Usuario> usuarioOpt = usuarioRepository.findByIdAcesso(idDeAcesso);
         if(usuarioOpt.isPresent()){
@@ -33,25 +36,25 @@ private OcorrenciaRepository ocorrenciaRepository;
     }
 
 
-    public void criarOcorrenciaDeSaida(String idDeAcesso, OcorrenciaSaidaDTO ocorrenciaSaidaDTO){
+    public void criarOcorrenciaDeSaida(String idDeAcesso, OcorrenciaDTO dto){
+
+
+
      Ocorrencia ocorrencia = new Ocorrencia();
-
-
-
-     ocorrencia.setAluno(ocorrenciaSaidaDTO.aluno());
-     ocorrencia.setProfessorResponsavel(ocorrenciaSaidaDTO.professorResponsavel());
-     ocorrencia.setUnidadeCurricular(ocorrenciaSaidaDTO.unidadeCurricular());
+     ocorrencia.setAluno(dto.aluno());
+     ocorrencia.setProfessorResponsavel(dto.professorResponsavel());
+     ocorrencia.setUnidadeCurricular(dto.unidadeCurricular());
      ocorrencia.setTipo(TipoDeOcorrencia.SAIDA_ANTECIPADA);
-     ocorrencia.setDescricao(ocorrenciaSaidaDTO.descricao());
+     ocorrencia.setDescricao(dto.descricao());
      ocorrencia.setStatus(StatusDaOcorrencia.AGUARDANDO_AUTORIZACAO);
         ocorrencia.setPedidoDeSaida(LocalDateTime.now());
-        ocorrencia.setDataHoraConclusao(ocorrenciaSaidaDTO.dataHoraConclusao());
+        ocorrencia.setDataHoraConclusao(dto.dataHoraConclusao());
      ocorrenciaRepository.save(ocorrencia);
     }
 
-    public List<OcorrenciaSaidaDTO> listarOcorrenciasDeSaida(){
+    public List<OcorrenciaDTO> listarOcorrenciasDeSaida(){
         return ocorrenciaRepository.findAll().stream().map(
-                os -> new OcorrenciaSaidaDTO(
+                os -> new OcorrenciaDTO(
                         os.getId(),
                         os.getAluno(),
                         os.getProfessorResponsavel(),
@@ -60,14 +63,14 @@ private OcorrenciaRepository ocorrenciaRepository;
                         os.getDescricao(),
                         os.getStatus(),
                         os.getDataHoraConclusao(),
-                        os.getDataHoraCriacao(
+                        os.getPedidoDeSaida(
                 )
         )).toList();
     }
 
-    public Optional<OcorrenciaSaidaDTO> buscarOcorrenciaSaidaPorId(Long id){
+    public Optional<OcorrenciaDTO> buscarOcorrenciaSaidaPorId(Long id){
         return ocorrenciaRepository.findById(id).map(
-                os -> new OcorrenciaSaidaDTO(
+                os -> new OcorrenciaDTO(
                         os.getId(),
                         os.getAluno(),
                         os.getProfessorResponsavel(),
@@ -76,22 +79,22 @@ private OcorrenciaRepository ocorrenciaRepository;
                         os.getDescricao(),
                         os.getStatus(),
                         os.getDataHoraConclusao(),
-                        os.getDataHoraCriacao()
+                        os.getPedidoDeSaida()
                 )
         );
     }
 
-    public boolean atualizarOcorrenciaSaidaPorId(Long id, OcorrenciaSaidaDTO ocorrenciaSaidaDTO){
+    public boolean atualizarOcorrenciaSaidaPorId(Long id, OcorrenciaDTO dto){
         return ocorrenciaRepository.findById(id).map(
                 os -> {
-                    os.setAluno(ocorrenciaSaidaDTO.aluno());
-                    os.setTipo(ocorrenciaSaidaDTO.tipoDeOcorrencia());
-                    os.setProfessorResponsavel(ocorrenciaSaidaDTO.professorResponsavel());
-                    os.setUnidadeCurricular(ocorrenciaSaidaDTO.unidadeCurricular());
-                    os.setDescricao(ocorrenciaSaidaDTO.descricao());
-                    os.setStatus(ocorrenciaSaidaDTO.statusDaOcorrencia());
-                    os.setDataHoraCriacao(ocorrenciaSaidaDTO.dataHoraCriacao());
-                    os.setDataHoraConclusao(ocorrenciaSaidaDTO.dataHoraConclusao());
+                    os.setAluno(dto.aluno());
+                    os.setTipo(dto.tipoDeOcorrencia());
+                    os.setProfessorResponsavel(dto.professorResponsavel());
+                    os.setUnidadeCurricular(dto.unidadeCurricular());
+                    os.setDescricao(dto.descricao());
+                    os.setStatus(dto.statusDaOcorrencia());
+                    os.setPedidoDeSaida(dto.PedidoDeSaida());
+                    os.setDataHoraConclusao(dto.dataHoraConclusao());
                     ocorrenciaRepository.save(os);
                     return true;
                 }).orElse(false);
