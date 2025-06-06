@@ -86,6 +86,9 @@ public class AQVService {
                 return true;
             }
 
+
+
+
             // guardar a variavel e utiliza-la ao inves de procurar no banco duas vezes
             /*justificativaRepository.findById(dto.id()).filter(justificativa -> justificativa.getStatus() == StatusDaJustificativa.AGUARDANDO_ANALISE)
                     .map(justificativa -> { // pensar num modo de aprovar e reprovar utilizando if
