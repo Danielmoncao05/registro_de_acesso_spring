@@ -8,8 +8,10 @@ import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositorie
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+@Service
 public class JustificativaServiceRegras {
 
     @Autowired
@@ -19,20 +21,15 @@ public class JustificativaServiceRegras {
     OcorrenciaRepository ocorrenciaRepository;
 
     public Ocorrencia validarOcorrencia (Long id) {
-       return ocorrenciaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ocorrência com ID" + id + " não encontrado"));
+       return ocorrenciaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ocorrência com ID " + id + " não encontrado"));
     }
 
-    public void descricaoPreenchida (JustificativaDTO justificativaDTO) {
-        if (justificativaDTO.descricao().isEmpty()) {
-            ResponseEntity.notFound().build();
-        } else  {
-            ResponseEntity.ok().build();
-        }
-    }
-
-    public void limiteJustificativa (OcorrenciaDTO ocorrenciaDTO) {
-
-    }
-
+//    public void descricaoPreenchida (JustificativaDTO justificativaDTO) {
+//        if (justificativaDTO.descricao().isEmpty()) {
+//            ResponseEntity.notFound().build();
+//        } else  {
+//            ResponseEntity.ok().build();
+//        }
+//    }
 
 }

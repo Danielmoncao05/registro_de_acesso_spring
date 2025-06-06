@@ -2,6 +2,7 @@ package com.senai.registro_de_acesso_spring.application.service.usuariosServices
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.JustificativaDTO;
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.OcorrenciaDTO;
+import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Justificativa;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
 import com.senai.registro_de_acesso_spring.domain.enums.StatusDaJustificativa;
@@ -15,14 +16,17 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class JustificativaService {
     @Autowired
     private JustificativaRepository justificativaRepository;
 
+    @Autowired
     private JustificativaServiceRegras justificativaServiceRegras;
 
+    @Autowired
     private OcorrenciaRepository ocorrenciaRepository;
 
     public void registrarJustificativa(JustificativaDTO dto) {
@@ -73,17 +77,19 @@ public class JustificativaService {
 
     // topico para justificativas de saidas antecipadas
 
-    public void justificarSaidaAntecipada (JustificativaDTO justificativaDTO) {
+    public void justificarSaidaAntecipada (JustificativaDTO justificativaDTO , Long idOcorrencia) {
 
-        Long idOcorrencia = justificativaDTO.ocorrencia().getId();
         Ocorrencia ocorrencia = justificativaServiceRegras.validarOcorrencia(idOcorrencia);
 
+        Aluno aluno = ocorrencia.getAluno();
+
         Justificativa justificativa = justificativaDTO.fromDTO();
-        justificativa.setTipo(TipoDeJustifcativa.FALTA);
+        justificativa.setTipo(TipoDeJustifcativa.SAIDA_ANTECIPADA);
         justificativa.setDescricao(justificativaDTO.descricao());
         justificativa.setAnexo(justificativaDTO.anexo());
         justificativa.setDataInicial(LocalDate.now());
         justificativa.setQuantidadeDias(justificativaDTO.quantidadeDias());
+        justificativa.setAluno(aluno);
         justificativa.setOcorrencia(ocorrencia);
 
         justificativaRepository.save(justificativa);
@@ -91,5 +97,9 @@ public class JustificativaService {
 //        if (ocorrenciaRepository.findBy(ocorrencia))
 //        Justificativa justificativa = justificativaDTO.fromDTO();
 //        justificativa.setStatus(StatusDaJustificativa.AGUARDANDO_ANALISE);
+    }
+
+    public List<JustificativaDTO> listarJustificativasSaidas() {
+        return justificativaRepository.findAll().stream().map(JustificativaDTO::toDTO).collect(Collectors.toList());
     }
 }

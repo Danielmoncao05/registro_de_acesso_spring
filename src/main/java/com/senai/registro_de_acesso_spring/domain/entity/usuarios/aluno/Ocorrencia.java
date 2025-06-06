@@ -28,6 +28,7 @@ public class Ocorrencia {
     private LocalDateTime dataHoraConclusao;
 
     @ManyToOne
+    @JoinColumn(name = "aluno_id")
     private Aluno aluno;
 
     @ManyToOne

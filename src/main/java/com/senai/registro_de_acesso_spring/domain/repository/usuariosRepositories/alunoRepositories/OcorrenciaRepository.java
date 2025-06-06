@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface OcorrenciaRepository extends JpaRepository<Ocorrencia, Long> {
     //List<Ocorrencia> findByStatusDaOcorrencia(StatusDaOcorrencia status);
-    boolean findBy(Ocorrencia ocorrencia);
+    List<Ocorrencia> findById(Ocorrencia ocorrencia);
 }

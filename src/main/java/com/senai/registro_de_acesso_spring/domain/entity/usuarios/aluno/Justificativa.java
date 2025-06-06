@@ -15,6 +15,7 @@ public class Justificativa {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column (name = "tipo" , length = 50)
     private TipoDeJustifcativa tipo;
 
     private String descricao;
