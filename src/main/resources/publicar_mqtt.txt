@@ -1,2 +1,2 @@
-# Código para publica mensagem MQTT pelo Terminal
+# Código para publicar mensagem MQTT pelo Terminal
 mosquitto_pub -h localhost -p 1883 -t catraca/rfid -m "numero_rfid"

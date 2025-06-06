@@ -1,7 +1,10 @@
 package com.senai.registro_de_acesso_spring.interface_ui.controller.usuariosControllers;
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.AQVDTO;
+import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.JustificativaDTO;
 import com.senai.registro_de_acesso_spring.application.service.usuariosServices.AQVService;
+import com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices.JustificativaService;
+import com.senai.registro_de_acesso_spring.domain.enums.StatusDaJustificativa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +16,9 @@ import java.util.List;
 public class AQVController {
     @Autowired
     private AQVService aqvService;
+
+    @Autowired
+    private JustificativaService justificativaService;
 
     @PostMapping
     public ResponseEntity<String> cadastrarAQV(@RequestBody AQVDTO dto) {
@@ -50,11 +56,15 @@ public class AQVController {
         }
     }
 
+
+    @GetMapping("/falta")
+    public ResponseEntity<List<JustificativaDTO>> listarJustificativasFalta() { return ResponseEntity.ok(justificativaService.listarJustificativasFalta()); }
+
     // AQV alterar status de Justificativa de Falta
-    @PutMapping("/falta/{id}")
-    public ResponseEntity<String> alterarStatusJustificativaFalta(@PathVariable Long id) {
-        if(aqvService.alterarStatusJustificativaFalta(id)) {
-            return ResponseEntity.ok("Status da Justificativa de Falta alterado com sucesso!");
+    @PutMapping("/falta/{idJustificativa}")
+    public ResponseEntity<String> alterarStatusJustificativaFalta(@PathVariable Long idJustificativa, @RequestBody JustificativaDTO dto) { // payload é o json com os dados
+        if(aqvService.alterarStatusJustificativaFalta(dto)) {
+            return ResponseEntity.ok("Status da Justificativa de Falta alterado para '" + dto.status() + "' com sucesso!");
         } else {
             return ResponseEntity.notFound().build();
         }

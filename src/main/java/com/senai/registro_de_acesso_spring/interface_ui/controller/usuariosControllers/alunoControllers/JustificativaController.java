@@ -67,15 +67,9 @@ public class JustificativaController {
     }
 
     @GetMapping("/falta/{idJustificativa}")
-    public ResponseEntity<JustificativaDTO> listarJustificativaFaltaPorId(@PathVariable Long idJustificativa) {
-        return justificativaService.listarJustificativaFaltaPorId(idJustificativa)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-     /* @GetMapping("/falta/{idJustificativa}")
     public ResponseEntity<Optional<JustificativaDTO>> listarJustificativaFaltaPorId(@PathVariable Long idJustificativa) {
         return ResponseEntity.ok(justificativaService.listarJustificativaFaltaPorId(idJustificativa));
-    } */
+    }
 
     @GetMapping("/falta")
     public ResponseEntity<List<JustificativaDTO>> listarJustificativasFalta() {
