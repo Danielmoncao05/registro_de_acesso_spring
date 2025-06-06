@@ -8,6 +8,7 @@ import com.senai.registro_de_acesso_spring.domain.enuns.StatusDaOcorrencia;
 import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeOcorrencia;
 import com.senai.registro_de_acesso_spring.domain.repositories.OcorrenciaRepository;
 import com.senai.registro_de_acesso_spring.domain.repositories.UsuarioRepository;
+import com.senai.registro_de_acesso_spring.domain.validador.ValidadorOcorrenciaSaida;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
