@@ -1,6 +1,7 @@
 package com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices;
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.OcorrenciaDTO;
+import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.HorarioSemanal;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Professor;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
@@ -12,8 +13,11 @@ import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositorie
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.OcorrenciaRepository;
 import com.senai.registro_de_acesso_spring.domain.service.OcorrenciaService.OcorrenciaServiceDomain;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -36,11 +40,13 @@ public class OcorrenciaService {
     private ProfessorRepository professorRepository;
 
     @Autowired
-    private OcorrenciaServiceDomain ocorrenciaServiceRN;
+    private OcorrenciaServiceDomain ocorrenciaServiceDomain;
 
-    public void registrarOcorrenciaSaida(OcorrenciaDTO dto) {
-        ocorrenciaRepository.save(dto.fromDTO());
-    }
+    @Autowired
+    private Ocorrencia ocorrencia;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     public boolean verificarAluno(String idAcesso) {
         usuarioRepository.findByIdAcesso(idAcesso).map(usuario -> {
@@ -56,23 +62,26 @@ public class OcorrenciaService {
     }
 
     public void gerarOcorrenciaDeAtraso(String idAcesso){
-        if (verificarAluno(idAcesso)){
-            alunoRepository.findByIdAcesso(idAcesso).map(aluno -> {
-                LocalTime horaEntrada = aluno.getSubTurma().getTurma().getHorarioEntrada();
-                Integer tolerancia = aluno.getSubTurma().getTurma().getCurso().getToleranciaMinutos();
-                if (ocorrenciaServiceRN.verificarAtraso(horaEntrada, tolerancia)){
-                    Ocorrencia ocorrencia = new Ocorrencia(
-                            TipoDeOcorrencia.ATRASO,
-                            null,
-                            StatusDaOcorrencia.AGUARDANDO_AUTORIZACAO,
-                            LocalDateTime.now(),
-                            null,
-                            aluno.getId(),
-                            //TODO: encontrar professor atual para que se possa registar a ocorrência
-                            );
-                }
-            });
-        }
+        alunoRepository.findByIdAcesso(idAcesso).map(aluno -> {
+            LocalTime horaEntrada = aluno.getSubTurma().getTurma().getHorarioEntrada();
+            Integer tolerancia = aluno.getSubTurma().getTurma().getCurso().getToleranciaMinutos();
+            if (ocorrenciaServiceDomain.verificarAtraso(horaEntrada, tolerancia)){
+                System.out.println("Aluno atrasado!");
+                //TODO salvar ocorrencia no BD
+                Ocorrencia ocorrencia = new Ocorrencia(
+                        TipoDeOcorrencia.ATRASO,
+                        null,  //descricao
+                        StatusDaOcorrencia.AGUARDANDO_AUTORIZACAO,
+                        LocalDateTime.now(),
+                        null, //dataHoraConclusao
+                        aluno,
+                        ocorrenciaServiceDomain.identificarProfessor(aluno),
+                        ocorrenciaServiceDomain.identificarUC(aluno)
+                        );
+                ocorrenciaRepository.save(ocorrencia);
+            }else System.out.println("Aluno dentro do horário!");
+            return null;
+        });
     }
 
     public void notificarAQV(){
@@ -91,7 +100,7 @@ public class OcorrenciaService {
 
     public Optional<OcorrenciaDTO> buscarOcorrenciaPorId(Long id) {
         return ocorrenciaRepository.findById(id)
-                // .filter(ocorrencia -> ocorrencia.getStatus() == StatusDaOcorrencia.APROVADO) // expressao lambda | nao tenho certeza se dá certo ainda(testar)
+                .filter(ocorrencia -> ocorrencia.getStatus() == StatusDaOcorrencia.APROVADO) // expressao lambda | nao tenho certeza se dá certo ainda(testar)
                 .map(OcorrenciaDTO::toDTO);
     }
 
@@ -122,4 +131,72 @@ public class OcorrenciaService {
         }
     }
 
+    //Métodos de para geração de ocorrência de saída antecipada
+    @Transactional
+    public void solicitarSaidaAntecipada(OcorrenciaDTO dto) {
+        Aluno aluno = alunoRepository.findById(dto.alunoId())
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+
+        Ocorrencia ocorrencia = dto.fromDTO();
+
+        ocorrencia.setStatus(StatusDaOcorrencia.AGUARDANDO_AUTORIZACAO);
+        ocorrencia.setDataHoraCriacao(LocalDateTime.now());
+        ocorrencia.setAluno(aluno);
+        ocorrencia.setTipo(TipoDeOcorrencia.SAIDA_ANTECIPADA);
+
+        Ocorrencia saved = ocorrenciaRepository.save(ocorrencia);
+
+        messagingTemplate.convertAndSend(
+                "/topic/aqv",
+                OcorrenciaDTO.toDTO(saved)
+        );
+    }
+
+    public void decidirSaida(OcorrenciaDTO dto) {
+        Ocorrencia ocorrencia = ocorrenciaRepository.findById(dto.id())
+                .orElseThrow(() -> new RuntimeException("Ocorrência não encontrada"));
+
+        if (dto.status() == StatusDaOcorrencia.REPROVADO) {
+            ocorrencia.setStatus(StatusDaOcorrencia.REPROVADO);
+            ocorrenciaRepository.save(ocorrencia);
+            messagingTemplate.convertAndSend(
+                    "/topic/aluno/" +
+                            ocorrencia.getAluno().getId(),
+                    OcorrenciaDTO.toDTO(ocorrencia)
+            );
+            return;
+        }
+
+        ocorrencia.setStatus(StatusDaOcorrencia.AGUARDANDO_CIENCIA_PROFESSOR);
+
+        Professor professor = professorRepository.findFirstByOrderByIdAsc()
+                .orElseThrow(() -> new RuntimeException("Professor não encontrado"));
+
+        ocorrencia.setProfessorResponsavel(professor);
+        Ocorrencia saved = ocorrenciaRepository.save(ocorrencia);
+
+        messagingTemplate.convertAndSend(
+                "/topic/professor/" +
+                        professor.getId(),
+                OcorrenciaDTO.toDTO(saved)
+        );
+    }
+
+    public void confirmarCiencia(OcorrenciaDTO dto) {
+        Ocorrencia ocorrencia = ocorrenciaRepository.findById(dto.id())
+                .orElseThrow(() -> new RuntimeException("Ocorrência não encontrada"));
+
+        ocorrencia.setStatus(StatusDaOcorrencia.APROVADO);
+        Ocorrencia saved = ocorrenciaRepository.save(ocorrencia);
+
+        messagingTemplate.convertAndSend(
+                "/topic/aluno/" +
+                        ocorrencia.getAluno().getId(),
+                OcorrenciaDTO.toDTO(saved)
+        );
+    }
+
+    public void gerarOcorrenciaDeSaidaAntecipada(OcorrenciaDTO dto) {
+        ocorrenciaRepository.save(dto.fromDTO());
+    }
 }

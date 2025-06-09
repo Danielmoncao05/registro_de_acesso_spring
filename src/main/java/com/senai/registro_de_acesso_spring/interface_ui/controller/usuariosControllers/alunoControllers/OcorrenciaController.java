@@ -15,8 +15,9 @@ public class OcorrenciaController {
     private OcorrenciaService ocorrenciaService;
 
     @Autowired
-    private OcorrenciaServiceDomain ocorrenciaServiceRN;
+    private OcorrenciaServiceDomain ocorrenciaServiceDomain;
 
+    //Métodos de teste para testar ocorrências através de endpoints
     /*
     @PostMapping("/{id}")
     public ResponseEntity<Void> registrarOcorrencia(@RequestBody OcorrenciaDTO dto) {
@@ -53,10 +54,12 @@ public class OcorrenciaController {
     }*/
 
     public void verificarAcesso(String idAcesso) {
-        ocorrenciaService.gerarOcorrenciaDeAtraso(idAcesso);
+        if (ocorrenciaService.verificarAluno(idAcesso)){
+            ocorrenciaService.gerarOcorrenciaDeAtraso(idAcesso);
+        }
     }
 
-    /*
+
     @MessageMapping("/ocorrencia/saida")
     public void solicitarSaida(@Payload OcorrenciaDTO dto) {
         ocorrenciaServiceRN.solicitarSaidaAntecipada(dto);
@@ -71,6 +74,5 @@ public class OcorrenciaController {
     public void darCiencia(@Payload OcorrenciaDTO dto) {
         ocorrenciaServiceRN.confirmarCiencia(dto);
     }
-     */
 
 }
