@@ -62,17 +62,17 @@ public class OcorrenciaController {
 
     @MessageMapping("/ocorrencia/saida")
     public void solicitarSaida(@Payload OcorrenciaDTO dto) {
-        ocorrenciaServiceRN.solicitarSaidaAntecipada(dto);
+        ocorrenciaService.solicitarSaidaAntecipada(dto);
     }
 
     @MessageMapping("/ocorrencia/decisao")
     public void decidirSaida(@Payload OcorrenciaDTO dto) {
-        ocorrenciaServiceRN.decidirSaida(dto);
+        ocorrenciaService.decidirSaida(dto);
     }
 
     @MessageMapping("/ocorrencia/ciencia")
     public void darCiencia(@Payload OcorrenciaDTO dto) {
-        ocorrenciaServiceRN.confirmarCiencia(dto);
+        ocorrenciaService.confirmarCiencia(dto);
     }
 
 }

@@ -43,9 +43,6 @@ public class OcorrenciaService {
     private OcorrenciaServiceDomain ocorrenciaServiceDomain;
 
     @Autowired
-    private Ocorrencia ocorrencia;
-
-    @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
     public boolean verificarAluno(String idAcesso) {
@@ -67,7 +64,6 @@ public class OcorrenciaService {
             Integer tolerancia = aluno.getSubTurma().getTurma().getCurso().getToleranciaMinutos();
             if (ocorrenciaServiceDomain.verificarAtraso(horaEntrada, tolerancia)){
                 System.out.println("Aluno atrasado!");
-                //TODO salvar ocorrencia no BD
                 Ocorrencia ocorrencia = new Ocorrencia(
                         TipoDeOcorrencia.ATRASO,
                         null,  //descricao
@@ -79,18 +75,21 @@ public class OcorrenciaService {
                         ocorrenciaServiceDomain.identificarUC(aluno)
                         );
                 ocorrenciaRepository.save(ocorrencia);
+                notificarAQV();
             }else System.out.println("Aluno dentro do horário!");
             return null;
         });
     }
 
     public void notificarAQV(){
-
-    }
+        System.out.println("Notificando AQV...");
+        System.out.println("Aprovado!");
+    }   //TODO
 
     public void notificarProfessor(){
-
-    }
+        System.out.println("Notificando professor...");
+        System.out.println("Aprovado!");
+    }   //TODO
 
     public List<OcorrenciaDTO> listarOcorrencia() {
         return ocorrenciaRepository.findAll()// ocorrenciaRepository.findByStatusDaOcorrencia(StatusDaOcorrencia.APROVADO)

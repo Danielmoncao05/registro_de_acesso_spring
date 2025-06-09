@@ -1,6 +1,7 @@
 package com.senai.registro_de_acesso_spring.domain.service.OcorrenciaService;
 
 import com.senai.registro_de_acesso_spring.domain.entity.curso.UnidadeCurricular;
+import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.Aula;
 import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.AulasDoDia;
 import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.HorarioSemanal;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Professor;
@@ -105,8 +106,45 @@ public class OcorrenciaServiceDomain {
     }
 
     public int aulaAtual(Aluno aluno) {
-        //TODO - understand the logic
-    }
+        DayOfWeek hoje = LocalDate.now().getDayOfWeek();
+        LocalTime now = LocalTime.now();
+
+        List<AulasDoDia> listaDeAulas;
+        if (existeHorarioSemanal(aluno)) {
+            listaDeAulas = aluno.getSubTurma()
+                    .getSemestres()
+                    .get(semestreAtual(aluno))
+                    .getHorariosSemanais()
+                    .get(horarioSemanalAtual(aluno))
+                    .getListaDeAulasDoDia();
+        } else {
+            listaDeAulas = aluno.getSubTurma()
+                    .getSemestres()
+                    .get(semestreAtual(aluno))
+                    .getHorarioPadrao()
+                    .getListaDeAulasDoDia();
+        }
+
+        int quantidadeAulas = aluno.getSubTurma().getTurma().getQuantidadeAulasPorDia();
+        LocalTime horarioEntrada = aluno.getSubTurma().getTurma().getHorarioEntrada();
+
+        for (AulasDoDia aulaDoDia : listaDeAulas) {
+            if (aulaDoDia.getDiaDaSemana().equals(hoje)) {
+                List<Aula> aulas = aulaDoDia.getAulas();
+                for (Aula aula : aulas) {
+
+                    int ordem = aula.getOrdem();
+                    LocalTime horaInicio = horarioEntrada.plusMinutes(ordem * 50);
+
+                    if (now.isAfter(horaInicio) && now.isBefore(horaInicio.plusMinutes(50))) {
+                        return aula.getOrdem();
+                    }
+                }
+            }
+        }
+
+        return -1;
+    }  //TODO Revisar Logica
 
     public int aulasDeHoje(Aluno aluno){
         DayOfWeek hoje = LocalDate.now().getDayOfWeek();
