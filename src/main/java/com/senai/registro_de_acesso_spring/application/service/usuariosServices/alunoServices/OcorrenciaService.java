@@ -27,7 +27,18 @@ public class OcorrenciaService {
     private AlunoRepository alunoRepository;
 
     public void registrarOcorrencia(OcorrenciaDTO dto) {
-        ocorrenciaRepository.save(dto.fromDTO());
+
+
+//        Ocorrencia ocorrencia = dto.fromDTO();
+//        ocorrencia.setDescricao(dto.descricao());
+//        ocorrencia.setStatus(dto.status());
+//        ocorrencia.setDataHoraCriacao(dto.dataHoraCriacao());
+//        ocorrencia.setDataHoraConclusao(dto.dataHoraConclusao());
+//        ocorrencia.setAluno(ocorrencia.getAluno());
+//        ocorrencia.setProfessorResponsavel(ocorrencia.getProfessorResponsavel());
+//
+
+      ocorrenciaRepository.save(dto.fromDTO());
     }
 
     public List<OcorrenciaDTO> listarOcorrencia() {
@@ -75,6 +86,7 @@ public class OcorrenciaService {
     public void criarOcorrenciaDeSaida (OcorrenciaDTO ocorrenciaDTO) {
 
         Aluno aluno = alunoRepository.findById(ocorrenciaDTO.alunoId()).orElseThrow(() -> new RuntimeException("Aluno inexistente"));
+
 
         Ocorrencia ocorrencia = ocorrenciaDTO.fromDTO();
 

@@ -62,5 +62,34 @@ public class JustificativaController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/saida")
+    public ResponseEntity<List<JustificativaDTO>> listarJustificativasDeSaida (@RequestBody JustificativaDTO dto) {
+
+        return ResponseEntity.ok(justificativaService.listarJustificativasSaidas());
+    }
+
+    @GetMapping("/saida/{idOcorrencia}")
+    public ResponseEntity<JustificativaDTO> buscarJustificativaPorId(@RequestBody JustificativaDTO dto, @PathVariable Long idOcorrencia) {
+
+        return justificativaService.buscarJustificativaPorId(idOcorrencia).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+
+    }
+
+    @PutMapping("/saida/{idOcorrencia}")
+    public ResponseEntity<Void> atualizarJustificativaSaida (@PathVariable Long idOcorrencia , @RequestBody JustificativaDTO dto) {
+
+        if (justificativaService.atualizarJustificativaSaida(idOcorrencia, dto)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+   @DeleteMapping("/saida/{idOcorrencia}")
+    public ResponseEntity<Void> deletarJustificativaSaida (@PathVariable Long idOcorrencia) {
+        if (justificativaService.deletarJustificativaSaida(idOcorrencia)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+   }
 
 }

@@ -100,6 +100,37 @@ public class JustificativaService {
     }
 
     public List<JustificativaDTO> listarJustificativasSaidas() {
-        return justificativaRepository.findAll().stream().map(JustificativaDTO::toDTO).collect(Collectors.toList());
+      //  return justificativaRepository.findAll().stream().map(JustificativaDTO::toDTO).collect(Collectors.toList());
+        return justificativaRepository.findAll().stream().filter(j -> j.getTipo() == TipoDeJustifcativa.SAIDA_ANTECIPADA).map(JustificativaDTO::toDTO).collect(Collectors.toList());
     }
-}
+
+    public Optional<JustificativaDTO> buscarJustificativaSaidaPorId (Long id) {
+        return justificativaRepository.findById(id).map(JustificativaDTO::toDTO);
+    }
+
+    public boolean atualizarJustificativaSaida (Long id , JustificativaDTO justificativaDTO) {
+        return justificativaRepository.findById(id).map(justificativa ->  {
+            Justificativa justificativaAtualizada = justificativaDTO.fromDTO();
+
+            justificativa.setDescricao(justificativaAtualizada.getDescricao());
+            justificativa.setAnexo(justificativaAtualizada.getAnexo());
+            justificativa.setDataInicial(justificativaAtualizada.getDataInicial());
+            justificativa.setQuantidadeDias(justificativaAtualizada.getQuantidadeDias());
+//            justificativa.setAluno(justificativaAtualizada.getAluno());
+//            justificativa.setOcorrencia(justificativaAtualizada.getOcorrencia());
+
+            justificativaRepository.save(justificativa);
+            return true;
+        }).orElse(false);
+    }
+
+    public boolean deletarJustificativaSaida(Long id) {
+        if (justificativaRepository.existsById(id)) {
+            justificativaRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+ }
