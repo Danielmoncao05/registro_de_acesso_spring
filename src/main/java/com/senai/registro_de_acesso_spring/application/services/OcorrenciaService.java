@@ -24,8 +24,7 @@ public class OcorrenciaService {
 @Autowired
 private OcorrenciaRepository ocorrenciaRepository;
 
-@Autowired
-private Aluno;
+
 
     public void criarOcorrenciaDeAtraso(String idDeAcesso){
         Optional<Usuario> usuarioOpt = usuarioRepository.findByIdAcesso(idDeAcesso);
@@ -38,8 +37,7 @@ private Aluno;
 
 
     public void criarOcorrenciaDeSaida(String idDeAcesso, OcorrenciaDTO dto){
-
-
+     ValidadorOcorrenciaSaida.validarIdade(dto.aluno());
 
      Ocorrencia ocorrencia = new Ocorrencia();
      ocorrencia.setAluno(dto.aluno());
@@ -53,8 +51,9 @@ private Aluno;
      ocorrenciaRepository.save(ocorrencia);
     }
 
-    public List<OcorrenciaDTO> listarOcorrenciasDeSaida(){
-        return ocorrenciaRepository.findAll().stream().map(
+    public List<OcorrenciaDTO> listarOcorrenciasDeSaidaPorIdDeAluno(String idDeAcesso){
+        List<Ocorrencia> ocorrencias = ocorrenciaRepository.findByAlunoAndTipo(idDeAcesso, TipoDeOcorrencia.SAIDA_ANTECIPADA);
+        return ocorrencias.stream().map(
                 os -> new OcorrenciaDTO(
                         os.getId(),
                         os.getAluno(),

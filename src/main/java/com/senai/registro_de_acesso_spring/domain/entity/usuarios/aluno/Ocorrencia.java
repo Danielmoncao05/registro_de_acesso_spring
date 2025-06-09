@@ -22,6 +22,7 @@ public class Ocorrencia { // obs: Strings temporários
 
     private String descricao;
 
+
     @Enumerated(EnumType.STRING)
     private StatusDaOcorrencia status;
 
