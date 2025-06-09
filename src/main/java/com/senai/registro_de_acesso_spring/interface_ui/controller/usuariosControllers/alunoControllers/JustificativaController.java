@@ -28,7 +28,7 @@ public class JustificativaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<JustificativaDTO> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<JustificativaDTO> buscarJustificativaPorId(@PathVariable Long id) {
         return justificativaService.buscarJustificativaPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -53,8 +53,6 @@ public class JustificativaController {
     }
 
     // Justificativa Service Domain
-    // NOT ME - ToDo: Processo de Justificativa de Atraso
-
     public void testeJustificativaFaltaIdAcesso(String idAcesso) {
         System.out.println("Justificativa - idAcesso: " + idAcesso);
     }
@@ -66,14 +64,14 @@ public class JustificativaController {
         return ResponseEntity.ok("Justificativa de Falta criada com sucesso!");
     }
 
-    @GetMapping("/falta/{idJustificativa}")
-    public ResponseEntity<Optional<JustificativaDTO>> listarJustificativaFaltaPorId(@PathVariable Long idJustificativa) {
-        return ResponseEntity.ok(justificativaService.listarJustificativaFaltaPorId(idJustificativa));
-    }
-
     @GetMapping("/falta")
     public ResponseEntity<List<JustificativaDTO>> listarJustificativasFalta() {
         return ResponseEntity.ok(justificativaService.listarJustificativasFalta()); // tratar para somente tipo de justificativa = FALTA | FEITO!!
+    }
+
+    @GetMapping("/falta/{idJustificativa}")
+    public ResponseEntity<Optional<JustificativaDTO>> listarJustificativaFaltaPorId(@PathVariable Long idJustificativa) {
+        return ResponseEntity.ok(justificativaService.listarJustificativaFaltaPorId(idJustificativa));
     }
 
     @PutMapping("/falta/{idJustificativa}")
@@ -89,6 +87,41 @@ public class JustificativaController {
     public ResponseEntity<String> deletarJustificativaFalta(@PathVariable Long idJustificativa) {
         if (justificativaService.deletarJustificativaFalta(idJustificativa)) {
             return ResponseEntity.ok("Justificativa de Falta deletada do sistema!");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Processo de Justificativa de Atraso - CRUD ESPECIFICO
+    @PostMapping("/atraso")
+    public ResponseEntity<String> criarJustificativaAtraso(@RequestBody JustificativaDTO dto) {
+        justificativaService.criarJustificativaAtraso(dto);
+        return ResponseEntity.ok("Justificativa de Atraso criada com sucesso!");
+    }
+
+    @GetMapping("/atraso")
+    public ResponseEntity<List<JustificativaDTO>> listarJustificativasAtraso() {
+        return ResponseEntity.ok(justificativaService.listarJustificativasAtraso());
+    }
+
+    @GetMapping("/atraso/{idJustificativa}")
+    public ResponseEntity<Optional<JustificativaDTO>> listarJustificativaAtrasoPorId(@PathVariable Long idJustificativa) {
+        return ResponseEntity.ok(justificativaService.listarJustificativaAtrasoPorId(idJustificativa));
+    }
+
+    @PutMapping("/atraso/{idJustificativa}")
+    public ResponseEntity<String> alterarJustificativaAtraso(@PathVariable Long idJustificativa, @RequestBody JustificativaDTO dto) {
+        if(justificativaService.alterarJustificativaAtraso(idJustificativa, dto)) {
+            return ResponseEntity.ok("Justificativa de Atraso alterada com sucesso!");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/atraso/{idJustificativa}")
+    public ResponseEntity<String> deletarJustificativaAtraso(@PathVariable Long idJustificativa) {
+        if(justificativaService.deletarJustificativaAtraso(idJustificativa)) {
+            return ResponseEntity.ok("Justificativa de Atraso deletada do sistema!");
         } else {
             return ResponseEntity.notFound().build();
         }

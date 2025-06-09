@@ -29,6 +29,7 @@ public class MqttSubscriber {
                 // Roda somente com a verificação se é aluno ou não
                 ocorrenciaController.criarOcorrenciaAtraso(idAcesso);
                 // Conexão com justificativa controller - TESTE - Roda independente de existir um usuário ou não | realizar verificação
+
                 justificativaController.testeJustificativaFaltaIdAcesso(idAcesso);
             });
             System.out.println("Inscrito no tópico MQTT: " + TOPICO);

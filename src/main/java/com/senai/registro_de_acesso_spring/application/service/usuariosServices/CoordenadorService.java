@@ -1,8 +1,14 @@
 package com.senai.registro_de_acesso_spring.application.service.usuariosServices;
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.CoordenadorDTO;
+import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.JustificativaDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Coordenador;
+import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Justificativa;
+import com.senai.registro_de_acesso_spring.domain.enums.StatusDaJustificativa;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeJustificativa;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.CoordenadorRepository;
+import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.JustificativaRepository;
+import com.sun.jdi.PrimitiveValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +20,9 @@ import java.util.stream.Collectors;
 public class CoordenadorService {
     @Autowired
     private CoordenadorRepository coordenadorRepository;
+
+    @Autowired
+    private JustificativaRepository justificativaRepository;
 
     public void cadastrarCoordenador(CoordenadorDTO dto) {
         coordenadorRepository.save(dto.fromDTO());
@@ -54,6 +63,48 @@ public class CoordenadorService {
             coordenadorRepository.save(coordenador);
             return true;
         }).orElse(false);
+    }
+
+    // Coordenador alterar Status de Justificativa de Falta
+    public Optional<Boolean> alterarStatusJustificativaFalta(Long idJustificativa, JustificativaDTO dto) {
+        return justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.FALTA)
+                .filter(justificativa -> justificativa.getStatus() == StatusDaJustificativa.AGUARDANDO_ANALISE).map(justificativa -> {
+            Justificativa justificativaStatusAlterado = dto.fromDTO();
+
+            if(justificativaStatusAlterado.getStatus().equals(StatusDaJustificativa.APROVADO)) {
+                justificativa.setStatus(justificativaStatusAlterado.getStatus());
+
+                justificativaRepository.save(justificativa);
+                return true;
+            } else if(justificativaStatusAlterado.getStatus().equals(StatusDaJustificativa.REPROVADO)) {
+                justificativa.setStatus(justificativaStatusAlterado.getStatus());
+
+                justificativaRepository.save(justificativa);
+                return true;
+            }
+            return false;
+        });
+    }
+
+    // Coordenador alterar Status de Justificativa de Atraso
+    public Optional<Boolean> alterarStatusJustificativaAtraso(Long idJustificativa, JustificativaDTO dto) {
+        return justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.ATRASO)
+                .filter(justificativa -> justificativa.getStatus() == StatusDaJustificativa.AGUARDANDO_ANALISE).map(justificativa -> {
+            Justificativa justificativaStatusAlterado = dto.fromDTO();
+
+            if(justificativaStatusAlterado.getStatus().equals(StatusDaJustificativa.APROVADO)) {
+                justificativa.setStatus(justificativaStatusAlterado.getStatus());
+
+                justificativaRepository.save(justificativa);
+                return true;
+            } else if(justificativaStatusAlterado.getStatus().equals(StatusDaJustificativa.REPROVADO)) {
+                justificativa.setStatus(justificativaStatusAlterado.getStatus());
+
+                justificativaRepository.save(justificativa);
+                return true;
+            }
+            return false;
+        });
     }
 
 }

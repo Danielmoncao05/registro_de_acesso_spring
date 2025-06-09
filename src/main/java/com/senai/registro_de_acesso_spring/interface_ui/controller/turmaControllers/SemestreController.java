@@ -46,4 +46,5 @@ public class SemestreController {
         }
         return ResponseEntity.notFound().build();
     }
+
 }

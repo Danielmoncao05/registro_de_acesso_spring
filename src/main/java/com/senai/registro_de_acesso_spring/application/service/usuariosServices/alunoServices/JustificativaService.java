@@ -117,4 +117,60 @@ public class JustificativaService {
         }
     }
 
+    // CRUD de Justificativa de Atraso
+    public void criarJustificativaAtraso(JustificativaDTO dto) {
+        Justificativa justificativa = dto.fromDTO();
+
+        // Instanciando justificativa com Tipo fixo = ATRASO e Status = AGUARDANDO_ANALISE
+        justificativa.setTipo(TipoDeJustificativa.ATRASO);
+        justificativa.setStatus(StatusDaJustificativa.AGUARDANDO_ANALISE);
+
+        justificativaRepository.save(justificativa);
+    }
+
+    public Optional<JustificativaDTO> listarJustificativaAtrasoPorId(Long id) {
+        return justificativaRepository.findById(id)
+                .filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.ATRASO)
+                .map(JustificativaDTO::toDTO);
+    }
+
+    public List<JustificativaDTO> listarJustificativasAtraso() {
+        return justificativaRepository.findAll()
+                .stream().filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.ATRASO)
+                .map(JustificativaDTO::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public boolean alterarJustificativaAtraso(Long id, JustificativaDTO dto) {
+        return justificativaRepository.findById(id).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.ATRASO)
+                .map(justificativa ->  {
+                    Justificativa justificativaAlterada = dto.fromDTO();
+
+                    /*// NÃO alterar o tipo e nem o aluno
+                    justificativa.setTipo(TipoDeJustificativa.FALTA);
+                    justificativa.setAluno(justificativaAlterada.getAluno());*/
+
+                    justificativa.setDescricao(justificativaAlterada.getDescricao());
+                    justificativa.setAnexo(justificativaAlterada.getAnexo());
+                    justificativa.setDataInicial(justificativaAlterada.getDataInicial());
+                    justificativa.setQuantidadeDias(justificativaAlterada.getQuantidadeDias());
+                    justificativa.setStatus(StatusDaJustificativa.AGUARDANDO_ANALISE); // ao alterar os dados, o status volta a aguardando para nova analise
+
+                    justificativaRepository.save(justificativa);
+                    return  true;
+                }).orElse(false);
+    }
+
+    public boolean deletarJustificativaAtraso(Long id) {
+        if(justificativaRepository.findById(id).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.ATRASO).isPresent()) {
+            justificativaRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // CRUD de Justificativa de Saída Antecipada
+    // todo: dani's doing
+
 }

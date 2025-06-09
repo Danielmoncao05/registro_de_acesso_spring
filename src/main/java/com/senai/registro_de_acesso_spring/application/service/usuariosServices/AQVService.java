@@ -68,29 +68,64 @@ public class AQVService {
         }).orElse(false);
     }
 
-    // AQV listar Justificativas de Faltas
-
-
     // AQV alterar Status de Justificativa de Falta
-    public boolean alterarStatusJustificativaFalta(JustificativaDTO dto) {
+    public Optional<Boolean> alterarStatusJustificativaFalta(Long idJustificativa, JustificativaDTO dto) {
+        return justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.FALTA)
+                .filter(justificativa -> justificativa.getStatus() == StatusDaJustificativa.AGUARDANDO_ANALISE).map(justificativa -> {
+            Justificativa justificativaStatusAlterado = dto.fromDTO();
+
+            if(justificativaStatusAlterado.getStatus().equals(StatusDaJustificativa.APROVADO)) {
+                justificativa.setStatus(justificativaStatusAlterado.getStatus());
+
+                justificativaRepository.save(justificativa);
+                return true;
+            } else if(justificativaStatusAlterado.getStatus().equals(StatusDaJustificativa.REPROVADO)) {
+               justificativa.setStatus(justificativaStatusAlterado.getStatus());
+
+                justificativaRepository.save(justificativa);
+                return true;
+            }
+            return false;
+        });
+    }
+
+    // AQV alterar Status de Justificativa de Atraso
+    public Optional<Boolean> alterarStatusJustificativaAtraso(Long idJustificativa, JustificativaDTO dto) {
+        return justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.ATRASO)
+                .filter(justificativa -> justificativa.getStatus() == StatusDaJustificativa.AGUARDANDO_ANALISE).map(justificativa -> {
+                    Justificativa justificativaStatusAlterado = dto.fromDTO();
+
+                    if(justificativaStatusAlterado.getStatus().equals(StatusDaJustificativa.APROVADO)) {
+                        justificativa.setStatus(justificativaStatusAlterado.getStatus());
+
+                        justificativaRepository.save(justificativa);
+                        return true;
+                    } else if(justificativaStatusAlterado.getStatus().equals(StatusDaJustificativa.REPROVADO)) {
+                        justificativa.setStatus(justificativaStatusAlterado.getStatus());
+
+                        justificativaRepository.save(justificativa);
+                        return true;
+                    }
+                    return false;
+                });
+    }
+
+    /*public boolean alterarStatusJustificativaFalta(Long idJustificativa, JustificativaDTO dto) {
         if(justificativaRepository.findById(dto.id()).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.FALTA).isPresent()) {
             Justificativa justificativa = dto.fromDTO();
 
+            System.out.println("Justificativa: " + justificativa + ", tipo: " + justificativa.getTipo() + ", status: " + justificativa.getStatus());
             if(dto.status().equals(StatusDaJustificativa.APROVADO)) {
                 justificativa.setStatus(StatusDaJustificativa.APROVADO);
 
+                System.out.println("Justificativa Status: " + justificativa.getStatus() + " - aprovado?");
                 return true;
             } else if(dto.status().equals(StatusDaJustificativa.REPROVADO)) {
                 justificativa.setStatus(StatusDaJustificativa.REPROVADO);
 
+                System.out.println("Justificativa Status: " + justificativa.getStatus() + " - reprovado?");
                 return true;
             }
-
-
-
-
-
-
             // guardar a variavel e utiliza-la ao inves de procurar no banco duas vezes
             /*justificativaRepository.findById(dto.id()).filter(justificativa -> justificativa.getStatus() == StatusDaJustificativa.AGUARDANDO_ANALISE)
                     .map(justificativa -> { // pensar num modo de aprovar e reprovar utilizando if
@@ -102,10 +137,10 @@ public class AQVService {
                             return true;
                         }
                         return false;
-                    });*/
-            //  if(justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getStatus() == StatusDaJustificativa.AGUARDANDO_ANALISE).isPresent()) {}
-        }
+                    });
+    //  if(justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getStatus() == StatusDaJustificativa.AGUARDANDO_ANALISE).isPresent()) {}
+}
+        System.out.println("vazio");
         return false;
-    }
-
+                }*/
 }

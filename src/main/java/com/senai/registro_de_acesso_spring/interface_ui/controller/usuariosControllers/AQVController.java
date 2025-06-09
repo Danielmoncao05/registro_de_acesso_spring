@@ -56,14 +56,14 @@ public class AQVController {
         }
     }
 
-
+    // AQV visualizar Justificativas de Faltas
     @GetMapping("/falta")
     public ResponseEntity<List<JustificativaDTO>> listarJustificativasFalta() { return ResponseEntity.ok(justificativaService.listarJustificativasFalta()); }
 
     // AQV alterar status de Justificativa de Falta
     @PutMapping("/falta/{idJustificativa}")
     public ResponseEntity<String> alterarStatusJustificativaFalta(@PathVariable Long idJustificativa, @RequestBody JustificativaDTO dto) { // payload é o json com os dados
-        if(aqvService.alterarStatusJustificativaFalta(dto)) {
+        if(aqvService.alterarStatusJustificativaFalta(idJustificativa, dto).isPresent()) {
             return ResponseEntity.ok("Status da Justificativa de Falta alterado para '" + dto.status() + "' com sucesso!");
         } else {
             return ResponseEntity.notFound().build();
