@@ -9,7 +9,7 @@ import java.util.List;
 public record UnidadeCurricularDTO(
         Long id,
         String nome,
-        Integer cargaHorariaTotal,
+        Integer cargaHoraria,
         Curso curso,
         List<Professor> professoresHabilitados
 ) {
@@ -17,7 +17,7 @@ public record UnidadeCurricularDTO(
         return new UnidadeCurricularDTO(
                 uc.getId(),
                 uc.getNome(),
-                uc.getCargaHorariaTotal(),
+                uc.getCargaHoraria(),
                 uc.getCurso(),
                 uc.getProfessor()
         );
@@ -27,7 +27,7 @@ public record UnidadeCurricularDTO(
         UnidadeCurricular uc = new UnidadeCurricular();
 
         uc.setNome(nome);
-        uc.setCargaHorariaTotal(cargaHorariaTotal);
+        uc.setCargaHoraria(cargaHoraria);
         uc.setCurso(curso);
         uc.setProfessor(professoresHabilitados);
 

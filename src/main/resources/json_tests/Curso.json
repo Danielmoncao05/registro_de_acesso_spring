@@ -1,0 +1,16 @@
+{
+  "titulo": "Desenvolvimento de Sistemas",
+  "tipoDeCurso": "TECNICO",
+  "cargaHoraria": 1200,
+  "toleranciaMinutos": 15,
+  "unidadesCurriculares": [
+    {
+      "nome": "Lógica de Programação",
+      "cargaHoraria": 80
+    },
+    {
+      "nome": "Banco de Dados",
+      "cargaHoraria": 100
+    }
+  ]
+}

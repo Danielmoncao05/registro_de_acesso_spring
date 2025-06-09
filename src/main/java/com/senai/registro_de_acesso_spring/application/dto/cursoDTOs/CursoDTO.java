@@ -10,9 +10,9 @@ public record CursoDTO(
         Long id,
         String titulo,
         TipoDeCurso tipo,
-        Integer carga_horaria,
+        Integer cargaHoraria,
         Integer toleranciaMinutos,
-        List<UnidadeCurricularDTO> unidadesCurricularesDTO
+        List<UnidadeCurricularDTO> unidadesCurriculares
 ) {
     public static CursoDTO toDTO(Curso c) {
         return new CursoDTO(
@@ -33,10 +33,10 @@ public record CursoDTO(
 
         curso.setTitulo(titulo);
         curso.setTipo(tipo);
-        curso.setCargaHoraria(carga_horaria);
+        curso.setCargaHoraria(cargaHoraria);
         curso.setToleranciaMinutos(toleranciaMinutos);
 
-        List<UnidadeCurricular> ucs = unidadesCurricularesDTO
+        List<UnidadeCurricular> ucs = unidadesCurriculares
                 .stream()
                 .map(dto -> dto.fromDTO(curso))
                 .toList()

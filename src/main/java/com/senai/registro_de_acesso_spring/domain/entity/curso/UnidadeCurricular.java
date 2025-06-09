@@ -17,7 +17,7 @@ public class UnidadeCurricular {
     protected Long id;
 
     private String nome;
-    private Integer cargaHorariaTotal;
+    private Integer cargaHoraria;
 
     @ManyToOne
     private Curso curso;
@@ -27,6 +27,6 @@ public class UnidadeCurricular {
 
     public UnidadeCurricular(String nome, Integer cargaHoraria) {
         this.nome = nome;
-        this.cargaHorariaTotal = cargaHoraria;
+        this.cargaHoraria = cargaHoraria;
     }
 }

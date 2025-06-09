@@ -24,12 +24,12 @@ public class CursoService {
                 new Curso(
                         dto.titulo(),
                         dto.tipo(),
-                        dto.carga_horaria(),
+                        dto.cargaHoraria(),
                         dto.toleranciaMinutos()
                 )
         );
 
-        List<UnidadeCurricular> unidades = dto.unidadesCurricularesDTO()
+        List<UnidadeCurricular> unidades = dto.unidadesCurriculares()
                 .stream()
                 .map(
                         ucDto -> ucDto.fromDTO(curso)
@@ -58,14 +58,14 @@ public class CursoService {
 
         curso.setTitulo(dto.titulo());
         curso.setTipo(dto.tipo());
-        curso.setCargaHoraria(dto.carga_horaria());
+        curso.setCargaHoraria(dto.cargaHoraria());
         curso.setToleranciaMinutos(dto.toleranciaMinutos());
 
         final Curso cursoAtualizado = cursoRepository.save(curso);
 
         unidadeCurricularRepository.deleteAllByCursoId(curso.getId());
 
-        List<UnidadeCurricular> novasUCs = dto.unidadesCurricularesDTO()
+        List<UnidadeCurricular> novasUCs = dto.unidadesCurriculares()
                 .stream()
                 .map(ucDTO -> ucDTO.fromDTO(cursoAtualizado))
                 .toList()

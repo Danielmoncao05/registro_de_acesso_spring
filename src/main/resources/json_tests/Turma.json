@@ -1,0 +1,9 @@
+{
+  "siglaDaTurma": "DEV",
+  "periodo": "MANHA",
+  "dataInicial": "2025-01-19",
+  "horarioEntrada": "08:00",
+  "quantidadeSemestres": 4,
+  "quantidadeAulasPorDia": 5,
+  "cursoId": 1
+}
