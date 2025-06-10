@@ -1,0 +1,62 @@
+[
+  {
+    "nome": "Ana Clara Silva",
+    "cpf": "123.456.789-00",
+    "dataNascimento": "2005-04-12",
+    "email": "ana.silva@example.com",
+    "senha": "SenhaForte123!",
+    "telefone": "(11) 91234-5678",
+    "idAcesso": "a1b2c3d4",
+    "username": "ana.clara",
+    "tipo": "ALUNO",
+    "subTurma": { "id": 1 }
+  },
+  {
+    "nome": "Bruno Henrique Oliveira",
+    "cpf": "987.654.321-00",
+    "dataNascimento": "2004-10-28",
+    "email": "bruno.oliveira@example.com",
+    "senha": "BrunoSenha2024!",
+    "telefone": "(21) 99876-5432",
+    "idAcesso": "b4c3d2e1",
+    "username": "bruno.henrique",
+    "tipo": "ALUNO",
+    "subTurma": { "id": 1 }
+  },
+  {
+    "nome": "Carla Mendes Rocha",
+    "cpf": "321.654.987-00",
+    "dataNascimento": "2006-01-15",
+    "email": "carla.rocha@example.com",
+    "senha": "Carla_2025*",
+    "telefone": "(31) 98888-1122",
+    "idAcesso": "c5d6e7f8",
+    "username": "carla.mendes",
+    "tipo": "ALUNO",
+    "subTurma": { "id": 1 }
+  },
+  {
+    "nome": "Diego Santos Lima",
+    "cpf": "456.789.123-00",
+    "dataNascimento": "2003-07-05",
+    "email": "diego.lima@example.com",
+    "senha": "DiegoPass_321!",
+    "telefone": "(41) 97777-3344",
+    "idAcesso": "d9e8f7g6",
+    "username": "diego.santos",
+    "tipo": "ALUNO",
+    "subTurma": { "id": 1 }
+  },
+  {
+    "nome": "Eduarda Pires Costa",
+    "cpf": "654.321.789-00",
+    "dataNascimento": "2005-11-30",
+    "email": "eduarda.costa@example.com",
+    "senha": "Eduarda123!",
+    "telefone": "(51) 96666-4455",
+    "idAcesso": "e0f1g2h3",
+    "username": "eduarda.pires",
+    "tipo": "ALUNO",
+    "subTurma": { "id": 1 }
+  }
+]

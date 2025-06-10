@@ -13,6 +13,7 @@ import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositorie
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.OcorrenciaRepository;
 import com.senai.registro_de_acesso_spring.domain.service.OcorrenciaService.OcorrenciaServiceDomain;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,16 +47,17 @@ public class OcorrenciaService {
     private SimpMessagingTemplate messagingTemplate;
 
     public boolean verificarAluno(String idAcesso) {
-        usuarioRepository.findByIdAcesso(idAcesso).map(usuario -> {
-            if (usuario instanceof Aluno) {
-                System.out.println("É aluno");
-                return true;
-            } else {
-                System.out.println("Não é aluno");
-                return false;
-            }
-        });
-        return false;
+        return usuarioRepository.findByIdAcesso(idAcesso)
+                .map(usuario -> {
+                    if (usuario instanceof Aluno) {
+                        System.out.println("É aluno");
+                        return true;
+                    } else {
+                        System.out.println("Não é aluno");
+                        return false;
+                    }
+                })
+                .orElse(false);
     }
 
     public void gerarOcorrenciaDeAtraso(String idAcesso){
@@ -71,10 +73,11 @@ public class OcorrenciaService {
                         LocalDateTime.now(),
                         null, //dataHoraConclusao
                         aluno,
-                        ocorrenciaServiceDomain.identificarProfessor(aluno),
-                        ocorrenciaServiceDomain.identificarUC(aluno)
+                        null,   //ocorrenciaServiceDomain.identificarProfessor(aluno)
+                        null    //ocorrenciaServiceDomain.identificarUC(aluno)
                         );
                 ocorrenciaRepository.save(ocorrencia);
+                System.out.println("Ocorrência registrada!");
                 notificarAQV();
             }else System.out.println("Aluno dentro do horário!");
             return null;

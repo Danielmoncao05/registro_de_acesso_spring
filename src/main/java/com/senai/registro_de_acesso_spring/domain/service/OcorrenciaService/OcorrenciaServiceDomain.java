@@ -19,7 +19,9 @@ public class OcorrenciaServiceDomain {
 
     public boolean verificarAtraso(LocalTime horaEntrada, Integer tolerancia){
         LocalTime horarioLimite = horaEntrada.plusMinutes(tolerancia);
-        return LocalTime.now().isAfter(horarioLimite);
+        //return LocalTime.now().isAfter(horarioLimite);      correct return
+        LocalTime agora = LocalTime.of(9, 10);  //test return to simulate delays
+        return agora.isAfter(horarioLimite);
     }
 
     public Professor identificarProfessor(Aluno a){

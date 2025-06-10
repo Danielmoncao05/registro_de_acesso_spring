@@ -1,0 +1,52 @@
+[
+  {
+    "nome": "Marcelo Tavares",
+    "cpf": "111.222.333-44",
+    "dataNascimento": "1980-05-20",
+    "email": "marcelo.tavares@example.com",
+    "senha": "MarceloProf80!",
+    "telefone": "(11) 98888-1122",
+    "idAcesso": "t1a2v3a4",
+    "username": "marcelo.tavares"
+  },
+  {
+    "nome": "Juliana Andrade",
+    "cpf": "222.333.444-55",
+    "dataNascimento": "1985-09-12",
+    "email": "juliana.andrade@example.com",
+    "senha": "ProfJuliana2024!",
+    "telefone": "(21) 97777-2233",
+    "idAcesso": "j2u3l4i5",
+    "username": "juliana.andrade"
+  },
+  {
+    "nome": "Carlos Eduardo Souza",
+    "cpf": "333.444.555-66",
+    "dataNascimento": "1978-03-08",
+    "email": "carlos.souza@example.com",
+    "senha": "CarlosED@78",
+    "telefone": "(31) 96666-3344",
+    "idAcesso": "c3e4s5o6",
+    "username": "carlos.souza"
+  },
+  {
+    "nome": "Fernanda Lima",
+    "cpf": "444.555.666-77",
+    "dataNascimento": "1990-11-25",
+    "email": "fernanda.lima@example.com",
+    "senha": "FernandaProf90!",
+    "telefone": "(41) 95555-4455",
+    "idAcesso": "f4l5i6m7",
+    "username": "fernanda.lima"
+  },
+  {
+    "nome": "Rafael Martins",
+    "cpf": "555.666.777-88",
+    "dataNascimento": "1982-07-14",
+    "email": "rafael.martins@example.com",
+    "senha": "RafaM82@prof",
+    "telefone": "(51) 94444-5566",
+    "idAcesso": "r5m6a7r8",
+    "username": "rafael.martins"
+  }
+]
