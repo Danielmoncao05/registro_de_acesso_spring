@@ -2,9 +2,11 @@ package com.senai.registro_de_acesso_spring.application.service.usuariosServices
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.JustificativaDTO;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Justificativa;
+import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
 import com.senai.registro_de_acesso_spring.domain.enums.StatusDaJustificativa;
 import com.senai.registro_de_acesso_spring.domain.enums.TipoDeJustificativa;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.JustificativaRepository;
+import com.senai.registro_de_acesso_spring.domain.service.justificativaService.JustificativaServiceDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ import java.util.stream.Collectors;
 public class JustificativaService {
     @Autowired
     private JustificativaRepository justificativaRepository;
+
+    @Autowired
+    private JustificativaServiceDomain justificativaServiceDomain;
 
     // CRUD de Justificativa
     public void registrarJustificativa(JustificativaDTO dto) {
@@ -75,8 +80,8 @@ public class JustificativaService {
         justificativaRepository.save(justificativa);
     }
 
-    public Optional<JustificativaDTO> listarJustificativaFaltaPorId(Long id) {
-        return justificativaRepository.findById(id)
+    public Optional<JustificativaDTO> buscarJustificativaFaltaPorId(Long idJustificativa) {
+        return justificativaRepository.findById(idJustificativa)
                 .filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.FALTA)
                 .map(JustificativaDTO::toDTO);
     }
@@ -88,8 +93,8 @@ public class JustificativaService {
                 .collect(Collectors.toList());
     }
 
-    public boolean alterarJustificativaFalta(Long id, JustificativaDTO dto) {
-        return justificativaRepository.findById(id).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.FALTA)
+    public boolean alterarJustificativaFalta(Long idJustificativa, JustificativaDTO dto) {
+        return justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.FALTA)
                 .map(justificativa -> {
                     Justificativa justificativaAlterada = dto.fromDTO();
 
@@ -108,9 +113,9 @@ public class JustificativaService {
                 }).orElse(false);
     }
 
-    public boolean deletarJustificativaFalta(Long id) {
-        if(justificativaRepository.findById(id).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.FALTA).isPresent()) {
-            justificativaRepository.deleteById(id);
+    public boolean deletarJustificativaFalta(Long idJustificativa) {
+        if(justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.FALTA).isPresent()) {
+            justificativaRepository.deleteById(idJustificativa);
             return true;
         } else {
             return false;
@@ -118,18 +123,24 @@ public class JustificativaService {
     }
 
     // CRUD de Justificativa de Atraso
-    public void criarJustificativaAtraso(JustificativaDTO dto) {
+    public void criarJustificativaAtraso(JustificativaDTO dto, Long idOcorrencia) { // Utilizando o ID da Ocorrência a uma variavel passada como Parametro para associa-la
         Justificativa justificativa = dto.fromDTO();
+
+        // Validação de Existencia da Ocorrência e atribuição a variavel
+        Ocorrencia ocorrencia = justificativaServiceDomain.validarOcorrencia(idOcorrencia);
 
         // Instanciando justificativa com Tipo fixo = ATRASO e Status = AGUARDANDO_ANALISE
         justificativa.setTipo(TipoDeJustificativa.ATRASO);
         justificativa.setStatus(StatusDaJustificativa.AGUARDANDO_ANALISE);
 
+        // Correlacionando a Ocorrência a Justificativa e conectando-as
+        justificativa.setOcorrencia(ocorrencia);
+
         justificativaRepository.save(justificativa);
     }
 
-    public Optional<JustificativaDTO> listarJustificativaAtrasoPorId(Long id) {
-        return justificativaRepository.findById(id)
+    public Optional<JustificativaDTO> buscarJustificativaAtrasoPorId(Long Justificativa) {
+        return justificativaRepository.findById(Justificativa)
                 .filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.ATRASO)
                 .map(JustificativaDTO::toDTO);
     }
@@ -141,13 +152,13 @@ public class JustificativaService {
                 .collect(Collectors.toList());
     }
 
-    public boolean alterarJustificativaAtraso(Long id, JustificativaDTO dto) {
-        return justificativaRepository.findById(id).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.ATRASO)
+    public boolean alterarJustificativaAtraso(Long idJustificativa, JustificativaDTO dto) {
+        return justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.ATRASO)
                 .map(justificativa ->  {
                     Justificativa justificativaAlterada = dto.fromDTO();
 
                     /*// NÃO alterar o tipo e nem o aluno
-                    justificativa.setTipo(TipoDeJustificativa.FALTA);
+                    justificativa.setTipo(TipoDeJustificativa.ATRASO);
                     justificativa.setAluno(justificativaAlterada.getAluno());*/
 
                     justificativa.setDescricao(justificativaAlterada.getDescricao());
@@ -161,9 +172,9 @@ public class JustificativaService {
                 }).orElse(false);
     }
 
-    public boolean deletarJustificativaAtraso(Long id) {
-        if(justificativaRepository.findById(id).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.ATRASO).isPresent()) {
-            justificativaRepository.deleteById(id);
+    public boolean deletarJustificativaAtraso(Long idJustificativa) {
+        if(justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.ATRASO).isPresent()) {
+            justificativaRepository.deleteById(idJustificativa);
             return true;
         } else {
             return false;
@@ -171,6 +182,63 @@ public class JustificativaService {
     }
 
     // CRUD de Justificativa de Saída Antecipada
-    // todo: dani's doing
+    public void criarJustificativaSaida(JustificativaDTO dto, Long idOcorrencia) {
+        Justificativa justificativa = dto.fromDTO();
+
+        // Validação de Existencia da Ocorrência e atribuição a variavel
+        Ocorrencia ocorrencia = justificativaServiceDomain.validarOcorrencia(idOcorrencia);
+
+        // Instanciando justificativa com Tipo fixo = SAIDA_ANTECIPADA e Status = AGUARDANDO_ANALISE
+        justificativa.setTipo(TipoDeJustificativa.SAIDA_ANTECIPADA);
+        justificativa.setStatus(StatusDaJustificativa.AGUARDANDO_ANALISE);
+
+        // Correlacionando a Ocorrência a Justificativa e conectando-as
+        justificativa.setOcorrencia(ocorrencia);
+
+        justificativaRepository.save(justificativa);
+    }
+
+    public Optional<JustificativaDTO> buscarJustificativaSaidaPorId(Long idJustificativa) {
+        return justificativaRepository.findById(idJustificativa)
+                .filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.SAIDA_ANTECIPADA)
+                .map(JustificativaDTO::toDTO);
+    }
+
+    public List<JustificativaDTO> listarJustificativasSaida() {
+        return justificativaRepository.findAll()
+                .stream().filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.SAIDA_ANTECIPADA)
+                .map(JustificativaDTO::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public boolean alterarJustificativaSaida(Long idJustificativa, JustificativaDTO dto) {
+        return justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.SAIDA_ANTECIPADA)
+                .map(justificativa -> {
+                    Justificativa justificativaAlterada = dto.fromDTO();
+
+                     /*// NÃO alterar o tipo e nem o aluno
+                    justificativa.setTipo(TipoDeJustificativa.SAIDA_ANTECIPADA);
+                    justificativa.setAluno(justificativaAlterada.getAluno());*/
+
+                    justificativa.setDescricao(justificativaAlterada.getDescricao());
+                    justificativa.setAnexo(justificativaAlterada.getAnexo());
+                    justificativa.setDataInicial(justificativaAlterada.getDataInicial());
+                    justificativa.setQuantidadeDias(justificativaAlterada.getQuantidadeDias());
+                    justificativa.setStatus(StatusDaJustificativa.AGUARDANDO_ANALISE); // ao alterar os dados, o status volta a aguardando para nova analise
+
+                    justificativaRepository.save(justificativa);
+
+                    return true;
+                }).orElse(false);
+    }
+
+    public boolean deletarJustificativaSaida(Long idJustificativa) {
+        if(justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.SAIDA_ANTECIPADA).isPresent()) {
+            justificativaRepository.deleteById(idJustificativa);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

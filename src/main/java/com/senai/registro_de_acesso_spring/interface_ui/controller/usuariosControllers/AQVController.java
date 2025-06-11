@@ -70,4 +70,33 @@ public class AQVController {
         }
     }
 
+    // AQV visualizar justificativas de Atraso
+    @GetMapping("/atraso")
+    public ResponseEntity<List<JustificativaDTO>> listarJustificativasAtraso() { return ResponseEntity.ok(justificativaService.listarJustificativasAtraso()); }
+
+    // AQV alterar Status de Justificativa de Atraso
+    @PutMapping("/atraso/{idJustificativa}")
+    public ResponseEntity<String> alterarStatusJustificativaAtraso(@PathVariable Long idJustificativa, @RequestBody JustificativaDTO dto) {
+        if(aqvService.alterarStatusJustificativaAtraso(idJustificativa, dto).isPresent()) {
+            return ResponseEntity.ok("Status da Justificativa de Atraso alterado para '" + dto.status() + "' com sucesso!");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // AQV visualizar Justificativas de Saída Antecipada
+    @GetMapping("/saida")
+    public ResponseEntity<List<JustificativaDTO>> listarJustificativasSaida() {return ResponseEntity.ok(justificativaService.listarJustificativasSaida()); }
+
+    // AQV alterar Status de Justificativa de Saída Antecipada
+    @PutMapping("/saida/{idJustificativa}")
+    public ResponseEntity<String> alterarStatusJustificativaSaida(@PathVariable Long idJustificativa, @RequestBody JustificativaDTO dto) {
+        if(aqvService.alterarStatusJustificativaSaida(idJustificativa, dto).isPresent()) {
+            return ResponseEntity.ok("Status da Justificativa de Saída Antecipada alterado para '" + dto.status() + "' com sucesso!");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 }

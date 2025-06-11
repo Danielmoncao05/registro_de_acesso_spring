@@ -82,6 +82,7 @@ public class OcorrenciaService {
     public boolean deletarOcorrencia(Long id) {
         if(ocorrenciaRepository.existsById(id)) {
             ocorrenciaRepository.deleteById(id);
+            // criar um metodo no justificativa repository para deletar ocorrencia por id
             return true;
         }else {
             return false;

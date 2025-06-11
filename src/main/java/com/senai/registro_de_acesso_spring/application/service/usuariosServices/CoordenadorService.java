@@ -88,7 +88,7 @@ public class CoordenadorService {
 
     // Coordenador alterar Status de Justificativa de Atraso
     public Optional<Boolean> alterarStatusJustificativaAtraso(Long idJustificativa, JustificativaDTO dto) {
-        return justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.ATRASO)
+        return justificativaRepository.findByIdAndTipo(idJustificativa, TipoDeJustificativa.ATRASO)
                 .filter(justificativa -> justificativa.getStatus() == StatusDaJustificativa.AGUARDANDO_ANALISE).map(justificativa -> {
             Justificativa justificativaStatusAlterado = dto.fromDTO();
 
@@ -105,6 +105,28 @@ public class CoordenadorService {
             }
             return false;
         });
+    }
+
+    // Coordenador alterar Status de Justificativa de Saída Antecipada
+    public Optional<Boolean> alterarStatusJustificativaSaida(Long idJustificativa, JustificativaDTO dto) {
+        return justificativaRepository.findByIdAndTipoAndStatus(idJustificativa, TipoDeJustificativa.SAIDA_ANTECIPADA, StatusDaJustificativa.AGUARDANDO_ANALISE)
+                .map(justificativa -> {
+                            Justificativa justificativaAlterada = dto.fromDTO();
+
+                            if(justificativaAlterada.getStatus().equals(StatusDaJustificativa.APROVADO)) {
+                                justificativa.setStatus(justificativaAlterada.getStatus());
+
+                                justificativaRepository.save(justificativa);
+                                return true;
+                            } else if(justificativaAlterada.getStatus().equals(StatusDaJustificativa.REPROVADO)) {
+                                justificativa.setStatus(justificativaAlterada.getStatus());
+
+                                justificativaRepository.save(justificativa);
+                                return true;
+                            }
+                            return false;
+                        }
+                );
     }
 
 }

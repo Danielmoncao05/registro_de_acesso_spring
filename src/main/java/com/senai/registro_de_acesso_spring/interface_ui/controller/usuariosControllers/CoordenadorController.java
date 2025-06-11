@@ -81,4 +81,18 @@ public class CoordenadorController {
         }
     }
 
+    // Coordenador visualizar Justificativas de Atraso
+    @GetMapping("/atraso")
+    public ResponseEntity<List<JustificativaDTO>> listarJustificativasSaida() { return ResponseEntity.ok(justificativaService.listarJustificativasSaida()); }
+
+    // Coordenador alterar Status de Justificativa de Saída Antecipada
+    @PutMapping("/saida/{idJustificativa}")
+    public ResponseEntity<String> alterarStatusJustificativaSaida(@PathVariable Long idJustificativa, @RequestBody JustificativaDTO dto) {
+        if(coordenadorService.alterarStatusJustificativaSaida(idJustificativa, dto).isPresent()) {
+            return ResponseEntity.ok("Status da Justificativa de Saída Antecipada alterado para '" + dto.status() + "' com sucesso!");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

@@ -27,4 +27,8 @@ public class Justificativa {
 
     @ManyToOne
     private Aluno aluno;
+
+    @OneToOne // TODO retirar o nullable false pois conflita com o tipo FALTA cujo não possui id ocorrencia !!!
+    @JoinColumn(name = "ocorrencia_id", nullable = false) // junção da coluna que referenciará o id para justificativa e correlaciona-las
+    private Ocorrencia ocorrencia;
 }
