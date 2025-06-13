@@ -87,6 +87,7 @@ public class OcorrenciaService {
     public void notificarAQV(){
         System.out.println("Notificando AQV...");
         System.out.println("Aprovado!");
+        notificarProfessor();
     }   //TODO
 
     public void notificarProfessor(){

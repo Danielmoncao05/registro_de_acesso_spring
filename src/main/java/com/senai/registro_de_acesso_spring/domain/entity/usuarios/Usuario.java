@@ -32,7 +32,7 @@ abstract public class Usuario {
     protected String foto;
     protected boolean ativo;
 
-    @ElementCollection(fetch = FetchType.EAGER) // faz uma coleçao dos elementos no banco de dados | tipo de busca -> ansiosa ?
+    @ElementCollection(fetch = FetchType.EAGER)
     protected List<String> permissoes;
 
     @Enumerated(EnumType.STRING)
