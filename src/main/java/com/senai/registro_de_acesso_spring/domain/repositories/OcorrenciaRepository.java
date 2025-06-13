@@ -10,5 +10,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OcorrenciaRepository extends JpaRepository<Ocorrencia, Long> {
-    List<Ocorrencia> findByAlunoAndTipo(String idDeAcesso, TipoDeOcorrencia tipo);
+    List<Ocorrencia> findByAlunoAndTipo(Aluno aluno, TipoDeOcorrencia tipo);
 }

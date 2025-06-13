@@ -6,6 +6,7 @@ import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Ocorrencia;
 import com.senai.registro_de_acesso_spring.domain.enuns.StatusDaOcorrencia;
 import com.senai.registro_de_acesso_spring.domain.enuns.TipoDeOcorrencia;
+import com.senai.registro_de_acesso_spring.domain.repositories.AlunoRepository;
 import com.senai.registro_de_acesso_spring.domain.repositories.OcorrenciaRepository;
 import com.senai.registro_de_acesso_spring.domain.repositories.UsuarioRepository;
 import com.senai.registro_de_acesso_spring.domain.validador.ValidadorOcorrenciaSaida;
@@ -21,8 +22,10 @@ public class OcorrenciaService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-@Autowired
-private OcorrenciaRepository ocorrenciaRepository;
+ @Autowired
+ private OcorrenciaRepository ocorrenciaRepository;
+ @Autowired
+ private AlunoRepository alunoRepository;
 
 
 
@@ -36,7 +39,10 @@ private OcorrenciaRepository ocorrenciaRepository;
     }
 
 
-    public void criarOcorrenciaDeSaida(String idDeAcesso, OcorrenciaDTO dto){
+    public void criarOcorrenciaDeSaida(Long idAluno, OcorrenciaDTO dto){
+
+        Aluno aluno = alunoRepository.findById(idAluno).orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
+
      ValidadorOcorrenciaSaida.validarIdade(dto.aluno());
 
      Ocorrencia ocorrencia = new Ocorrencia();
@@ -51,8 +57,8 @@ private OcorrenciaRepository ocorrenciaRepository;
      ocorrenciaRepository.save(ocorrencia);
     }
 
-    public List<OcorrenciaDTO> listarOcorrenciasDeSaidaPorIdDeAluno(String idDeAcesso){
-        List<Ocorrencia> ocorrencias = ocorrenciaRepository.findByAlunoAndTipo(idDeAcesso, TipoDeOcorrencia.SAIDA_ANTECIPADA);
+    public List<OcorrenciaDTO> listarOcorrenciasDeSaidaPorIdDeAluno(Aluno aluno){
+        List<Ocorrencia> ocorrencias = ocorrenciaRepository.findByAlunoAndTipo(aluno, TipoDeOcorrencia.SAIDA_ANTECIPADA);
         return ocorrencias.stream().map(
                 os -> new OcorrenciaDTO(
                         os.getId(),
