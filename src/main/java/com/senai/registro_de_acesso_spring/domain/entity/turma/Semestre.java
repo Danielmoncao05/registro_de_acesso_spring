@@ -32,5 +32,4 @@ public class Semestre {
     @ManyToOne
     @JoinColumn(name = "sub_turma_id")
     private SubTurma subTurma;
-
 }

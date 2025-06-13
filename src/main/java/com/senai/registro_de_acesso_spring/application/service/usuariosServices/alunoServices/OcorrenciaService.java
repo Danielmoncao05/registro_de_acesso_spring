@@ -64,6 +64,7 @@ public class OcorrenciaService {
         alunoRepository.findByIdAcesso(idAcesso).map(aluno -> {
             LocalTime horaEntrada = aluno.getSubTurma().getTurma().getHorarioEntrada();
             Integer tolerancia = aluno.getSubTurma().getTurma().getCurso().getToleranciaMinutos();
+            if (ocorrenciaServiceDomain.verificarHorario(horaEntrada)){         //TODO: verificar horário antes mesmo de verificar atraso;
             if (ocorrenciaServiceDomain.verificarAtraso(horaEntrada, tolerancia)){
                 System.out.println("Aluno atrasado!");
                 Ocorrencia ocorrencia = new Ocorrencia(
@@ -73,15 +74,17 @@ public class OcorrenciaService {
                         LocalDateTime.now(),
                         null, //dataHoraConclusao
                         aluno,
-                        null,   //ocorrenciaServiceDomain.identificarProfessor(aluno)
-                        null    //ocorrenciaServiceDomain.identificarUC(aluno)
+                        ocorrenciaServiceDomain.identificarProfessor(aluno),
+                        ocorrenciaServiceDomain.identificarUC(aluno)
                         );
                 ocorrenciaRepository.save(ocorrencia);
                 System.out.println("Ocorrência registrada!");
                 notificarAQV();
             }else System.out.println("Aluno dentro do horário!");
+            }else System.out.println("Aluno fora do horário de aula");
             return null;
         });
+
     }
 
     public void notificarAQV(){

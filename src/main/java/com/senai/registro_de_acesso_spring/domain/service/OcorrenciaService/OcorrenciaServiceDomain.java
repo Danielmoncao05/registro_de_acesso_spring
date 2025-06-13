@@ -24,9 +24,10 @@ public class OcorrenciaServiceDomain {
         return agora.isAfter(horarioLimite);
     }
 
-    public void verificarHorario(LocalTime horaEntrada){
-        //esta deve verificar se o horario de entrada consta antes do inicio da aula ou depois do termino da aula - para evitar erros;
-    }
+    public boolean verificarHorario(LocalTime horaEntrada){
+        //verificar se o horario de entrada consta antes do inicio da aula ou depois do termino da aula - para evitar erros;
+        return true;
+    }     //TODO
 
     public Professor identificarProfessor(Aluno a){
         if (existeHorarioSemanal(a)){
@@ -48,7 +49,7 @@ public class OcorrenciaServiceDomain {
                     getAulas().get(aulaAtual(a)).
                     getProfessor();
         }
-    }
+    }   //TODO fragmentar função
 
     public UnidadeCurricular identificarUC(Aluno a){
         if (existeHorarioSemanal(a)){
@@ -70,7 +71,7 @@ public class OcorrenciaServiceDomain {
                     getAulas().get(aulaAtual(a)).
                     getUnidadeCurricular();
         }
-    }
+    }       //TODO fragmentar função
 
     public boolean existeHorarioSemanal(Aluno aluno){
         LocalDate hoje = LocalDate.now();
