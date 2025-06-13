@@ -19,6 +19,6 @@ public interface JustificativaRepository extends JpaRepository<Justificativa, Lo
     // List<Justificativa> findByStatusDaJustificativa(StatusDaJustificativa status);
 
     // Listar Justificativas de Falta ou Atraso - AMBOS NÃO ESTÃO SENDO UTILIZADOS MOMENTANEAMENTE
-    // List<JustificativaDTO> findByTipoDeJustificativa(TipoDeJustifcativa tipo);
+    // List<Justificativa> findByTipoDeJustificativa(TipoDeJustifcativa tipo);
     // Optional<Justificativa> findByTipo(TipoDeJustificativa tipo);
 }

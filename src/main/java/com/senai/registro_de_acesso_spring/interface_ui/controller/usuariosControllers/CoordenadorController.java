@@ -81,8 +81,8 @@ public class CoordenadorController {
         }
     }
 
-    // Coordenador visualizar Justificativas de Atraso
-    @GetMapping("/atraso")
+    // Coordenador visualizar Justificativas de Saída Antecipada
+    @GetMapping("/saida")
     public ResponseEntity<List<JustificativaDTO>> listarJustificativasSaida() { return ResponseEntity.ok(justificativaService.listarJustificativasSaida()); }
 
     // Coordenador alterar Status de Justificativa de Saída Antecipada

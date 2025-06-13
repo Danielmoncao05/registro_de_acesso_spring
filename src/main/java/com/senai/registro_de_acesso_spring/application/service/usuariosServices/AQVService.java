@@ -138,6 +138,19 @@ public class AQVService {
         );
     }
 
+    public Optional<Boolean> alterarStatusJustificativa(Long idJustificativa, JustificativaDTO dto, TipoDeJustificativa tipo) {
+        return justificativaRepository.findByIdAndTipoAndStatus(idJustificativa, tipo, StatusDaJustificativa.AGUARDANDO_ANALISE)
+                .map(justificativa -> {
+                    Justificativa justificativaAlterada = dto.fromDTO();
+
+                     justificativa.setStatus(justificativaAlterada.getStatus());
+                     justificativaRepository.save(justificativa);
+
+                     return true;
+                }
+            );
+    }
+
     /*public boolean alterarStatusJustificativaFalta(Long idJustificativa, JustificativaDTO dto) {
         if(justificativaRepository.findById(dto.id()).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.FALTA).isPresent()) {
             Justificativa justificativa = dto.fromDTO();
