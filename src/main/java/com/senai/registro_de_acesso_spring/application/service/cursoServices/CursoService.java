@@ -42,7 +42,6 @@ public class CursoService {
         curso.setUnidadesCurriculares(unidades);
 
         return CursoDTO.toDTO(curso);
-
     }
 
     public List<CursoDTO> listarCursos() {

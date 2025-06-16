@@ -1,6 +1,8 @@
 package com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices;
 
 import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTOs.OcorrenciaDTO;
+import com.senai.registro_de_acesso_spring.domain.entity.turma.Semestre;
+import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.HorarioPadrao;
 import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.HorarioSemanal;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Professor;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
@@ -18,10 +20,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,31 +60,46 @@ public class OcorrenciaService {
                 .orElse(false);
     }
 
+    @Transactional
     public void gerarOcorrenciaDeAtraso(String idAcesso){
-        alunoRepository.findByIdAcesso(idAcesso).map(aluno -> {
-            LocalTime horaEntrada = aluno.getSubTurma().getTurma().getHorarioEntrada();
-            Integer tolerancia = aluno.getSubTurma().getTurma().getCurso().getToleranciaMinutos();
-            if (ocorrenciaServiceDomain.verificarHorario(horaEntrada)){         //TODO: verificar horário antes mesmo de verificar atraso;
-            if (ocorrenciaServiceDomain.verificarAtraso(horaEntrada, tolerancia)){
-                System.out.println("Aluno atrasado!");
-                Ocorrencia ocorrencia = new Ocorrencia(
-                        TipoDeOcorrencia.ATRASO,
-                        null,  //descricao
-                        StatusDaOcorrencia.AGUARDANDO_AUTORIZACAO,
-                        LocalDateTime.now(),
-                        null, //dataHoraConclusao
-                        aluno,
-                        ocorrenciaServiceDomain.identificarProfessor(aluno),
-                        ocorrenciaServiceDomain.identificarUC(aluno)
-                        );
-                ocorrenciaRepository.save(ocorrencia);
-                System.out.println("Ocorrência registrada!");
-                notificarAQV();
-            }else System.out.println("Aluno dentro do horário!");
-            }else System.out.println("Aluno fora do horário de aula");
-            return null;
-        });
+       Optional<Aluno> alunoOpt = alunoRepository.findByIdAcesso(idAcesso);
+        Aluno aluno;
+       if(alunoOpt.isPresent()){
+           aluno = alunoOpt.get();
 
+           LocalTime horaEntrada = aluno.getSubTurma().getTurma().getHorarioEntrada();
+           Integer tolerancia = aluno.getSubTurma().getTurma().getCurso().getToleranciaMinutos();
+           System.out.println(horaEntrada+", "+tolerancia);
+           LocalTime agora = LocalTime.of(10, 35); //Horario Teste
+
+           long tempoDecorrido = Duration.between(horaEntrada.plusMinutes(tolerancia), agora).toMinutes();
+
+           System.out.println(tempoDecorrido);
+
+           System.out.println(tempoDecorrido / aluno.getSubTurma().getTurma().getCurso().getTipo().getMinutosPorAula() );
+
+           long mesesEntre = ChronoUnit.MONTHS.between(aluno.getSubTurma().getTurma().getDataInicial(), LocalDate.now());
+           int indiceSemestreAtual = (int) (mesesEntre / 6) + 1;
+
+           System.out.println("Indice semestre atual: " + indiceSemestreAtual);
+
+           //TODO teste horário semanal
+           aluno.getSubTurma().getSemestres().stream().forEach(System.out::println);
+
+           HorarioPadrao horarioPadrao = aluno.getSubTurma().getSemestres().get(indiceSemestreAtual).getHorarioPadrao();
+           System.out.println("Horario padrao: " + horarioPadrao);
+           System.out.println(aluno.getSubTurma().getSemestres().toString());
+
+
+//           Ocorrencia ocorrencia = new Ocorrencia(
+//                   TipoDeOcorrencia.ATRASO,
+//                   StatusDaOcorrencia.AGUARDANDO_AUTORIZACAO,
+//                   LocalDateTime.now(),
+//                   null, //DataHoraConclusao
+//                   aluno,
+//
+//           );
+       }
     }
 
     public void notificarAQV(){

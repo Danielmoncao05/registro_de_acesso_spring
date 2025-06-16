@@ -6,9 +6,11 @@ import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.AulasDoD
 import com.senai.registro_de_acesso_spring.domain.entity.turma.horarios.HorarioSemanal;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.Professor;
 import com.senai.registro_de_acesso_spring.domain.entity.usuarios.aluno.Aluno;
+import com.senai.registro_de_acesso_spring.domain.enums.DiasDaSemana;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -30,11 +32,13 @@ public class OcorrenciaServiceDomain {
     }     //TODO
 
     public Professor identificarProfessor(Aluno a){
-        return aulaAtual(a).getProfessor();
+        System.out.println("identificando professor");
+        return aulaAtual(a).getProfessor();     //TEST
     }
 
     public UnidadeCurricular identificarUC(Aluno a){
-       return aulaAtual(a).getUnidadeCurricular();
+        System.out.println("identificando UC");
+       return aulaAtual(a).getUnidadeCurricular();  //TEST
     }
 
     public boolean existeHorarioSemanal(Aluno aluno){
@@ -78,15 +82,38 @@ public class OcorrenciaServiceDomain {
 
     public Aula aulaAtual(Aluno aluno) {
         AulasDoDia aulasDeHoje = aulasDeHoje(aluno);
-        LocalTime now = LocalTime.now();
-        int quantidadeAulas = aluno.getSubTurma().getTurma().getQuantidadeAulasPorDia();
+        int quantidadeAulas = aulasDeHoje.getAulas().size();
         LocalTime horarioEntrada = aluno.getSubTurma().getTurma().getHorarioEntrada();
-        //TODO achar aula dentro da lista
-        return null;
+
+        Duration duracaoAula = Duration.ofMinutes(45); // Assume curso técnico
+        LocalTime agora = LocalTime.of(10, 12); //Horario Teste
+
+        // Se ainda não chegou o horário de início das aulas
+        if (agora.isBefore(horarioEntrada)) {
+            System.out.println("Aulas ainda não começaram.");
+            return null;
+        }
+
+        Duration tempoDecorrido = Duration.between(horarioEntrada, agora);
+        int index = (int) (tempoDecorrido.toMinutes() / duracaoAula.toMinutes());
+
+        // Se o índice é maior do que a quantidade de aulas do dia
+        if (index >= quantidadeAulas) {
+            System.out.println("Aulas do dia já terminaram.");
+            return null;
+        }
+
+        System.out.println("Indice da aula atual: " + index);
+        System.out.println("ID Professor: " + aulasDeHoje.getAulas().get(index).getProfessor().getId() + "\nID UC: " + aulasDeHoje.getAulas().get(index).getProfessor().getId());
+        System.out.println("ID Professor: " + aulasDeHoje.getAulas().get(0).getProfessor().getId() + "\nID UC: " + aulasDeHoje.getAulas().get(0).getProfessor().getId());
+
+        return aulasDeHoje.getAulas().get(index);
     }
 
+
     public AulasDoDia aulasDeHoje(Aluno aluno){
-        DayOfWeek hoje = LocalDate.now().getDayOfWeek();
+
+        Enum<DiasDaSemana> hoje = diaDaSemana(LocalDate.now().getDayOfWeek());
 
         List<AulasDoDia> listaDeAulas;
 
@@ -106,12 +133,34 @@ public class OcorrenciaServiceDomain {
         }
 
         for (AulasDoDia aulasDoDia : listaDeAulas){
-            if (DayOfWeek.valueOf(aulasDoDia.getDiaDaSemana().toUpperCase()).equals(hoje)){
+            if (aulasDoDia.getDiaDaSemana().equals(hoje)){
                 System.out.println("Aulas do dia encontradas!");
                 return aulasDoDia;
             }else System.out.println("Aulas do dia nao encontradas");
         }
-
         return null;
-    }   //TODO arrumar metodo
+    }   //TODO testar metodo
+
+    public Enum<DiasDaSemana> diaDaSemana(DayOfWeek diaDaSemana){
+        switch (diaDaSemana){
+            case MONDAY -> {
+                return DiasDaSemana.SEGUNDA;
+            }
+            case TUESDAY -> {
+                return DiasDaSemana.TERCA;
+            }
+            case WEDNESDAY -> {
+                return DiasDaSemana.QUARTA;
+            }
+            case THURSDAY -> {
+                return DiasDaSemana.QUINTA;
+            }
+            case FRIDAY -> {
+                return DiasDaSemana.SEXTA;
+            }
+            default -> {
+                return null;
+            }
+        }
+    }
 }
