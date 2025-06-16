@@ -68,12 +68,22 @@ public class AQVService {
         }).orElse(false);
     }
 
-    // TODO criar metodo unico para nao repetir codigo
-
     // TODO pensar em um jeito de utilizar o dto.id e nao afetar o controller,nem o funcionamento
-
     // AQV alterar Status de Justificativa de Falta
-    public Optional<Boolean> alterarStatusJustificativaFalta(Long idJustificativa, JustificativaDTO dto) {
+    public Optional<Boolean> alterarStatusJustificativas(Long idJustificativa, JustificativaDTO dto, TipoDeJustificativa tipo) {
+        return justificativaRepository.findByIdAndTipoAndStatus(idJustificativa, tipo, StatusDaJustificativa.AGUARDANDO_ANALISE)
+                .map(justificativa -> {
+                    Justificativa justificativaAlterada = dto.fromDTO();
+
+                    justificativa.setStatus(justificativaAlterada.getStatus());
+                    justificativaRepository.save(justificativa);
+
+                    return true;
+                }
+        );
+    }
+
+    /*public Optional<Boolean> alterarStatusJustificativaFalta(Long idJustificativa, JustificativaDTO dto) {
         return justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.FALTA)
                 .filter(justificativa -> justificativa.getStatus() == StatusDaJustificativa.AGUARDANDO_ANALISE).map(justificativa -> {
                     Justificativa justificativaStatusAlterado = dto.fromDTO();
@@ -136,20 +146,7 @@ public class AQVService {
                     return false;
                 }
         );
-    }
-
-    public Optional<Boolean> alterarStatusJustificativa(Long idJustificativa, JustificativaDTO dto, TipoDeJustificativa tipo) {
-        return justificativaRepository.findByIdAndTipoAndStatus(idJustificativa, tipo, StatusDaJustificativa.AGUARDANDO_ANALISE)
-                .map(justificativa -> {
-                    Justificativa justificativaAlterada = dto.fromDTO();
-
-                     justificativa.setStatus(justificativaAlterada.getStatus());
-                     justificativaRepository.save(justificativa);
-
-                     return true;
-                }
-            );
-    }
+    }*/
 
     /*public boolean alterarStatusJustificativaFalta(Long idJustificativa, JustificativaDTO dto) {
         if(justificativaRepository.findById(dto.id()).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.FALTA).isPresent()) {

@@ -104,6 +104,12 @@ public class OcorrenciaService {
     }
 
     // TODO: Processo de Ocorrência de Atraso
+    @Transactional
+    public void criarOcorrenciaAtraso(String idAcesso) {
+        LocalDateTime horarioEntradaAluno =LocalDateTime.now();
+        Optional<Aluno> alunoOpt = alunoRepository.findByIdAcesso(idAcesso);
+        // lista de horarios semanais e ver se tem a segunda que estamos | segunda de hoje é igual a de horario semanal
+    }
 
     // Processo de Ocorrência de Saída Antecipada
     @Transactional

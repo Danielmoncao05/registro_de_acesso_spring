@@ -5,6 +5,7 @@ import com.senai.registro_de_acesso_spring.application.dto.usuariosDTOs.alunoDTO
 import com.senai.registro_de_acesso_spring.application.service.usuariosServices.AQVService;
 import com.senai.registro_de_acesso_spring.application.service.usuariosServices.alunoServices.JustificativaService;
 import com.senai.registro_de_acesso_spring.domain.enums.StatusDaJustificativa;
+import com.senai.registro_de_acesso_spring.domain.enums.TipoDeJustificativa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +21,16 @@ public class AQVController {
     @Autowired
     private JustificativaService justificativaService;
 
+    // CRUD de AQV
     @PostMapping
     public ResponseEntity<String> cadastrarAQV(@RequestBody AQVDTO dto) {
         aqvService.cadastrarAQV(dto);
         return ResponseEntity.ok("AQV '" + dto.nome() + "' cadastrado(a) com sucesso!");
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AQVDTO>> listarAQVs() {
+        return ResponseEntity.ok(aqvService.listarAQVs());
     }
 
     @GetMapping("/{id}")
@@ -31,11 +38,6 @@ public class AQVController {
         return aqvService.buscarAQVPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping
-    public ResponseEntity<List<AQVDTO>> listarAQVs() {
-        return ResponseEntity.ok(aqvService.listarAQVs());
     }
 
     @PutMapping("/{id}")
@@ -63,7 +65,7 @@ public class AQVController {
     // AQV alterar status de Justificativa de Falta
     @PutMapping("/falta/{idJustificativa}")
     public ResponseEntity<String> alterarStatusJustificativaFalta(@PathVariable Long idJustificativa, @RequestBody JustificativaDTO dto) { // payload é o json com os dados
-        if(aqvService.alterarStatusJustificativaFalta(idJustificativa, dto).isPresent()) {
+        if(aqvService.alterarStatusJustificativas(idJustificativa, dto, TipoDeJustificativa.FALTA).isPresent()) {
             return ResponseEntity.ok("Status da Justificativa de Falta alterado para '" + dto.status() + "' com sucesso!");
         } else {
             return ResponseEntity.notFound().build();
@@ -77,7 +79,7 @@ public class AQVController {
     // AQV alterar Status de Justificativa de Atraso
     @PutMapping("/atraso/{idJustificativa}")
     public ResponseEntity<String> alterarStatusJustificativaAtraso(@PathVariable Long idJustificativa, @RequestBody JustificativaDTO dto) {
-        if(aqvService.alterarStatusJustificativaAtraso(idJustificativa, dto).isPresent()) {
+        if(aqvService.alterarStatusJustificativas(idJustificativa, dto, TipoDeJustificativa.ATRASO).isPresent()) {
             return ResponseEntity.ok("Status da Justificativa de Atraso alterado para '" + dto.status() + "' com sucesso!");
         } else {
             return ResponseEntity.notFound().build();
@@ -91,7 +93,7 @@ public class AQVController {
     // AQV alterar Status de Justificativa de Saída Antecipada
     @PutMapping("/saida/{idJustificativa}")
     public ResponseEntity<String> alterarStatusJustificativaSaida(@PathVariable Long idJustificativa, @RequestBody JustificativaDTO dto) {
-        if(aqvService.alterarStatusJustificativaSaida(idJustificativa, dto).isPresent()) {
+        if(aqvService.alterarStatusJustificativas(idJustificativa, dto, TipoDeJustificativa.SAIDA_ANTECIPADA).isPresent()) {
             return ResponseEntity.ok("Status da Justificativa de Saída Antecipada alterado para '" + dto.status() + "' com sucesso!");
         } else {
             return ResponseEntity.notFound().build();

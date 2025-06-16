@@ -24,6 +24,7 @@ public class CoordenadorService {
     @Autowired
     private JustificativaRepository justificativaRepository;
 
+    // CRUD de Coordenador
     public void cadastrarCoordenador(CoordenadorDTO dto) {
         coordenadorRepository.save(dto.fromDTO());
     }
@@ -65,8 +66,21 @@ public class CoordenadorService {
         }).orElse(false);
     }
 
-    // Coordenador alterar Status de Justificativa de Falta
-    public Optional<Boolean> alterarStatusJustificativaFalta(Long idJustificativa, JustificativaDTO dto) {
+    // Coordenador alterar Status de Justificativas
+    public Optional<Boolean> alterarStatusJustificativas(Long idJustificativa, JustificativaDTO dto, TipoDeJustificativa tipo) {
+        return justificativaRepository.findByIdAndTipoAndStatus(idJustificativa, tipo, StatusDaJustificativa.AGUARDANDO_ANALISE)
+                .map(justificativa -> {
+                    Justificativa justificativaAlterada = dto.fromDTO();
+
+                    justificativa.setStatus(justificativaAlterada.getStatus());
+                    justificativaRepository.save(justificativa);
+
+                    return true;
+                }
+        );
+    }
+
+    /*public Optional<Boolean> alterarStatusJustificativaFalta(Long idJustificativa, JustificativaDTO dto) {
         return justificativaRepository.findById(idJustificativa).filter(justificativa -> justificativa.getTipo() == TipoDeJustificativa.FALTA)
                 .filter(justificativa -> justificativa.getStatus() == StatusDaJustificativa.AGUARDANDO_ANALISE).map(justificativa -> {
             Justificativa justificativaStatusAlterado = dto.fromDTO();
@@ -127,6 +141,6 @@ public class CoordenadorService {
                             return false;
                         }
                 );
-    }
+    }*/
 
 }
