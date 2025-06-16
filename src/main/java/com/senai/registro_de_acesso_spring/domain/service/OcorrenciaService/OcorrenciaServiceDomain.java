@@ -30,48 +30,12 @@ public class OcorrenciaServiceDomain {
     }     //TODO
 
     public Professor identificarProfessor(Aluno a){
-        if (existeHorarioSemanal(a)){
-            return a.getSubTurma().
-                    getSemestres().
-                    get(semestreAtual(a)).
-                    getHorariosSemanais().
-                    get(horarioSemanalAtual(a)).
-                    getListaDeAulasDoDia().
-                    get(aulasDeHoje(a)).
-                    getAulas().get(aulaAtual(a)).
-                    getProfessor();
-        }else {
-            return a.getSubTurma().
-                    getSemestres().
-                    get(semestreAtual(a)).
-                    getHorarioPadrao().
-                    getListaDeAulasDoDia().get(aulasDeHoje(a)).
-                    getAulas().get(aulaAtual(a)).
-                    getProfessor();
-        }
-    }   //TODO fragmentar função
+        return aulaAtual(a).getProfessor();
+    }
 
     public UnidadeCurricular identificarUC(Aluno a){
-        if (existeHorarioSemanal(a)){
-            return a.getSubTurma().
-                    getSemestres().
-                    get(semestreAtual(a)).
-                    getHorariosSemanais().
-                    get(horarioSemanalAtual(a)).
-                    getListaDeAulasDoDia().
-                    get(aulasDeHoje(a)).
-                    getAulas().get(aulaAtual(a)).
-                    getUnidadeCurricular();
-        }else {
-            return a.getSubTurma().
-                    getSemestres().
-                    get(semestreAtual(a)).
-                    getHorarioPadrao().
-                    getListaDeAulasDoDia().get(aulasDeHoje(a)).
-                    getAulas().get(aulaAtual(a)).
-                    getUnidadeCurricular();
-        }
-    }       //TODO fragmentar função
+       return aulaAtual(a).getUnidadeCurricular();
+    }
 
     public boolean existeHorarioSemanal(Aluno aluno){
         LocalDate hoje = LocalDate.now();
@@ -112,48 +76,16 @@ public class OcorrenciaServiceDomain {
         return 0;
     }
 
-    public int aulaAtual(Aluno aluno) {
-        DayOfWeek hoje = LocalDate.now().getDayOfWeek();
+    public Aula aulaAtual(Aluno aluno) {
+        AulasDoDia aulasDeHoje = aulasDeHoje(aluno);
         LocalTime now = LocalTime.now();
-
-        List<AulasDoDia> listaDeAulas;
-        if (existeHorarioSemanal(aluno)) {
-            listaDeAulas = aluno.getSubTurma()
-                    .getSemestres()
-                    .get(semestreAtual(aluno))
-                    .getHorariosSemanais()
-                    .get(horarioSemanalAtual(aluno))
-                    .getListaDeAulasDoDia();
-        } else {
-            listaDeAulas = aluno.getSubTurma()
-                    .getSemestres()
-                    .get(semestreAtual(aluno))
-                    .getHorarioPadrao()
-                    .getListaDeAulasDoDia();
-        }
-
         int quantidadeAulas = aluno.getSubTurma().getTurma().getQuantidadeAulasPorDia();
         LocalTime horarioEntrada = aluno.getSubTurma().getTurma().getHorarioEntrada();
+        //TODO achar aula dentro da lista
+        return null;
+    }
 
-        for (AulasDoDia aulaDoDia : listaDeAulas) {
-            if (aulaDoDia.getDiaDaSemana().equals(hoje)) {
-                List<Aula> aulas = aulaDoDia.getAulas();
-                for (Aula aula : aulas) {
-
-                    int ordem = aula.getOrdem();
-                    LocalTime horaInicio = horarioEntrada.plusMinutes(ordem * 50);
-
-                    if (now.isAfter(horaInicio) && now.isBefore(horaInicio.plusMinutes(50))) {
-                        return aula.getOrdem();
-                    }
-                }
-            }
-        }
-
-        return -1;
-    }  //TODO Revisar Logica
-
-    public int aulasDeHoje(Aluno aluno){
+    public AulasDoDia aulasDeHoje(Aluno aluno){
         DayOfWeek hoje = LocalDate.now().getDayOfWeek();
 
         List<AulasDoDia> listaDeAulas;
@@ -173,12 +105,13 @@ public class OcorrenciaServiceDomain {
                     .getListaDeAulasDoDia();
         }
 
-        for (int i = 0; i < listaDeAulas.size(); i++) {
-            if (listaDeAulas.get(i).getDiaDaSemana().equals(hoje)) {
-                return i;
-            }
+        for (AulasDoDia aulasDoDia : listaDeAulas){
+            if (DayOfWeek.valueOf(aulasDoDia.getDiaDaSemana().toUpperCase()).equals(hoje)){
+                System.out.println("Aulas do dia encontradas!");
+                return aulasDoDia;
+            }else System.out.println("Aulas do dia nao encontradas");
         }
 
-        return -1;
-    }
+        return null;
+    }   //TODO arrumar metodo
 }
