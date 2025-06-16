@@ -1,51 +1,52 @@
 package com.senai.registro_de_acesso_spring.interface_ui.controller;
 
+import com.senai.registro_de_acesso_spring.application.dto.AlunoDTO;
 import com.senai.registro_de_acesso_spring.application.services.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/alunos")
 public class AlunoController {
     @Autowired
     private AlunoService alunoService;
-/*
+
     @PostMapping
-    public ResponseEntity<String> cadastrar(@RequestBody AlunoDTO alunoDTO) {
-        alunoService.cadastrar(alunoDTO);
-        return ResponseEntity.ok("Aluno cadastrado com sucesso!");
+    public ResponseEntity<String> cadastrarAluno(@RequestBody AlunoDTO alunoDTO) {
+        alunoService.cadastrarAluno(alunoDTO);
+        return ResponseEntity.ok(alunoDTO.nome() + " cadastrado com sucesso!");
     }
 
     @GetMapping
     public ResponseEntity<List<AlunoDTO>> listarAlunos() {
-        return ResponseEntity.ok(alunoService.listar());
+        return ResponseEntity.ok(alunoService.listarAlunos());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<AlunoDTO>> buscarPorId(@PathVariable Long id) {
-        return alunoService.buscarPorId(id)
+    public ResponseEntity<AlunoDTO> buscarAlunoPorId(@PathVariable Long id) {
+        return alunoService.buscarAlunoPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping
-    public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody AlunoDTO alunoDTO) {
-        if(alunoService.atualizar(id, alunoDTO)) {
-            return ResponseEntity.ok("Aluno atualizado com sucesso!");
+    @PutMapping("/{id}")
+    public ResponseEntity<String> atualizarAluno(@PathVariable Long id, @RequestBody AlunoDTO alunoDTO) {
+        if(alunoService.atualizarAluno(id, alunoDTO)) {
+            return ResponseEntity.ok(alunoDTO.nome() + " atualizado com sucesso!");
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deletar(@PathVariable Long id) {
-        if(alunoService.deletar(id)) {
-            return ResponseEntity.ok("Aluno deletado com sucesso!");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> inativarAluno(@PathVariable Long id) {
+        if(alunoService.inativarAluno(id)) {
+            return ResponseEntity.ok("Aluno desativado do sistema!");
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-
-    // criar salvar e ler ocorrencia | um só de entrada e um só de saida(entrada é automatica) | controller e service pequenos porem uteis | como vou utiliza-lo no aluno ??
-*/
 }
