@@ -167,13 +167,13 @@ public class OcorrenciaServiceRN {
     public boolean atualizarOcorrenciaSaidaPorId(Long id, OcorrenciaDTO dto){
         return ocorrenciaRepository.findById(id).map(
                 os -> {
-                    os.setAluno(dto.aluno());
-                    os.setTipo(dto.tipoDeOcorrencia());
-                    os.setProfessorResponsavel(dto.professorResponsavel());
-                    os.setUnidadeCurricular(dto.unidadeCurricular());
+                    os.setAluno(dto.fromDTO().getAluno());
+                    os.setTipo(dto.tipo());
+                    os.setProfessorResponsavel(dto.fromDTO().getProfessorResponsavel());
+                    os.setUnidadeCurricular(dto.fromDTO().getUnidadeCurricular());
                     os.setDescricao(dto.descricao());
-                    os.setStatus(dto.statusDaOcorrencia());
-                    os.setPedidoDeSaida(dto.PedidoDeSaida());
+                    os.setStatus(dto.status());
+                    os.setDataHoraCriacao(dto.dataHoraCriacao());
                     os.setDataHoraConclusao(dto.dataHoraConclusao());
                     ocorrenciaRepository.save(os);
                     return true;
