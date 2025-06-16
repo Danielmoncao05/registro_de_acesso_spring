@@ -76,4 +76,16 @@ public class OcorrenciaController {
         ocorrenciaServiceRN.confirmarCiencia(dto);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
 }

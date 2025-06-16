@@ -10,6 +10,7 @@ import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositorie
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.UsuarioRepository;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.AlunoRepository;
 import com.senai.registro_de_acesso_spring.domain.repository.usuariosRepositories.alunoRepositories.OcorrenciaRepository;
+import com.senai.registro_de_acesso_spring.domain.validador.ValidadorOcorrenciaSaida;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OcorrenciaServiceRN {
@@ -110,4 +113,89 @@ public class OcorrenciaServiceRN {
                 OcorrenciaDTO.toDTO(saved)
         );
     }
+
+    public void criarOcorrenciaDeSaida(Long idAluno, OcorrenciaDTO dto, Aluno aluno){
+
+         aluno = alunoRepository.findById(idAluno).orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
+
+        ValidadorOcorrenciaSaida.validarIdade(aluno);
+
+        Ocorrencia ocorrencia = new Ocorrencia();
+        ocorrencia.setAluno(aluno);
+        ocorrencia.setProfessorResponsavel(dto.fromDTO().getProfessorResponsavel());
+        ocorrencia.setUnidadeCurricular(dto.fromDTO().getUnidadeCurricular());
+        ocorrencia.setTipo(TipoDeOcorrencia.SAIDA_ANTECIPADA);
+        ocorrencia.setDescricao(dto.descricao());
+        ocorrencia.setStatus(StatusDaOcorrencia.AGUARDANDO_AUTORIZACAO);
+        ocorrencia.setDataHoraCriacao(dto.dataHoraCriacao());
+        ocorrencia.setDataHoraConclusao(dto.dataHoraConclusao());
+        ocorrenciaRepository.save(ocorrencia);
+    }
+
+    public List<OcorrenciaDTO> listarOcorrenciasDeSaidaPorIdDeAluno(Aluno aluno){
+        List<Ocorrencia> ocorrencias = ocorrenciaRepository.findByAlunoAndTipo(aluno, TipoDeOcorrencia.SAIDA_ANTECIPADA);
+        return ocorrencias.stream().map(
+                os -> new OcorrenciaDTO(
+                        os.getId(),
+                        os.getAluno(),
+                        os.getProfessorResponsavel(),
+                        os.getUnidadeCurricular(),
+                        os.getTipo(),
+                        os.getDescricao(),
+                        os.getStatus(),
+                        os.getDataHoraCriacao(),
+                        os.getDataHoraConclusao()
+                )).toList();
+    }
+
+    public Optional<OcorrenciaDTO> buscarOcorrenciaSaidaPorId(Long id){
+        return ocorrenciaRepository.findById(id).map(
+                os -> new OcorrenciaDTO(
+                        os.getId(),
+                        os.getAluno(),
+                        os.getProfessorResponsavel(),
+                        os.getUnidadeCurricular(),
+                        os.getTipo(),
+                        os.getDescricao(),
+                        os.getStatus(),
+                        os.getDataHoraConclusao(),
+                        os.getDataHoraCriacao()
+                )
+        );
+    }
+
+    public boolean atualizarOcorrenciaSaidaPorId(Long id, OcorrenciaDTO dto){
+        return ocorrenciaRepository.findById(id).map(
+                os -> {
+                    os.setAluno(dto.aluno());
+                    os.setTipo(dto.tipoDeOcorrencia());
+                    os.setProfessorResponsavel(dto.professorResponsavel());
+                    os.setUnidadeCurricular(dto.unidadeCurricular());
+                    os.setDescricao(dto.descricao());
+                    os.setStatus(dto.statusDaOcorrencia());
+                    os.setPedidoDeSaida(dto.PedidoDeSaida());
+                    os.setDataHoraConclusao(dto.dataHoraConclusao());
+                    ocorrenciaRepository.save(os);
+                    return true;
+                }).orElse(false);
+    }
+
+    public boolean deletarOcorrenciaSaida(Long id){
+        if (ocorrenciaRepository.existsById(id)){
+            ocorrenciaRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+}
+
+
+
+
+
+
+
+
+
+
 }
