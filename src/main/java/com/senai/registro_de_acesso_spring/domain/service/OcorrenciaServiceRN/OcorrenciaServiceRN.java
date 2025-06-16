@@ -147,6 +147,7 @@ public class OcorrenciaServiceRN {
                         os.getDataHoraConclusao()
                 )).toList();
     }
+    //erro na sequencia?
 
     public Optional<OcorrenciaDTO> buscarOcorrenciaSaidaPorId(Long id){
         return ocorrenciaRepository.findById(id).map(
